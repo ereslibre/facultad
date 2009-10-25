@@ -5,5 +5,7 @@ obj = bld.new_task_gen(
           source   = bld.glob('*.cpp'),
           target   = 'practica1',
           include  = '.',
-          uselib   = 'QTOPENGL')
+          uselib   = ['QTCORE',
+                      'QTGUI',
+                      'QTOPENGL'])
 
