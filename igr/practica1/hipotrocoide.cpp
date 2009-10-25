@@ -48,28 +48,28 @@ void Hipotrocoide::setZoom(int zoom)
 
 void Hipotrocoide::arriba()
 {
-    m_yoffsetAcumulado -= 100 * m_zoom / 100.0;
+    m_yoffsetAcumulado += 100 * m_zoom / 100.0;
     resizeGL(m_width, m_height);
     update();
 }
 
 void Hipotrocoide::abajo()
 {
-    m_yoffsetAcumulado += 100 * m_zoom / 100.0;
+    m_yoffsetAcumulado -= 100 * m_zoom / 100.0;
     resizeGL(m_width, m_height);
     update();
 }
 
 void Hipotrocoide::izquierda()
 {
-    m_xoffsetAcumulado += 100 * m_zoom / 100.0;
+    m_xoffsetAcumulado -= 100 * m_zoom / 100.0;
     resizeGL(m_width, m_height);
     update();
 }
 
 void Hipotrocoide::derecha()
 {
-    m_xoffsetAcumulado -= 100 * m_zoom / 100.0;
+    m_xoffsetAcumulado += 100 * m_zoom / 100.0;
     resizeGL(m_width, m_height);
     update();
 }
@@ -271,8 +271,8 @@ void Hipotrocoide::mouseMoveEvent(QMouseEvent *event)
         QPointF res = event->posF() - m_oldPos;
         res.rx() *= m_ratio * (m_zoom / 100.0);
         res.ry() *= m_ratio * (m_zoom / 100.0);
-        m_xoffsetAcumulado -= res.x();
-        m_yoffsetAcumulado += res.y();
+        m_xoffsetAcumulado += res.x();
+        m_yoffsetAcumulado -= res.y();
         resizeGL(m_width, m_height);
         update();
     }
