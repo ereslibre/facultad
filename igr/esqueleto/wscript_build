@@ -1,0 +1,7 @@
+#! /usr/bin/env python
+
+bld.new_task_gen(
+    features = 'cxx cprogram',
+    source   = bld.glob('*.cpp'),
+    target   = 'esqueleto',
+    uselib   = 'QTOPENGL')

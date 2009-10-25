@@ -1,0 +1,9 @@
+#! /usr/bin/env python
+
+obj = bld.new_task_gen(
+          features = 'qt4 cprogram cxx',
+          source   = bld.glob('*.cpp'),
+          target   = 'practica1',
+          include  = '.',
+          uselib   = 'QTOPENGL')
+
