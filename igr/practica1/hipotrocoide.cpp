@@ -327,7 +327,7 @@ void Hipotrocoide::realizaDibujo()
         glVertex2f((m_a - m_b) * cos(currStepSize) + m_c * cos(currStepSize * (m_a - m_b) / m_b),
                    (m_a - m_b) * sin(currStepSize) - m_c * sin(currStepSize * (m_a - m_b) / m_b));
         currStepSize += stepSize;
-        if (numAristas == (numVueltas / 100)) {
+        if (numAristas == ((m_b / boost::math::gcd(m_a, m_b)) * m_precision / 255)) {
             numAristas = 0;
             c.r = c.r + m_stepColor.r % 256;
             c.g = c.g + m_stepColor.g % 256;
