@@ -282,7 +282,13 @@ void Hipotrocoide::mouseMoveEvent(QMouseEvent *event)
 
 void Hipotrocoide::initializeGL()
 {
-    srand(time(0));
+    srandom(time(0));
+    m_stepColor.r = random() % 256;
+    m_stepColor.g = random() % 256;
+    m_stepColor.b = random() % 256;
+    m_colorInicial.r = random() % 256;
+    m_colorInicial.g = random() % 256;
+    m_colorInicial.b = random() % 256;
     glPointSize(3);
 }
 
@@ -311,10 +317,25 @@ void Hipotrocoide::realizaDibujo()
     glVertex2i(0, 0);
     glEnd();
     glBegin(GL_LINE_STRIP);
+    Color c;
+    c.r = m_colorInicial.r;
+    c.g = m_colorInicial.g;
+    c.b = m_colorInicial.b;
+    glColor3ub(c.r, c.g, c.b);
+    int numAristas = 0;
     for (int i = 0; i <= numVueltas; ++i) {
         glVertex2f((m_a - m_b) * cos(currStepSize) + m_c * cos(currStepSize * (m_a - m_b) / m_b),
                    (m_a - m_b) * sin(currStepSize) - m_c * sin(currStepSize * (m_a - m_b) / m_b));
         currStepSize += stepSize;
+        if (numAristas == (numVueltas / 100)) {
+            numAristas = 0;
+            c.r = c.r + m_stepColor.r % 256;
+            c.g = c.g + m_stepColor.g % 256;
+            c.b = c.b + m_stepColor.b % 256;
+            glColor3ub(c.r, c.g, c.b);
+        } else {
+            ++numAristas;
+        }
     }
     glEnd();
 }

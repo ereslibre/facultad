@@ -79,6 +79,8 @@ private:
     int          m_filas;
     int          m_columnas;
     unsigned int m_animacionStep;
+    Color        m_stepColor;
+    Color        m_colorInicial;
     QTimer      *m_timer;
 };
 
