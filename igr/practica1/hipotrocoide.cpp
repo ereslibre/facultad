@@ -177,7 +177,7 @@ void Hipotrocoide::dibuja()
         top = 2.0;
     }
     if (m_embaldosado) {
-        glClearColor(1, 1, 1, 0);
+        glClearColor(0, 0, 0, 0);
         glClear(GL_COLOR_BUFFER_BIT);
         GLint viewportWidth = m_width / m_columnas;
         GLint viewportHeight = m_height / m_filas;
@@ -198,7 +198,7 @@ void Hipotrocoide::dibuja()
             y += viewportHeight;
         }
     } else {
-        glClearColor(1, 1, 1, 0);
+        glClearColor(0, 0, 0, 0);
         glClear(GL_COLOR_BUFFER_BIT);
         glViewport(0, 0, m_width, m_height);
         glMatrixMode(GL_PROJECTION);
@@ -303,46 +303,18 @@ void Hipotrocoide::resizeGL(int width, int height)
 
 void Hipotrocoide::realizaDibujo()
 {
-    const float stepSize = 2.0 * M_PI / m_precision;
-    float currStepSize = 0;
+    const int numVueltas = (m_b / boost::math::gcd(m_a, m_b)) * (m_animado ? m_animacionStep : m_precision);
+    const GLdouble stepSize = 2.0 * M_PI / m_precision;
+    GLdouble currStepSize = 0;
     glColor3f(0, 0, 1);
     glBegin(GL_POINTS);
     glVertex2i(0, 0);
     glEnd();
-    if (m_listaColores.size() != qMax((m_precision + 1), m_b / boost::math::gcd(m_a, m_b)) + 1) {
-        m_listaColores.clear();
-        for (int i = 0; i <= qMax((m_precision + 1), m_b / boost::math::gcd(m_a, m_b)); ++i) {
-            Color c;
-            c.r = (rand() % 256) / 255.0;
-            c.g = (rand() % 256) / 255.0;
-            c.b = (rand() % 256) / 255.0;
-            m_listaColores << c;
-        }
-    }
-    const Color c = m_listaColores[0];
-    glColor3f(c.r, c.g, c.b);
     glBegin(GL_LINE_STRIP);
-    int numAristas = 0;
-    for (int i = 0; i < (m_b / boost::math::gcd(m_a, m_b)); ++i) {
-        for (int j = 0; j <= (m_animado ? m_animacionStep : m_precision); ++j) {
-            if (numAristas == m_precision / 10) {
-                const Color c = m_listaColores[j];
-                glColor3f(c.r, c.g, c.b);
-                numAristas = 0;
-            } else {
-                ++numAristas;
-            }
-            glVertex2f((m_a - m_b) * cos(currStepSize) + m_c * cos(currStepSize * (m_a - m_b) / m_b),
-                       (m_a - m_b) * sin(currStepSize) - m_c * sin(currStepSize * (m_a - m_b) / m_b));
-            currStepSize += stepSize;
-        }
-        if (numAristas == m_precision / 10) {
-            const Color c = m_listaColores[i];
-            glColor3f(c.r, c.g, c.b);
-            numAristas = 0;
-        } else {
-            ++numAristas;
-        }
+    for (int i = 0; i <= numVueltas; ++i) {
+        glVertex2f((m_a - m_b) * cos(currStepSize) + m_c * cos(currStepSize * (m_a - m_b) / m_b),
+                   (m_a - m_b) * sin(currStepSize) - m_c * sin(currStepSize * (m_a - m_b) / m_b));
+        currStepSize += stepSize;
     }
     glEnd();
 }

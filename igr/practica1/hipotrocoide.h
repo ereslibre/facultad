@@ -50,9 +50,16 @@ private:
     void realizaDibujo();
 
     struct Color {
-        GLfloat r;
-        GLfloat g;
-        GLfloat b;
+        Color()
+            : r(0)
+            , g(0)
+            , b(0)
+        {
+        }
+
+        GLint r;
+        GLint g;
+        GLint b;
     };
 
     GLint        m_a;
@@ -73,7 +80,6 @@ private:
     int          m_columnas;
     unsigned int m_animacionStep;
     QTimer      *m_timer;
-    QList<Color> m_listaColores;
 };
 
 #endif
