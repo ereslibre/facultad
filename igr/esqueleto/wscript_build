@@ -1,7 +1,11 @@
 #! /usr/bin/env python
 
 bld.new_task_gen(
-    features = 'cxx cprogram',
-    source   = bld.glob('*.cpp'),
-    target   = 'esqueleto',
-    uselib   = 'QTOPENGL')
+      features = 'qt4 cprogram cxx',
+      source   = bld.glob('*.cpp'),
+      target   = 'practica1',
+      include  = '.',
+      uselib   = ['QTCORE',
+                  'QTGUI',
+                  'QTOPENGL'],
+      install_path = None)
