@@ -63,6 +63,10 @@ void Escena::centrar()
     update();
 }
 
+void Escena::cambioHerramienta(uint herramienta)
+{
+}
+
 QSize Escena::sizeHint() const
 {
     return QSize(640, 480);

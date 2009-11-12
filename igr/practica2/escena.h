@@ -4,6 +4,7 @@
 #include <QtCore/QList>
 #include <QtOpenGL/QGLWidget>
 #include "lapiz.h"
+#include "herramientas.h"
 
 class DibujoLineas;
 
@@ -25,6 +26,7 @@ public Q_SLOTS:
     void izquierda();
     void derecha();
     void centrar();
+    void cambioHerramienta(uint herramienta);
 
 Q_SIGNALS:
     void zoomIn();

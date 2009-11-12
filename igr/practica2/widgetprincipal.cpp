@@ -22,6 +22,7 @@ WidgetPrincipal::WidgetPrincipal(QWidget *parent)
     QHBoxLayout *desplazamientoLayout = new QHBoxLayout;
     WidgetDesplazamiento *widgetDesplazamiento = new WidgetDesplazamiento(this);
     desplazamientoLayout->addWidget(widgetDesplazamiento);
+    desplazamientoLayout->addStretch();
     principal->addLayout(desplazamientoLayout);
     setLayout(principal);
 
