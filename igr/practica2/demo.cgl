@@ -1,0 +1,21 @@
+Functions called:
+ delete (86 times)
+ sin (10 times)
+ cos (10 times)
+ time (1 times)
+ SysReallocMem (34 times)
+ SysFreeMem (1125 times)
+ SysGetMem (1125 times)
+ realloc (1 times)
+ memcpy (1 times)
+ delete[] (2 times)
+ free (26 times)
+ new[] (14 times)
+ new (91 times)
+ calloc (5 times)
+ malloc (20 times)
+Resource types used:
+ object array (14 allocs, 13 max)
+ object (91 allocs, 78 max)
+ memory block (1151 allocs, 390 max)
+Modules used:

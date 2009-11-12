@@ -18,4 +18,4 @@ def configure(conf):
     conf.check_cfg(package = 'QtOpenGL', args = '--cflags --libs')
 
 def build(bld):
-	bld.add_subdirs('esqueleto practica1');
+	bld.add_subdirs('esqueleto practica1 practica2');
