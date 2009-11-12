@@ -1,12 +1,12 @@
-#ifndef PRACTICA2_H
-#define PRACTICA2_H
+#ifndef ESCENA_H
+#define ESCENA_H
 
 #include <QtCore/QList>
 #include <QtOpenGL/QGLWidget>
 #include "lapiz.h"
-#include "herramientas.h"
 
 class DibujoLineas;
+class DibujoManual;
 
 class Escena
     : public QGLWidget
@@ -43,6 +43,11 @@ protected:
     virtual void resizeGL(int width, int height);
 
 private:
+    enum Estado {
+        Idle = 0,
+        CreandoDibujo
+    };
+
     QPointF mapeaPVaAVE(const QPoint &p);
 
     GLfloat              m_width;
@@ -53,7 +58,11 @@ private:
     GLfloat              m_yoffsetAcumulado;
     QPointF              m_oldPos;
     QList<DibujoLineas*> m_listaDibujoLineas;
+    DibujoManual        *m_dibujoManualAct;
+    QPointF              m_ultimoClick;
     Lapiz                m_lapiz;
+    uint                 m_herramienta;
+    Estado               m_estado;
 };
 
 #endif

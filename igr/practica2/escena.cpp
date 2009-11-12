@@ -3,13 +3,17 @@
 #include <QtGui/QWheelEvent>
 #include <QtGui/QKeyEvent>
 #include <QtGui/QPainter>
-#include "dibujolineas.h"
+#include "dibujomanual.h"
+#include "herramientas.h"
 
 Escena::Escena(QWidget *parent)
     : QGLWidget(parent)
     , m_zoom(50)
     , m_xoffsetAcumulado(0)
     , m_yoffsetAcumulado(0)
+    , m_dibujoManualAct(0)
+    , m_herramienta(Herramientas::Ninguna)
+    , m_estado(Idle)
 {
     setFocusPolicy(Qt::StrongFocus);
     setMouseTracking(true);
@@ -65,6 +69,12 @@ void Escena::centrar()
 
 void Escena::cambioHerramienta(uint herramienta)
 {
+    m_herramienta = herramienta;
+    if (m_estado == CreandoDibujo) {
+        m_dibujoManualAct = 0;
+        m_ultimoClick = QPointF();
+        m_estado = Idle;
+    }
 }
 
 QSize Escena::sizeHint() const
@@ -109,6 +119,26 @@ void Escena::keyPressEvent(QKeyEvent *event)
 
 void Escena::mousePressEvent(QMouseEvent *event)
 {
+    if (m_herramienta == Herramientas::Ninguna) {
+        return;
+    }
+    if (m_herramienta == Herramientas::Manual) {
+        if (!m_dibujoManualAct) {
+            m_dibujoManualAct = new DibujoManual(m_lapiz);
+            m_listaDibujoLineas << m_dibujoManualAct;
+        }
+        if (m_ultimoClick.isNull()) {
+            m_ultimoClick = mapeaPVaAVE(event->pos());
+            m_estado = CreandoDibujo;
+        } else {
+            const QPointF posClick = mapeaPVaAVE(event->pos());
+            m_dibujoManualAct->anadeSegmento(Segmento(PV2f(m_ultimoClick.x(), m_ultimoClick.y()),
+                                                      PV2f(posClick.x(), posClick.y())));
+            m_ultimoClick = posClick;
+        }
+        event->accept();
+    }
+    update();
 }
 
 void Escena::mouseReleaseEvent(QMouseEvent *event)
