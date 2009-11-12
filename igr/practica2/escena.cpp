@@ -127,7 +127,7 @@ void Escena::mousePressEvent(QMouseEvent *event)
             m_dibujoManualAct = new DibujoManual(m_lapiz);
             m_listaDibujoLineas << m_dibujoManualAct;
         }
-        if (m_ultimoClick.isNull()) {
+        if (m_estado == Idle) {
             m_ultimoClick = mapeaPVaAVE(event->pos());
             m_estado = CreandoDibujo;
         } else {
