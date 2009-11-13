@@ -7,7 +7,7 @@ class PoliEspiral
     : public DibujoLineas
 {
 public:
-    PoliEspiral(Lapiz &l, uint nPasos, GLfloat incLado, GLfloat incDir, GLfloat lado);
+    PoliEspiral(Lapiz &l, const PV2f &centro, uint nPasos, GLfloat incLado, GLfloat incDir, GLfloat lado);
 
     void dibuja() const;
 

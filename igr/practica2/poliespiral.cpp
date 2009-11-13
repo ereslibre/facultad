@@ -1,7 +1,7 @@
 #include "poliespiral.h"
 
-PoliEspiral::PoliEspiral(Lapiz &l, uint nPasos, GLfloat incLado, GLfloat incDir, GLfloat lado)
-    : DibujoLineas(l)
+PoliEspiral::PoliEspiral(Lapiz &l, const PV2f &centro, uint nPasos, GLfloat incLado, GLfloat incDir, GLfloat lado)
+    : DibujoLineas(l, centro)
     , m_nPasos(nPasos)
     , m_incLado(incLado)
     , m_incDir(incDir)
@@ -13,7 +13,7 @@ void PoliEspiral::dibuja() const
 {
     GLfloat lado = m_lado;
     for (uint i = 0; i < m_nPasos; ++i) {
-        m_l.avanzar(m_lado);
+        m_l.avanzar(lado);
         lado += m_incLado;
         m_l.girar(m_incDir);
     }

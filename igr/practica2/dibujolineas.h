@@ -9,7 +9,9 @@
 class DibujoLineas
 {
 public:
-    DibujoLineas(Lapiz &l);
+    DibujoLineas(Lapiz &l, const PV2f &centro = PV2f());
+
+    const PV2f &getCentro() const;
 
     void anadeSegmento(const Segmento &segmento);
     void limpiaDibujo();
@@ -22,6 +24,7 @@ protected:
     Lapiz          &m_l;
     QList<Segmento> m_listaSegmentos;
     GLdouble        m_radianes;
+    PV2f            m_centro;
 };
 
 #endif

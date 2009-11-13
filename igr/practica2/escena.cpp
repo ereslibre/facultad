@@ -4,7 +4,11 @@
 #include <QtGui/QKeyEvent>
 #include <QtGui/QPainter>
 #include "dibujomanual.h"
+#include "poliespiral.h"
 #include "herramientas.h"
+
+/// FIXME
+#include <math.h>
 
 Escena::Escena(QWidget *parent)
     : QGLWidget(parent)
@@ -137,6 +141,9 @@ void Escena::mousePressEvent(QMouseEvent *event)
             m_ultimoClick = posClick;
         }
         event->accept();
+    } else if (m_herramienta == Herramientas::PoliEspiral) {
+        const QPointF posClick = mapeaPVaAVE(event->pos());
+        m_listaDibujoLineas << new PoliEspiral(m_lapiz, PV2f(posClick.x(), posClick.y()), 10, 2, M_PI / 4.0, 5);
     }
     update();
 }
@@ -178,6 +185,7 @@ void Escena::paintGL()
     while (it != m_listaDibujoLineas.end()) {
         m_lapiz.salvaEstado();
         DibujoLineas *const dibujoLineas = *it;
+        m_lapiz.setPos(dibujoLineas->getCentro());
         dibujoLineas->dibuja();
         m_lapiz.recuperaEstado();
         ++it;
