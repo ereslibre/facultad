@@ -10,6 +10,7 @@ public:
     PoliEspiral(Lapiz &l, const PV2f &centro, uint nPasos, GLfloat incLado, GLfloat incDir, GLfloat lado);
 
     void dibuja() const;
+    QWidget *configWidget() const;
 
 private:
     uint    m_nPasos;

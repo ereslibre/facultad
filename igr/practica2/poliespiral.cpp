@@ -18,3 +18,9 @@ void PoliEspiral::dibuja() const
         m_l.girar(m_incDir);
     }
 }
+
+QWidget *PoliEspiral::configWidget() const
+{
+    return 0;
+}
+

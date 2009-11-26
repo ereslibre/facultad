@@ -17,3 +17,9 @@ void DibujoManual::dibuja() const
     }
     glEnd();
 }
+
+QWidget *DibujoManual::configWidget() const
+{
+    return 0;
+}
+

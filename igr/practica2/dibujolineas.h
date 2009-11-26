@@ -6,6 +6,8 @@
 #include "segmento.h"
 #include "lapiz.h"
 
+class QWidget;
+
 class DibujoLineas
 {
 public:
@@ -18,7 +20,10 @@ public:
 
     void girar(GLdouble radianes);
 
+    bool clickSobreFigura(const PV2f &posClick) const;
+
     virtual void dibuja() const = 0;
+    virtual QWidget *configWidget() const = 0;
 
 protected:
     Lapiz          &m_l;

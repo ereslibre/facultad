@@ -7,7 +7,7 @@
 #include "poliespiral.h"
 #include "herramientas.h"
 
-/// FIXME
+// FIXME
 #include <math.h>
 
 Escena::Escena(QWidget *parent)
@@ -123,10 +123,17 @@ void Escena::keyPressEvent(QKeyEvent *event)
 
 void Escena::mousePressEvent(QMouseEvent *event)
 {
+    const QPointF posClick = mapeaPVaAVE(event->pos());
     if (m_herramienta == Herramientas::Ninguna) {
-        return;
-    }
-    if (m_herramienta == Herramientas::Manual) {
+        QList<DibujoLineas*>::ConstIterator it = m_listaDibujoLineas.begin();
+        while (it != m_listaDibujoLineas.end()) {
+            DibujoLineas *const dibujoLineas = *it;
+            if (dibujoLineas->clickSobreFigura(PV2f(posClick.x(), posClick.y()))) {
+                // se hizo clic en la figura (cerca de algún vértice suyo)
+            }
+            ++it;
+        }
+    } else if (m_herramienta == Herramientas::Manual) {
         if (!m_dibujoManualAct) {
             m_dibujoManualAct = new DibujoManual(m_lapiz);
             m_listaDibujoLineas << m_dibujoManualAct;
@@ -135,14 +142,12 @@ void Escena::mousePressEvent(QMouseEvent *event)
             m_ultimoClick = mapeaPVaAVE(event->pos());
             m_estado = CreandoDibujo;
         } else {
-            const QPointF posClick = mapeaPVaAVE(event->pos());
             m_dibujoManualAct->anadeSegmento(Segmento(PV2f(m_ultimoClick.x(), m_ultimoClick.y()),
                                                       PV2f(posClick.x(), posClick.y())));
             m_ultimoClick = posClick;
         }
         event->accept();
     } else if (m_herramienta == Herramientas::PoliEspiral) {
-        const QPointF posClick = mapeaPVaAVE(event->pos());
         m_listaDibujoLineas << new PoliEspiral(m_lapiz, PV2f(posClick.x(), posClick.y()), 10, 2, M_PI / 4.0, 5);
     }
     update();

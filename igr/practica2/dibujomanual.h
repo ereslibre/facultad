@@ -10,6 +10,7 @@ public:
     DibujoManual(Lapiz &l);
 
     void dibuja() const;
+    QWidget *configWidget() const;
 };
 
 #endif
