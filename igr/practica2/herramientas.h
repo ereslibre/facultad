@@ -19,11 +19,7 @@ public:
         Manual,
         PoliEspiral,
         PoliRegular,
-        Roseta,
-        Estrella,
         PoliArco,
-        Arco,
-        Circunferencia,
         Hipotrocoide
     };
 
@@ -38,11 +34,7 @@ private:
     QPushButton *m_manual;
     QPushButton *m_poliEspiral;
     QPushButton *m_poliRegular;
-    QPushButton *m_roseta;
-    QPushButton *m_estrella;
     QPushButton *m_poliArco;
-    QPushButton *m_arco;
-    QPushButton *m_circunferencia;
     QPushButton *m_hipotrocoide;
 };
 
