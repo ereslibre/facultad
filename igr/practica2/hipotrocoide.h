@@ -18,11 +18,12 @@ public:
 private:
     void calculaSegmentos();
 
-    uint     m_a;
-    uint     m_b;
-    uint     m_c;
-    uint     m_precision;
-    QWidget *m_configWidget;
+    uint          m_a;
+    uint          m_b;
+    uint          m_c;
+    uint          m_precision;
+    class ConfigWidget;
+    ConfigWidget *m_configWidget;
 };
 
 #endif

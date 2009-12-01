@@ -9,6 +9,66 @@
 
 #include <boost/math/common_factor.hpp>
 
+class Hipotrocoide::ConfigWidget
+    : public QWidget
+{
+public:
+    ConfigWidget();
+
+    QLineEdit *a() const;
+    QLineEdit *b() const;
+    QLineEdit *c() const;
+    QLineEdit *precision() const;
+
+private:
+    QLineEdit *m_a;
+    QLineEdit *m_b;
+    QLineEdit *m_c;
+    QLineEdit *m_precision;
+};
+
+QLineEdit *Hipotrocoide::ConfigWidget::a() const
+{
+    return m_a;
+}
+
+QLineEdit *Hipotrocoide::ConfigWidget::b() const
+{
+    return m_b;
+}
+
+QLineEdit *Hipotrocoide::ConfigWidget::c() const
+{
+    return m_c;
+}
+
+QLineEdit *Hipotrocoide::ConfigWidget::precision() const
+{
+    return m_precision;
+}
+
+Hipotrocoide::ConfigWidget::ConfigWidget()
+    : m_a(new QLineEdit(this))
+    , m_b(new QLineEdit(this))
+    , m_c(new QLineEdit(this))
+    , m_precision(new QLineEdit(this))
+{
+    QGridLayout *layout = new QGridLayout;
+    layout->addWidget(new QLabel("a", this), 0, 0);
+    layout->addWidget(new QLabel("b", this), 1, 0);
+    layout->addWidget(new QLabel("c", this), 2, 0);
+    layout->addWidget(new QLabel("Precision", this), 3, 0);
+    m_a->setText("300");
+    m_b->setText("280");
+    m_c->setText("50");
+    m_precision->setText("500");
+    layout->addWidget(m_a, 0, 1);
+    layout->addWidget(m_b, 1, 1);
+    layout->addWidget(m_c, 2, 1);
+    layout->addWidget(m_precision, 3, 1);
+    setLayout(layout);
+}
+
 Hipotrocoide::Hipotrocoide(Lapiz &l, const PV2f &centro, uint a, uint b, uint c, uint precision)
     : DibujoLineas(l, centro)
     , m_a(a)
@@ -48,39 +108,27 @@ QWidget *Hipotrocoide::configWidget()
     if (m_configWidget) {
         return m_configWidget;
     }
-    m_configWidget = new QWidget;
-    QGridLayout *layout = new QGridLayout;
-    layout->addWidget(new QLabel("a", m_configWidget), 0, 0);
-    layout->addWidget(new QLabel("b", m_configWidget), 1, 0);
-    layout->addWidget(new QLabel("c", m_configWidget), 2, 0);
-    layout->addWidget(new QLabel("Precision", m_configWidget), 3, 0);
-    QLineEdit *a = new QLineEdit(m_configWidget);
-    a->setText("300");
-    QLineEdit *b = new QLineEdit(m_configWidget);
-    b->setText("280");
-    QLineEdit *c = new QLineEdit(m_configWidget);
-    c->setText("50");
-    QLineEdit *precision = new QLineEdit(m_configWidget);
-    precision->setText("500");
-    layout->addWidget(a, 0, 1);
-    layout->addWidget(b, 1, 1);
-    layout->addWidget(c, 2, 1);
-    layout->addWidget(precision, 3, 1);
-    m_configWidget->setLayout(layout);
-    connect(a, SIGNAL(textEdited(QString)), this, SLOT(invalidar()));
-    connect(b, SIGNAL(textEdited(QString)), this, SLOT(invalidar()));
-    connect(c, SIGNAL(textEdited(QString)), this, SLOT(invalidar()));
-    connect(precision, SIGNAL(textEdited(QString)), this, SLOT(invalidar()));
+    m_configWidget = new ConfigWidget;
+    connect(m_configWidget->a(), SIGNAL(textEdited(QString)), this, SLOT(invalidar()));
+    connect(m_configWidget->b(), SIGNAL(textEdited(QString)), this, SLOT(invalidar()));
+    connect(m_configWidget->c(), SIGNAL(textEdited(QString)), this, SLOT(invalidar()));
+    connect(m_configWidget->precision(), SIGNAL(textEdited(QString)), this, SLOT(invalidar()));
     return m_configWidget;
 }
 
 void Hipotrocoide::invalidar()
 {
+    m_a = m_configWidget->a()->text().toInt();
+    m_b = m_configWidget->b()->text().toInt();
+    m_c = m_configWidget->c()->text().toInt();
+    m_precision = m_configWidget->precision()->text().toInt();
     calculaSegmentos();
+    DibujoLineas::invalidar();
 }
 
 void Hipotrocoide::calculaSegmentos()
 {
+    m_listaSegmentos.clear();
     const int numVueltas = (m_b / boost::math::gcd(m_a, m_b)) * m_precision;
     const GLdouble stepSize = 2.0 * M_PI / m_precision;
     GLdouble currStepSize = 0;

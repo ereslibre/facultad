@@ -9,7 +9,6 @@
 #include "hipotrocoide.h"
 #include "herramientas.h"
 
-// FIXME
 #include <math.h>
 
 Escena::Escena(QWidget *parent)
@@ -126,6 +125,7 @@ void Escena::keyPressEvent(QKeyEvent *event)
 void Escena::mousePressEvent(QMouseEvent *event)
 {
     const QPointF posClick = mapeaPVaAVE(event->pos());
+    DibujoLineas *dibujoLineas = 0;
     if (m_herramienta == Herramientas::Ninguna) {
         if (!(event->modifiers() & Qt::ControlModifier)) {
             m_listaSeleccion.clear();
@@ -142,6 +142,7 @@ void Escena::mousePressEvent(QMouseEvent *event)
     } else if (m_herramienta == Herramientas::Manual) {
         if (!m_dibujoManualAct) {
             m_dibujoManualAct = new DibujoManual(m_lapiz);
+            dibujoLineas = m_dibujoManualAct;
             m_listaDibujoLineas << m_dibujoManualAct;
         }
         if (m_estado == Idle) {
@@ -154,11 +155,15 @@ void Escena::mousePressEvent(QMouseEvent *event)
         }
         event->accept();
     } else if (m_herramienta == Herramientas::PoliEspiral) {
-        m_listaDibujoLineas << new PoliEspiral(m_lapiz, PV2f(posClick.x(), posClick.y()), 10, 2, M_PI / 4.0, 5);
+        dibujoLineas = new PoliEspiral(m_lapiz, PV2f(posClick.x(), posClick.y()), 10, 2, M_PI / 4.0, 5);
     } else if (m_herramienta == Herramientas::PoliRegular) {
-        m_listaDibujoLineas << new PoligonoRegular(m_lapiz, PV2f(posClick.x(), posClick.y()), 20, 6);
+        dibujoLineas = new PoligonoRegular(m_lapiz, PV2f(posClick.x(), posClick.y()), 20, 6);
     } else if (m_herramienta == Herramientas::Hipotrocoide) {
-        m_listaDibujoLineas << new Hipotrocoide(m_lapiz, PV2f(posClick.x(), posClick.y()), 300, 280, 50, 500);
+        dibujoLineas = new Hipotrocoide(m_lapiz, PV2f(posClick.x(), posClick.y()), 300, 280, 50, 500);
+    }
+    if (dibujoLineas) {
+        m_listaDibujoLineas << dibujoLineas;
+        connect(dibujoLineas, SIGNAL(invalidada()), this, SLOT(update()));
     }
 }
 

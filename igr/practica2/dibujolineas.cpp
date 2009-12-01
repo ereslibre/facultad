@@ -38,4 +38,9 @@ bool DibujoLineas::clickSobreFigura(const PV2f &posClick) const
     return false;
 }
 
+void DibujoLineas::invalidar()
+{
+    emit invalidada();
+}
+
 #include "dibujolineas.moc"

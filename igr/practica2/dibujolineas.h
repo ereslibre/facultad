@@ -38,7 +38,10 @@ public:
     virtual QWidget *configWidget() = 0;
 
 public Q_SLOTS:
-    virtual void invalidar() = 0;
+    virtual void invalidar();
+
+Q_SIGNALS:
+    void invalidada();
 
 protected:
     Lapiz          &m_l;
