@@ -11,6 +11,11 @@ PoliEspiral::PoliEspiral(Lapiz &l, const PV2f &centro, uint nPasos, GLfloat incL
 
 void PoliEspiral::dibuja(Estado estado) const
 {
+    if (estado & Seleccionado) {
+        glColor3f(1.0, 1.0, 0);
+    } else {
+        glColor3f(1.0, 1.0, 1.0);
+    }
     GLfloat lado = m_lado;
     for (uint i = 0; i < m_nPasos; ++i) {
         m_l.avanzar(lado);

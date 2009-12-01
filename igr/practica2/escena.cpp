@@ -135,7 +135,7 @@ void Escena::mousePressEvent(QMouseEvent *event)
             DibujoLineas *const dibujoLineas = *it;
             if (dibujoLineas->clickSobreFigura(PV2f(posClick.x(), posClick.y()))) {
                 m_listaSeleccion << dibujoLineas;
-                break;
+                return;
             }
             ++it;
         }
@@ -160,11 +160,11 @@ void Escena::mousePressEvent(QMouseEvent *event)
     } else if (m_herramienta == Herramientas::Hipotrocoide) {
         m_listaDibujoLineas << new Hipotrocoide(m_lapiz, PV2f(posClick.x(), posClick.y()), 300, 280, 50, 500);
     }
-    update();
 }
 
 void Escena::mouseReleaseEvent(QMouseEvent *event)
 {
+    update();
 }
 
 void Escena::initializeGL()

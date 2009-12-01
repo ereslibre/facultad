@@ -27,8 +27,6 @@ bool DibujoLineas::clickSobreFigura(const PV2f &posClick) const
     QList<Segmento>::ConstIterator it = m_listaSegmentos.begin();
     while (it != m_listaSegmentos.end()) {
         const Segmento segmento = *it;
-        glVertex2d(segmento.getA().getX(), segmento.getA().getY());
-        glVertex2d(segmento.getB().getX(), segmento.getB().getY());
         if (qAbs(posClick.getX() - segmento.getA().getX()) < 1.0 ||
             qAbs(posClick.getX() - segmento.getB().getX()) < 1.0 ||
             qAbs(posClick.getY() - segmento.getA().getY()) < 1.0 ||
