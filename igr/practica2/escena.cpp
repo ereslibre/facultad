@@ -5,6 +5,8 @@
 #include <QtGui/QPainter>
 #include "dibujomanual.h"
 #include "poliespiral.h"
+#include "poligonoregular.h"
+#include "hipotrocoide.h"
 #include "herramientas.h"
 
 // FIXME
@@ -125,11 +127,15 @@ void Escena::mousePressEvent(QMouseEvent *event)
 {
     const QPointF posClick = mapeaPVaAVE(event->pos());
     if (m_herramienta == Herramientas::Ninguna) {
+        if (!(event->modifiers() & Qt::ControlModifier)) {
+            m_listaSeleccion.clear();
+        }
         QList<DibujoLineas*>::ConstIterator it = m_listaDibujoLineas.begin();
         while (it != m_listaDibujoLineas.end()) {
             DibujoLineas *const dibujoLineas = *it;
             if (dibujoLineas->clickSobreFigura(PV2f(posClick.x(), posClick.y()))) {
-                // se hizo clic en la figura (cerca de algún vértice suyo)
+                m_listaSeleccion << dibujoLineas;
+                break;
             }
             ++it;
         }
@@ -149,6 +155,10 @@ void Escena::mousePressEvent(QMouseEvent *event)
         event->accept();
     } else if (m_herramienta == Herramientas::PoliEspiral) {
         m_listaDibujoLineas << new PoliEspiral(m_lapiz, PV2f(posClick.x(), posClick.y()), 10, 2, M_PI / 4.0, 5);
+    } else if (m_herramienta == Herramientas::PoliRegular) {
+        m_listaDibujoLineas << new PoligonoRegular(m_lapiz, PV2f(posClick.x(), posClick.y()), 20, 6);
+    } else if (m_herramienta == Herramientas::Hipotrocoide) {
+        m_listaDibujoLineas << new Hipotrocoide(m_lapiz, PV2f(posClick.x(), posClick.y()), 300, 280, 50, 500);
     }
     update();
 }
@@ -191,7 +201,11 @@ void Escena::paintGL()
         m_lapiz.salvaEstado();
         DibujoLineas *const dibujoLineas = *it;
         m_lapiz.setPos(dibujoLineas->getCentro());
-        dibujoLineas->dibuja();
+        if (m_listaSeleccion.contains(dibujoLineas)) {
+            dibujoLineas->dibuja(DibujoLineas::Seleccionado);
+        } else {
+            dibujoLineas->dibuja();
+        }
         m_lapiz.recuperaEstado();
         ++it;
     }

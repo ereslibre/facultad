@@ -9,7 +9,7 @@ PoliEspiral::PoliEspiral(Lapiz &l, const PV2f &centro, uint nPasos, GLfloat incL
 {
 }
 
-void PoliEspiral::dibuja() const
+void PoliEspiral::dibuja(Estado estado) const
 {
     GLfloat lado = m_lado;
     for (uint i = 0; i < m_nPasos; ++i) {

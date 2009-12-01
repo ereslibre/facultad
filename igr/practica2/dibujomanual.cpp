@@ -5,8 +5,13 @@ DibujoManual::DibujoManual(Lapiz &l)
 {
 }
 
-void DibujoManual::dibuja() const
+void DibujoManual::dibuja(Estado estado) const
 {
+    if (estado & Seleccionado) {
+        glColor3f(1.0, 1.0, 0);
+    } else {
+        glColor3f(1.0, 1.0, 1.0);
+    }
     glBegin(GL_LINES);
     QList<Segmento>::ConstIterator it = m_listaSegmentos.begin();
     while (it != m_listaSegmentos.end()) {

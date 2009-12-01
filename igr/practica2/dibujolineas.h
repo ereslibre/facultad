@@ -11,6 +11,11 @@ class QWidget;
 class DibujoLineas
 {
 public:
+    enum Estado {
+        Ninguno = 0,
+        Seleccionado = 1
+    };
+
     DibujoLineas(Lapiz &l, const PV2f &centro = PV2f());
 
     const PV2f &getCentro() const;
@@ -22,7 +27,7 @@ public:
 
     bool clickSobreFigura(const PV2f &posClick) const;
 
-    virtual void dibuja() const = 0;
+    virtual void dibuja(Estado estado = Ninguno) const = 0;
     virtual QWidget *configWidget() const = 0;
 
 protected:

@@ -9,7 +9,7 @@ class PoliEspiral
 public:
     PoliEspiral(Lapiz &l, const PV2f &centro, uint nPasos, GLfloat incLado, GLfloat incDir, GLfloat lado);
 
-    void dibuja() const;
+    void dibuja(Estado estado) const;
     QWidget *configWidget() const;
 
 private:

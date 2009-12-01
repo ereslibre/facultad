@@ -22,9 +22,9 @@ void Lapiz::girar(GLdouble radianes)
     m_e.dir += radianes;
 }
 
-void Lapiz::avanzar(GLfloat distancia, bool dejarRastro)
+void Lapiz::avanzar(GLfloat distancia, Comportamiento comportamiento)
 {
-    if (dejarRastro) {
+    if (comportamiento == DejarRastro) {
         glBegin(GL_LINE_STRIP);
         glVertex2d(m_e.pos.getX(), m_e.pos.getY());
     }
@@ -32,7 +32,7 @@ void Lapiz::avanzar(GLfloat distancia, bool dejarRastro)
     const GLdouble incY = distancia * sin(m_e.dir);
     m_e.pos.rX() += incX;
     m_e.pos.rY() += incY;
-    if (dejarRastro) {
+    if (comportamiento == DejarRastro) {
         glVertex2d(m_e.pos.getX(), m_e.pos.getY());
         glEnd();
     }

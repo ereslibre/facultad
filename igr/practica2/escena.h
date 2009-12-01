@@ -63,6 +63,7 @@ private:
     Lapiz                m_lapiz;
     uint                 m_herramienta;
     Estado               m_estado;
+    QList<DibujoLineas*> m_listaSeleccion;
 };
 
 #endif

@@ -7,13 +7,18 @@
 class Lapiz
 {
 public:
+    enum Comportamiento {
+        DejarRastro = 0,
+        NoDejarRastro
+    };
+
     Lapiz();
 
     void salvaEstado();
     void recuperaEstado();
 
     void girar(GLdouble radianes);
-    void avanzar(GLfloat distancia, bool dejarRastro = true);
+    void avanzar(GLfloat distancia, Comportamiento comportamiento = DejarRastro);
 
     void setDir(GLdouble dir);
     void setPos(const PV2f &pos);
