@@ -13,7 +13,7 @@ class Hipotrocoide::ConfigWidget
     : public QWidget
 {
 public:
-    ConfigWidget();
+    ConfigWidget(int a, int b, int c, int precision);
 
     QLineEdit *a() const;
     QLineEdit *b() const;
@@ -47,7 +47,7 @@ QLineEdit *Hipotrocoide::ConfigWidget::precision() const
     return m_precision;
 }
 
-Hipotrocoide::ConfigWidget::ConfigWidget()
+Hipotrocoide::ConfigWidget::ConfigWidget(int a, int b, int c, int precision)
     : m_a(new QLineEdit(this))
     , m_b(new QLineEdit(this))
     , m_c(new QLineEdit(this))
@@ -58,10 +58,10 @@ Hipotrocoide::ConfigWidget::ConfigWidget()
     layout->addWidget(new QLabel("b", this), 1, 0);
     layout->addWidget(new QLabel("c", this), 2, 0);
     layout->addWidget(new QLabel("Precision", this), 3, 0);
-    m_a->setText("300");
-    m_b->setText("280");
-    m_c->setText("50");
-    m_precision->setText("500");
+    m_a->setText(QString::number(a));
+    m_b->setText(QString::number(b));
+    m_c->setText(QString::number(c));
+    m_precision->setText(QString::number(precision));
     layout->addWidget(m_a, 0, 1);
     layout->addWidget(m_b, 1, 1);
     layout->addWidget(m_c, 2, 1);
@@ -108,7 +108,7 @@ QWidget *Hipotrocoide::configWidget()
     if (m_configWidget) {
         return m_configWidget;
     }
-    m_configWidget = new ConfigWidget;
+    m_configWidget = new ConfigWidget(m_a, m_b, m_c, m_precision);
     connect(m_configWidget->a(), SIGNAL(textEdited(QString)), this, SLOT(invalidar()));
     connect(m_configWidget->b(), SIGNAL(textEdited(QString)), this, SLOT(invalidar()));
     connect(m_configWidget->c(), SIGNAL(textEdited(QString)), this, SLOT(invalidar()));
