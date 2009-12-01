@@ -37,6 +37,7 @@ protected:
     virtual void wheelEvent(QWheelEvent *event);
     virtual void keyPressEvent(QKeyEvent *event);
     virtual void mousePressEvent(QMouseEvent *event);
+    virtual void mouseMoveEvent(QMouseEvent *event);
     virtual void mouseReleaseEvent(QMouseEvent *event);
 
     virtual void initializeGL();
@@ -46,7 +47,8 @@ protected:
 private:
     enum Estado {
         Idle = 0,
-        CreandoDibujo
+        CreandoDibujo,
+        Recortando
     };
 
     QPointF mapeaPVaAVE(const QPoint &p);
@@ -61,6 +63,7 @@ private:
     QList<DibujoLineas*> m_listaDibujoLineas;
     DibujoManual        *m_dibujoManualAct;
     QPointF              m_ultimoClick;
+    QPointF              m_posActual;
     Lapiz                m_lapiz;
     uint                 m_herramienta;
     Estado               m_estado;

@@ -16,6 +16,7 @@ public:
 
     enum Herramienta {
         Ninguna = 0,
+        Recortar,
         Manual,
         PoliEspiral,
         PoliRegular,
@@ -31,6 +32,7 @@ private Q_SLOTS:
 
 private:
     QPushButton *m_ninguna;
+    QPushButton *m_recortar;
     QPushButton *m_manual;
     QPushButton *m_poliEspiral;
     QPushButton *m_poliRegular;

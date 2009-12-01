@@ -111,8 +111,10 @@ void Hipotrocoide::dibuja(Estado estado) const
     QList<Segmento>::ConstIterator it = m_listaSegmentos.begin();
     while (it != m_listaSegmentos.end()) {
         const Segmento segmento = *it;
-        glVertex2d(segmento.getA().getX(), segmento.getA().getY());
-        glVertex2d(segmento.getB().getX(), segmento.getB().getY());
+        if (segmento.esValido()) {
+            glVertex2d(segmento.getA().getX(), segmento.getA().getY());
+            glVertex2d(segmento.getB().getX(), segmento.getB().getY());
+        }
         ++it;
     }
     glEnd();
@@ -128,6 +130,7 @@ QWidget *Hipotrocoide::configWidget()
     connect(m_configWidget->b(), SIGNAL(textEdited(QString)), this, SLOT(invalidar()));
     connect(m_configWidget->c(), SIGNAL(textEdited(QString)), this, SLOT(invalidar()));
     connect(m_configWidget->precision(), SIGNAL(textEdited(QString)), this, SLOT(invalidar()));
+    connect(m_configWidget->rotacion(), SIGNAL(valueChanged(int)), this, SLOT(invalidar()));
     return m_configWidget;
 }
 
@@ -137,6 +140,7 @@ void Hipotrocoide::invalidar()
     m_b = m_configWidget->b()->text().toInt();
     m_c = m_configWidget->c()->text().toInt();
     m_precision = m_configWidget->precision()->text().toInt();
+    m_rotacion = m_configWidget->rotacion()->value();
     calculaSegmentos();
     DibujoLineas::invalidar();
 }
@@ -149,10 +153,12 @@ void Hipotrocoide::calculaSegmentos()
     GLdouble currStepSize = 0;
     PV2f pa((m_a - m_b) * cos(currStepSize) + m_c * cos(currStepSize * (m_a - m_b) / m_b) + m_centro.getX(),
             (m_a - m_b) * sin(currStepSize) - m_c * sin(currStepSize * (m_a - m_b) / m_b) + m_centro.getY());
+    pa.rotar(m_centro, m_rotacion * 2.0 * M_PI / 359.0);
     for (int i = 0; i <= numVueltas; ++i) {
         currStepSize += stepSize;
-        const PV2f pb((m_a - m_b) * cos(currStepSize) + m_c * cos(currStepSize * (m_a - m_b) / m_b) + m_centro.getX(),
-                      (m_a - m_b) * sin(currStepSize) - m_c * sin(currStepSize * (m_a - m_b) / m_b) + m_centro.getY());
+        PV2f pb((m_a - m_b) * cos(currStepSize) + m_c * cos(currStepSize * (m_a - m_b) / m_b) + m_centro.getX(),
+                (m_a - m_b) * sin(currStepSize) - m_c * sin(currStepSize * (m_a - m_b) / m_b) + m_centro.getY());
+        pb.rotar(m_centro, m_rotacion * 2.0 * M_PI / 359.0);
         m_listaSegmentos << Segmento(pa, pb);
         pa = pb;
     }

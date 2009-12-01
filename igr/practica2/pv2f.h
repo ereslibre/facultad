@@ -19,6 +19,11 @@ public:
     void setX(GLfloat x);
     void setY(GLfloat y);
 
+    void rotar(const PV2f &centro, GLfloat angulo);
+
+    bool operator==(const PV2f &rhs) const;
+    bool operator!=(const PV2f &rhs) const;
+
 private:
     GLfloat m_x;
     GLfloat m_y;

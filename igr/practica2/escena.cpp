@@ -139,6 +139,11 @@ void Escena::mousePressEvent(QMouseEvent *event)
             }
             ++it;
         }
+    } else if (m_herramienta == Herramientas::Recortar) {
+        if (m_estado == Idle) {
+            m_estado = Recortando;
+            m_ultimoClick = posClick;
+        }
     } else if (m_herramienta == Herramientas::Manual) {
         if (!m_dibujoManualAct) {
             m_dibujoManualAct = new DibujoManual(m_lapiz);
@@ -167,8 +172,21 @@ void Escena::mousePressEvent(QMouseEvent *event)
     }
 }
 
+void Escena::mouseMoveEvent(QMouseEvent *event)
+{
+    if (m_herramienta == Herramientas::Recortar && m_estado == Recortando) {
+        m_posActual = mapeaPVaAVE(event->pos());
+        update();
+    }
+}
+
 void Escena::mouseReleaseEvent(QMouseEvent *event)
 {
+    if (m_herramienta == Herramientas::Recortar) {
+        m_estado = Idle;
+        m_ultimoClick = QPointF();
+        m_posActual = QPointF();
+    }
     emit elementosSeleccionados(m_listaSeleccion);
     update();
 }
@@ -214,6 +232,19 @@ void Escena::paintGL()
         }
         m_lapiz.recuperaEstado();
         ++it;
+    }
+    if (m_herramienta == Herramientas::Recortar && m_estado == Recortando) {
+        const GLfloat minx = qMin(m_ultimoClick.x(), m_posActual.x());
+        const GLfloat miny = qMin(m_ultimoClick.y(), m_posActual.y());
+        const GLfloat maxx = qMax(m_ultimoClick.x(), m_posActual.x());
+        const GLfloat maxy = qMax(m_ultimoClick.y(), m_posActual.y());
+        glBegin(GL_LINE_STRIP);
+        glVertex2d(minx, miny);
+        glVertex2d(minx, maxy);
+        glVertex2d(maxx, maxy);
+        glVertex2d(maxx, miny);
+        glVertex2d(minx, miny);
+        glEnd();
     }
 }
 

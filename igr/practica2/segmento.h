@@ -15,6 +15,10 @@ public:
     void setA(const PV2f &a);
     void setB(const PV2f &b);
 
+    bool esValido() const;
+
+    void cohenSutherland(const PV2f &tl, const PV2f &bm);
+
 private:
     PV2f m_a;
     PV2f m_b;

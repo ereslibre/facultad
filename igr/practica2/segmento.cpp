@@ -31,3 +31,12 @@ void Segmento::setB(const PV2f &b)
 {
     m_b = b;
 }
+
+bool Segmento::esValido() const
+{
+    return m_a != m_b;
+}
+
+void Segmento::cohenSutherland(const PV2f &tl, const PV2f &bm)
+{
+}
