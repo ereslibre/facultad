@@ -7,6 +7,17 @@ PoliEspiral::PoliEspiral(Lapiz &l, const PV2f &centro, uint nPasos, GLfloat incL
     , m_incDir(incDir)
     , m_lado(lado)
 {
+    l.salvaEstado();
+    l.setPos(centro);
+    PV2f a = centro;
+    for (uint i = 0; i < m_nPasos; ++i) {
+        m_l.avanzar(lado, Lapiz::NoDejarRastro);
+        m_listaSegmentos << Segmento(a, m_l.getPos());
+        a = m_l.getPos();
+        lado += m_incLado;
+        m_l.girar(m_incDir);
+    }
+    l.recuperaEstado();
 }
 
 void PoliEspiral::dibuja(Estado estado) const

@@ -27,10 +27,10 @@ bool DibujoLineas::clickSobreFigura(const PV2f &posClick) const
     QList<Segmento>::ConstIterator it = m_listaSegmentos.begin();
     while (it != m_listaSegmentos.end()) {
         const Segmento segmento = *it;
-        if (qAbs(posClick.getX() - segmento.getA().getX()) < 1.0 ||
-            qAbs(posClick.getX() - segmento.getB().getX()) < 1.0 ||
-            qAbs(posClick.getY() - segmento.getA().getY()) < 1.0 ||
-            qAbs(posClick.getY() - segmento.getB().getY()) < 1.0) {
+        if ((qAbs(posClick.getX() - segmento.getA().getX()) < 3.0 &&
+             qAbs(posClick.getY() - segmento.getA().getY()) < 3.0) ||
+            (qAbs(posClick.getX() - segmento.getB().getX()) < 3.0 &&
+             qAbs(posClick.getY() - segmento.getB().getY()) < 3.0)) {
             return true;
         }
         ++it;

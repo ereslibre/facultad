@@ -14,13 +14,14 @@ Hipotrocoide::Hipotrocoide(Lapiz &l, const PV2f &centro, uint a, uint b, uint c,
     const int numVueltas = (m_b / boost::math::gcd(m_a, m_b)) * m_precision;
     const GLdouble stepSize = 2.0 * M_PI / m_precision;
     GLdouble currStepSize = 0;
+    PV2f pa((m_a - m_b) * cos(currStepSize) + m_c * cos(currStepSize * (m_a - m_b) / m_b) + m_centro.getX(),
+            (m_a - m_b) * sin(currStepSize) - m_c * sin(currStepSize * (m_a - m_b) / m_b) + m_centro.getY());
     for (int i = 0; i <= numVueltas; ++i) {
-        const PV2f a((m_a - m_b) * cos(currStepSize) + m_c * cos(currStepSize * (m_a - m_b) / m_b) + m_centro.getX(),
-                     (m_a - m_b) * sin(currStepSize) - m_c * sin(currStepSize * (m_a - m_b) / m_b) + m_centro.getY());
         currStepSize += stepSize;
-        const PV2f b((m_a - m_b) * cos(currStepSize) + m_c * cos(currStepSize * (m_a - m_b) / m_b) + m_centro.getX(),
-                     (m_a - m_b) * sin(currStepSize) - m_c * sin(currStepSize * (m_a - m_b) / m_b) + m_centro.getY());
-        m_listaSegmentos << Segmento(a, b);
+        const PV2f pb((m_a - m_b) * cos(currStepSize) + m_c * cos(currStepSize * (m_a - m_b) / m_b) + m_centro.getX(),
+                      (m_a - m_b) * sin(currStepSize) - m_c * sin(currStepSize * (m_a - m_b) / m_b) + m_centro.getY());
+        m_listaSegmentos << Segmento(pa, pb);
+        pa = pb;
     }
 }
 
