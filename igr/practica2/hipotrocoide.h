@@ -22,6 +22,7 @@ private:
     uint          m_b;
     uint          m_c;
     uint          m_precision;
+    uint          m_rotacion;
     class ConfigWidget;
     ConfigWidget *m_configWidget;
 };

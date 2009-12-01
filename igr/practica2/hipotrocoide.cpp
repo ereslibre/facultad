@@ -1,6 +1,7 @@
 #include "hipotrocoide.h"
 
 #include <QtGui/QLabel>
+#include <QtGui/QSlider>
 #include <QtGui/QWidget>
 #include <QtGui/QLineEdit>
 #include <QtGui/QGridLayout>
@@ -13,18 +14,20 @@ class Hipotrocoide::ConfigWidget
     : public QWidget
 {
 public:
-    ConfigWidget(int a, int b, int c, int precision);
+    ConfigWidget(int a, int b, int c, int precision, int rotacion);
 
     QLineEdit *a() const;
     QLineEdit *b() const;
     QLineEdit *c() const;
     QLineEdit *precision() const;
+    QSlider *rotacion() const;
 
 private:
     QLineEdit *m_a;
     QLineEdit *m_b;
     QLineEdit *m_c;
     QLineEdit *m_precision;
+    QSlider   *m_rotacion;
 };
 
 QLineEdit *Hipotrocoide::ConfigWidget::a() const
@@ -47,25 +50,36 @@ QLineEdit *Hipotrocoide::ConfigWidget::precision() const
     return m_precision;
 }
 
-Hipotrocoide::ConfigWidget::ConfigWidget(int a, int b, int c, int precision)
+QSlider *Hipotrocoide::ConfigWidget::rotacion() const
+{
+    return m_rotacion;
+}
+
+Hipotrocoide::ConfigWidget::ConfigWidget(int a, int b, int c, int precision, int rotacion)
     : m_a(new QLineEdit(this))
     , m_b(new QLineEdit(this))
     , m_c(new QLineEdit(this))
     , m_precision(new QLineEdit(this))
+    , m_rotacion(new QSlider(Qt::Horizontal, this))
 {
     QGridLayout *layout = new QGridLayout;
     layout->addWidget(new QLabel("a", this), 0, 0);
     layout->addWidget(new QLabel("b", this), 1, 0);
     layout->addWidget(new QLabel("c", this), 2, 0);
     layout->addWidget(new QLabel("Precision", this), 3, 0);
+    layout->addWidget(new QLabel("Rotacion", this), 4, 0);
     m_a->setText(QString::number(a));
     m_b->setText(QString::number(b));
     m_c->setText(QString::number(c));
     m_precision->setText(QString::number(precision));
+    m_rotacion->setMinimum(0);
+    m_rotacion->setMaximum(359);
+    m_rotacion->setValue(rotacion);
     layout->addWidget(m_a, 0, 1);
     layout->addWidget(m_b, 1, 1);
     layout->addWidget(m_c, 2, 1);
     layout->addWidget(m_precision, 3, 1);
+    layout->addWidget(m_rotacion, 4, 1);
     setLayout(layout);
 }
 
@@ -75,6 +89,7 @@ Hipotrocoide::Hipotrocoide(Lapiz &l, const PV2f &centro, uint a, uint b, uint c,
     , m_b(b)
     , m_c(c)
     , m_precision(precision)
+    , m_rotacion(0)
     , m_configWidget(0)
 {
     calculaSegmentos();
@@ -108,7 +123,7 @@ QWidget *Hipotrocoide::configWidget()
     if (m_configWidget) {
         return m_configWidget;
     }
-    m_configWidget = new ConfigWidget(m_a, m_b, m_c, m_precision);
+    m_configWidget = new ConfigWidget(m_a, m_b, m_c, m_precision, m_rotacion);
     connect(m_configWidget->a(), SIGNAL(textEdited(QString)), this, SLOT(invalidar()));
     connect(m_configWidget->b(), SIGNAL(textEdited(QString)), this, SLOT(invalidar()));
     connect(m_configWidget->c(), SIGNAL(textEdited(QString)), this, SLOT(invalidar()));
