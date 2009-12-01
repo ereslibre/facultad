@@ -40,8 +40,11 @@ void PoliEspiral::dibuja(Estado estado) const
     }
 }
 
-QWidget *PoliEspiral::configWidget() const
+QWidget *PoliEspiral::configWidget()
 {
     return 0;
 }
 
+void PoliEspiral::invalidar()
+{
+}

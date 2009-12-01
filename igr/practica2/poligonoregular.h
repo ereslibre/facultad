@@ -12,7 +12,8 @@ public:
     QString getNombre() const;
 
     void dibuja(Estado estado) const;
-    QWidget *configWidget() const;
+    QWidget *configWidget();
+    void invalidar();
 
 private:
     GLfloat m_lado;

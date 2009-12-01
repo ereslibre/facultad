@@ -28,8 +28,11 @@ void DibujoManual::dibuja(Estado estado) const
     glEnd();
 }
 
-QWidget *DibujoManual::configWidget() const
+QWidget *DibujoManual::configWidget()
 {
     return 0;
 }
 
+void DibujoManual::invalidar()
+{
+}

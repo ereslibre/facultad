@@ -66,11 +66,6 @@ void WidgetPrincipal::zoomOut()
 
 void WidgetPrincipal::elementosSeleccionados(const QList<DibujoLineas*> &seleccion)
 {
-    for (int i = 1; i < m_tabWidget->count(); ++i) {
-        QWidget *const widget = m_tabWidget->widget(i);
-        widget->setVisible(false);
-        delete widget;
-    }
     m_tabWidget->clear();
     m_tabWidget->addTab(m_escenaWidget, "Escena");
     QList<DibujoLineas*>::ConstIterator it = seleccion.begin();

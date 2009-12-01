@@ -49,7 +49,11 @@ void PoligonoRegular::dibuja(Estado estado) const
     }
 }
 
-QWidget *PoligonoRegular::configWidget() const
+QWidget *PoligonoRegular::configWidget()
 {
     return 0;
+}
+
+void PoligonoRegular::invalidar()
+{
 }

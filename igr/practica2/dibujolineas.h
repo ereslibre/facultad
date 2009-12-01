@@ -2,6 +2,7 @@
 #define DIBUJOLINEAS_H
 
 #include <GL/gl.h>
+#include <QtCore/QObject>
 #include <QtCore/QList>
 #include <QtCore/QString>
 #include "segmento.h"
@@ -10,7 +11,10 @@
 class QWidget;
 
 class DibujoLineas
+    : public QObject
 {
+    Q_OBJECT
+
 public:
     enum Estado {
         Ninguno = 0,
@@ -31,7 +35,10 @@ public:
     bool clickSobreFigura(const PV2f &posClick) const;
 
     virtual void dibuja(Estado estado = Ninguno) const = 0;
-    virtual QWidget *configWidget() const = 0;
+    virtual QWidget *configWidget() = 0;
+
+public Q_SLOTS:
+    virtual void invalidar() = 0;
 
 protected:
     Lapiz          &m_l;

@@ -38,3 +38,4 @@ bool DibujoLineas::clickSobreFigura(const PV2f &posClick) const
     return false;
 }
 
+#include "dibujolineas.moc"

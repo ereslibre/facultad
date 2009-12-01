@@ -12,13 +12,17 @@ public:
     QString getNombre() const;
 
     void dibuja(Estado estado) const;
-    QWidget *configWidget() const;
+    QWidget *configWidget();
+    void invalidar();
 
 private:
-    uint m_a;
-    uint m_b;
-    uint m_c;
-    uint m_precision;
+    void calculaSegmentos();
+
+    uint     m_a;
+    uint     m_b;
+    uint     m_c;
+    uint     m_precision;
+    QWidget *m_configWidget;
 };
 
 #endif
