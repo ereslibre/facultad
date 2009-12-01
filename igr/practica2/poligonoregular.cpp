@@ -37,16 +37,17 @@ void PoligonoRegular::dibuja(Estado estado) const
     } else {
         glColor3f(1.0, 1.0, 1.0);
     }
-    const GLfloat alpha = 2.0 * M_PI / (GLfloat) m_nLados;
-    const GLfloat beta = (M_PI - alpha) / 2;
-    const GLfloat radio = (m_lado / 2.0) / sin(alpha / 2.0);
-    const GLfloat gamma = M_PI - beta;
-    m_l.avanzar(radio, Lapiz::NoDejarRastro);
-    m_l.girar(gamma);
-    for (int i = 0; i < m_nLados; ++i) {
-        m_l.avanzar(m_lado);
-        m_l.girar(alpha);
+    glBegin(GL_LINES);
+    QList<Segmento>::ConstIterator it = m_listaSegmentos.begin();
+    while (it != m_listaSegmentos.end()) {
+        const Segmento segmento = *it;
+        if (segmento.esValido()) {
+            glVertex2d(segmento.getA().getX(), segmento.getA().getY());
+            glVertex2d(segmento.getB().getX(), segmento.getB().getY());
+        }
+        ++it;
     }
+    glEnd();
 }
 
 QWidget *PoligonoRegular::configWidget()

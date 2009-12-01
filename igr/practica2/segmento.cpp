@@ -68,7 +68,11 @@ void Segmento::cohenSutherland(const PV2f &tl, const PV2f &br)
             m_a.setY(m_b.getY() - ((m_b.getY() - m_a.getY()) / (m_b.getX() - m_a.getX())) * (m_b.getX() - br.getX()));
             m_a.setX(br.getX());
         } else if ((codigoA & ARRIBA) == ARRIBA) {
+            m_a.setX(m_b.getX() - ((m_b.getY() - tl.getY()) * (m_b.getX() - m_a.getX()) / (m_b.getY() - m_a.getY())));
+            m_a.setY(tl.getY());
         } else if ((codigoA & ABAJO) == ABAJO) {
+            m_a.setX(m_b.getX() - ((m_b.getY() - br.getY()) * (m_b.getX() - m_a.getX()) / (m_b.getY() - m_a.getY())));
+            m_a.setY(br.getY());
         }
         codigoA = codigo(m_a, tl, br);
     }
