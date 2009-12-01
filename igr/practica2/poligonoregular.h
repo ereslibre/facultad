@@ -9,6 +9,8 @@ class PoligonoRegular
 public:
     PoligonoRegular(Lapiz &l, const PV2f &centro, GLfloat lado, int nLados);
 
+    QString getNombre() const;
+
     void dibuja(Estado estado) const;
     QWidget *configWidget() const;
 

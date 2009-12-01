@@ -164,6 +164,7 @@ void Escena::mousePressEvent(QMouseEvent *event)
 
 void Escena::mouseReleaseEvent(QMouseEvent *event)
 {
+    emit elementosSeleccionados(m_listaSeleccion);
     update();
 }
 

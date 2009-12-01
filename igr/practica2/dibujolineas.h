@@ -3,6 +3,7 @@
 
 #include <GL/gl.h>
 #include <QtCore/QList>
+#include <QtCore/QString>
 #include "segmento.h"
 #include "lapiz.h"
 
@@ -17,6 +18,8 @@ public:
     };
 
     DibujoLineas(Lapiz &l, const PV2f &centro = PV2f());
+
+    virtual QString getNombre() const = 0;
 
     const PV2f &getCentro() const;
 

@@ -9,6 +9,8 @@ class Hipotrocoide
 public:
     Hipotrocoide(Lapiz &l, const PV2f &centro, uint a, uint b, uint c, uint precision);
 
+    QString getNombre() const;
+
     void dibuja(Estado estado) const;
     QWidget *configWidget() const;
 

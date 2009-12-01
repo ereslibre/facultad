@@ -25,6 +25,11 @@ Hipotrocoide::Hipotrocoide(Lapiz &l, const PV2f &centro, uint a, uint b, uint c,
     }
 }
 
+QString Hipotrocoide::getNombre() const
+{
+    return "Hipotrocoide";
+}
+
 void Hipotrocoide::dibuja(Estado estado) const
 {
     if (estado & Seleccionado) {

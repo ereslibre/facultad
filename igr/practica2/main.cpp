@@ -22,6 +22,7 @@ int main(int argc, char **argv)
     QObject::connect(h, SIGNAL(cambioHerramienta(uint)), e, SLOT(cambioHerramienta(uint)));
     QObject::connect(e, SIGNAL(zoomIn()), w, SLOT(zoomIn()));
     QObject::connect(e, SIGNAL(zoomOut()), w, SLOT(zoomOut()));
+    QObject::connect(e, SIGNAL(elementosSeleccionados(QList<DibujoLineas*>)), w, SLOT(elementosSeleccionados(QList<DibujoLineas*>)));
     QDockWidget *opciones = new QDockWidget("Opciones", &v);
     opciones->setWidget(w);
     QDockWidget *herramientasDock = new QDockWidget("Herramientas", &v);

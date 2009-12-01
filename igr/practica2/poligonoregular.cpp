@@ -25,6 +25,11 @@ PoligonoRegular::PoligonoRegular(Lapiz &l, const PV2f &centro, GLfloat lado, int
     l.recuperaEstado();
 }
 
+QString PoligonoRegular::getNombre() const
+{
+    return "Poligono Regular";
+}
+
 void PoligonoRegular::dibuja(Estado estado) const
 {
     if (estado & Seleccionado) {

@@ -5,6 +5,11 @@ DibujoManual::DibujoManual(Lapiz &l)
 {
 }
 
+QString DibujoManual::getNombre() const
+{
+    return "Dibujo Manual";
+}
+
 void DibujoManual::dibuja(Estado estado) const
 {
     if (estado & Seleccionado) {

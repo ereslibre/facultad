@@ -3,8 +3,10 @@
 
 #include <QtGui/QWidget>
 
+class DibujoLineas;
 class Hipotrocoide;
 class QSlider;
+class QTabWidget;
 
 class WidgetPrincipal
     : public QWidget
@@ -18,6 +20,7 @@ public:
 public Q_SLOTS:
     void zoomIn();
     void zoomOut();
+    void elementosSeleccionados(const QList<DibujoLineas*> &seleccion);
 
 Q_SIGNALS:
     void zoomChanged(int zoom);
@@ -28,7 +31,9 @@ Q_SIGNALS:
     void centrar();
 
 private:
-    QSlider *m_zoom;
+    QSlider    *m_zoom;
+    QWidget    *m_escenaWidget;
+    QTabWidget *m_tabWidget;
 };
 
 #endif

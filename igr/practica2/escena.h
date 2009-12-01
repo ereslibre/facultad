@@ -31,6 +31,7 @@ public Q_SLOTS:
 Q_SIGNALS:
     void zoomIn();
     void zoomOut();
+    void elementosSeleccionados(const QList<DibujoLineas*> &seleccion);
 
 protected:
     virtual void wheelEvent(QWheelEvent *event);

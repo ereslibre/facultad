@@ -20,6 +20,11 @@ PoliEspiral::PoliEspiral(Lapiz &l, const PV2f &centro, uint nPasos, GLfloat incL
     l.recuperaEstado();
 }
 
+QString PoliEspiral::getNombre() const
+{
+    return "Poli-espiral";
+}
+
 void PoliEspiral::dibuja(Estado estado) const
 {
     if (estado & Seleccionado) {

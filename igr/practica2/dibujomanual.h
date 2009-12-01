@@ -9,6 +9,8 @@ class DibujoManual
 public:
     DibujoManual(Lapiz &l);
 
+    QString getNombre() const;
+
     void dibuja(Estado estado) const;
     QWidget *configWidget() const;
 };
