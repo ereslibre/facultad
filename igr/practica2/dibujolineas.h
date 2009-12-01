@@ -34,6 +34,8 @@ public:
 
     bool clickSobreFigura(const PV2f &posClick) const;
 
+    void cohenSutherland(const PV2f &tl, const PV2f &br);
+
     virtual void dibuja(Estado estado = Ninguno) const = 0;
     virtual QWidget *configWidget() = 0;
 

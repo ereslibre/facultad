@@ -143,6 +143,7 @@ void Escena::mousePressEvent(QMouseEvent *event)
         if (m_estado == Idle) {
             m_estado = Recortando;
             m_ultimoClick = posClick;
+            m_posActual = posClick;
         }
     } else if (m_herramienta == Herramientas::Manual) {
         if (!m_dibujoManualAct) {
@@ -183,6 +184,17 @@ void Escena::mouseMoveEvent(QMouseEvent *event)
 void Escena::mouseReleaseEvent(QMouseEvent *event)
 {
     if (m_herramienta == Herramientas::Recortar) {
+        const QRectF ventana(m_ultimoClick, m_posActual);
+        const QRectF ventanaNormalizada = ventana.normalized();
+        QList<DibujoLineas*>::ConstIterator it = m_listaDibujoLineas.begin();
+        while (it != m_listaDibujoLineas.end()) {
+            DibujoLineas *const dibujoLineas = *it;
+            dibujoLineas->cohenSutherland(PV2f(ventanaNormalizada.topLeft().x(),
+                                               ventanaNormalizada.topLeft().y()),
+                                          PV2f(ventanaNormalizada.bottomRight().x(),
+                                               ventanaNormalizada.bottomRight().y()));
+            ++it;
+        }
         m_estado = Idle;
         m_ultimoClick = QPointF();
         m_posActual = QPointF();

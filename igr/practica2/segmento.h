@@ -17,9 +17,11 @@ public:
 
     bool esValido() const;
 
-    void cohenSutherland(const PV2f &tl, const PV2f &bm);
+    void cohenSutherland(const PV2f &tl, const PV2f &br);
 
 private:
+    int codigo(const PV2f &p, const PV2f &tl, const PV2f &br) const;
+
     PV2f m_a;
     PV2f m_b;
 };

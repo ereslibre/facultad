@@ -38,6 +38,16 @@ bool DibujoLineas::clickSobreFigura(const PV2f &posClick) const
     return false;
 }
 
+void DibujoLineas::cohenSutherland(const PV2f &tl, const PV2f &br)
+{
+    QList<Segmento>::Iterator it = m_listaSegmentos.begin();
+    while (it != m_listaSegmentos.end()) {
+        Segmento &segmento = *it;
+        segmento.cohenSutherland(tl, br);
+        ++it;
+    }
+}
+
 void DibujoLineas::invalidar()
 {
     emit invalidada();

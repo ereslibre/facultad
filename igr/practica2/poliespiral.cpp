@@ -32,12 +32,17 @@ void PoliEspiral::dibuja(Estado estado) const
     } else {
         glColor3f(1.0, 1.0, 1.0);
     }
-    GLfloat lado = m_lado;
-    for (uint i = 0; i < m_nPasos; ++i) {
-        m_l.avanzar(lado);
-        lado += m_incLado;
-        m_l.girar(m_incDir);
+    glBegin(GL_LINES);
+    QList<Segmento>::ConstIterator it = m_listaSegmentos.begin();
+    while (it != m_listaSegmentos.end()) {
+        const Segmento segmento = *it;
+        if (segmento.esValido()) {
+            glVertex2d(segmento.getA().getX(), segmento.getA().getY());
+            glVertex2d(segmento.getB().getX(), segmento.getB().getY());
+        }
+        ++it;
     }
+    glEnd();
 }
 
 QWidget *PoliEspiral::configWidget()
