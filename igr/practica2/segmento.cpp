@@ -1,5 +1,10 @@
 #include "segmento.h"
 
+#define IZQUIERDA 1
+#define DERECHA 2
+#define ARRIBA 4
+#define ABAJO 8
+
 Segmento::Segmento(const PV2f &a, const PV2f &b)
     : m_a(a)
     , m_b(b)
@@ -40,7 +45,7 @@ bool Segmento::esValido() const
 void Segmento::cohenSutherland(const PV2f &tl, const PV2f &br)
 {
     int codigoA = codigo(m_a, tl, br);
-    const int codigoB = codigo(m_b, tl, br);
+    int codigoB = codigo(m_b, tl, br);
     for (int frontera = 0; frontera < 4; ++frontera) {
         if (!(codigoA | codigoB)) {
             return;
@@ -49,22 +54,21 @@ void Segmento::cohenSutherland(const PV2f &tl, const PV2f &br)
             m_b = PV2f(0, 0);
             return;
         }
-
         if (!codigoA) {
-            //int buf1 = startCode; startCode = endCode; endCode = buf1;
-            //Vector2 buf2 = line.Start; line.Start = line.End; line.End = buf2;
-        } else if ((codigoA & 1) == 1) {
-            //line.Start.Y += dydx * (_clipMin.X - line.Start.X);
-            //line.Start.X = _clipMin.X;
-        } else if ((codigoA & 2) == 2) {
-            //line.Start.Y += dydx * (_clipMax.X - line.Start.X);
-            //line.Start.X = _clipMax.X;
-        } else if ((codigoA & 4) == 4) {
-            //line.Start.X += dxdy * (_clipMax.Y - line.Start.Y);
-            //line.Start.Y = _clipMax.Y;
-        } else if ((codigoA & 8) == 8) {
-            //line.Start.X += dxdy * (_clipMin.Y - line.Start.Y);
-            //line.Start.Y = _clipMin.Y;
+            const int caux = codigoA;
+            codigoA = codigoB;
+            codigoB = caux;
+            const PV2f aux = m_a;
+            m_a = m_b;
+            m_b = aux;
+        } else if ((codigoA & IZQUIERDA) == IZQUIERDA) {
+            m_a.setY(m_b.getY() - ((m_b.getY() - m_a.getY()) / (m_b.getX() - m_a.getX())) * (m_b.getX() - tl.getX()));
+            m_a.setX(tl.getX());
+        } else if ((codigoA & DERECHA) == DERECHA) {
+            m_a.setY(m_b.getY() - ((m_b.getY() - m_a.getY()) / (m_b.getX() - m_a.getX())) * (m_b.getX() - br.getX()));
+            m_a.setX(br.getX());
+        } else if ((codigoA & ARRIBA) == ARRIBA) {
+        } else if ((codigoA & ABAJO) == ABAJO) {
         }
         codigoA = codigo(m_a, tl, br);
     }
@@ -74,14 +78,14 @@ int Segmento::codigo(const PV2f &p, const PV2f &tl, const PV2f &br) const
 {
     int resultado = 0;
     if (p.getX() < tl.getX()) {
-        resultado |= 1;
+        resultado |= IZQUIERDA;
     } else if (p.getX() > br.getX()) {
-        resultado |= 2;
+        resultado |= DERECHA;
     }
     if (p.getY() < tl.getY()) {
-        resultado |= 4;
+        resultado |= ARRIBA;
     } else if (p.getY() > br.getY()) {
-        resultado |= 8;
+        resultado |= ABAJO;
     }
     return resultado;
 }
