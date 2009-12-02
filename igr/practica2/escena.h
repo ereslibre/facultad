@@ -2,6 +2,7 @@
 #define ESCENA_H
 
 #include <QtCore/QList>
+#include <QtCore/QStack>
 #include <QtOpenGL/QGLWidget>
 #include "lapiz.h"
 
@@ -77,6 +78,7 @@ private:
         SHipotrocoide
     };
 
+    void guardaEstadoParaDeshacer();
     void borrar();
     QPointF mapeaPVaAVE(const QPoint &p);
 
@@ -99,6 +101,7 @@ private:
     QString              m_guardarRuta;
 
     QList<DibujoLineas*> m_bufferCopia;
+    QStack<QList<DibujoLineas*> > m_bufferDeshacer;
 
     QAction *m_nuevo;
     QAction *m_abrir;

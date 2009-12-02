@@ -306,6 +306,14 @@ void Escena::salir()
 
 void Escena::deshacer()
 {
+    m_listaDibujoLineas = m_bufferDeshacer.pop();
+    m_deshacer->setEnabled(m_bufferDeshacer.count());
+    m_copiar->setEnabled(false);
+    m_cortar->setEnabled(false);
+    m_pegar->setEnabled(false);
+    m_listaSeleccion.clear();
+    emit elementosSeleccionados(QList<DibujoLineas*>());
+    update();
 }
 
 void Escena::copiar()
@@ -426,6 +434,7 @@ void Escena::mousePressEvent(QMouseEvent *event)
         if (m_estado == Idle) {
             m_estado = Arrastrando;
             m_oldPos = posClick;
+            guardaEstadoParaDeshacer();
         }
     } else if (m_herramienta == Herramientas::Manual) {
         if (!m_dibujoManualAct) {
@@ -449,6 +458,7 @@ void Escena::mousePressEvent(QMouseEvent *event)
         dibujoLineas = new Hipotrocoide(m_lapiz, PV2f(posClick.x(), posClick.y()), 300, 280, 50, 500);
     }
     if (dibujoLineas) {
+        guardaEstadoParaDeshacer();
         m_listaDibujoLineas << dibujoLineas;
         m_escenaModificada = true;
         connect(dibujoLineas, SIGNAL(invalidada()), this, SLOT(update()));
@@ -563,6 +573,19 @@ void Escena::resizeGL(int width, int height)
     m_ratio = (GLfloat) width / (GLfloat) height;
     m_width = width;
     m_height = height;
+}
+
+void Escena::guardaEstadoParaDeshacer()
+{
+    QList<DibujoLineas*>::ConstIterator it = m_listaDibujoLineas.begin();
+    QList<DibujoLineas*> estadoAntiguo;
+    while (it != m_listaDibujoLineas.end()) {
+        DibujoLineas *const dibujoLineas = *it;
+        estadoAntiguo << dibujoLineas->clonar();
+        ++it;
+    }
+    m_bufferDeshacer.push(estadoAntiguo);
+    m_deshacer->setEnabled(true);
 }
 
 void Escena::borrar()
