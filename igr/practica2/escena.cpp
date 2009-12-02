@@ -167,6 +167,7 @@ void Escena::abrir()
     if (fichero.open(QFile::ReadOnly)) {
         EstadoParser estado = PTipo;
         SiguienteFigura siguiente = SManual;
+        DibujoManual *dibujoManual = 0;
         int numSegmentos = 0;
         int segmentoActual = 0;
         QTextStream in(&fichero);
@@ -177,6 +178,7 @@ void Escena::abrir()
                 if (line == "DibujoManual") {
                     siguiente = SManual;
                     estado = PNumSegmentos;
+                    dibujoManual = new DibujoManual(m_lapiz);
                 } else if (line == "PoliEspiral") {
                     siguiente = SPoliEspiral;
                     estado = PAtributos;
@@ -197,7 +199,10 @@ void Escena::abrir()
             } else if (estado == PSegmento) {
                 ++segmentoActual;
                 const QStringList vertices = line.split(',');
+                dibujoManual->anadeSegmento(Segmento(PV2f(vertices[0].toFloat(), vertices[1].toFloat()),
+                                                     PV2f(vertices[2].toFloat(), vertices[3].toFloat())));
                 if (segmentoActual == numSegmentos) {
+                    m_listaDibujoLineas << dibujoManual;
                     estado = PTipo;
                 }
             } else {
