@@ -438,6 +438,7 @@ void Escena::mousePressEvent(QMouseEvent *event)
             dibujoLineas = m_dibujoManualAct;
         }
         if (m_estado == Idle) {
+            guardaEstadoParaDeshacer();
             m_ultimoClick = mapeaPVaAVE(event->pos());
             m_estado = CreandoDibujo;
         } else {
@@ -454,7 +455,9 @@ void Escena::mousePressEvent(QMouseEvent *event)
         dibujoLineas = new Hipotrocoide(m_lapiz, PV2f(posClick.x(), posClick.y()), 300, 280, 50, 500);
     }
     if (dibujoLineas) {
-        guardaEstadoParaDeshacer();
+        if (m_estado == Idle) {
+            guardaEstadoParaDeshacer();
+        }
         m_listaDibujoLineas << dibujoLineas;
         m_escenaModificada = true;
         connect(dibujoLineas, SIGNAL(invalidada()), this, SLOT(update()));
