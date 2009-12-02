@@ -1,13 +1,17 @@
 #include "escena.h"
 
-#include <QtGui/QWheelEvent>
-#include <QtGui/QKeyEvent>
-#include <QtGui/QPainter>
 #include "dibujomanual.h"
 #include "poliespiral.h"
 #include "poligonoregular.h"
 #include "hipotrocoide.h"
 #include "herramientas.h"
+
+#include <QtGui/QMainWindow>
+#include <QtGui/QWheelEvent>
+#include <QtGui/QKeyEvent>
+#include <QtGui/QPainter>
+#include <QtGui/QMenuBar>
+#include <QtGui/QMessageBox>
 
 #include <math.h>
 
@@ -19,9 +23,48 @@ Escena::Escena(QWidget *parent)
     , m_dibujoManualAct(0)
     , m_herramienta(Herramientas::Ninguna)
     , m_estado(Idle)
+    , m_escenaModificada(false)
 {
     setFocusPolicy(Qt::StrongFocus);
     setMouseTracking(true);
+    QMainWindow *const v = qobject_cast<QMainWindow*>(parentWidget());
+    QMenu *const archivo = v->menuBar()->addMenu("&Archivo");
+    m_nuevo = new QAction("&Nuevo", archivo);
+    m_abrir = new QAction("&Abrir...", archivo);
+    m_guardar = new QAction("&Guardar", archivo);
+    m_guardar->setEnabled(false);
+    m_guardarComo = new QAction("Guardar &como...", archivo);
+    m_salir = new QAction("&Salir...", archivo);
+    archivo->addAction(m_nuevo);
+    archivo->addSeparator();
+    archivo->addAction(m_abrir);
+    archivo->addAction(m_guardar);
+    archivo->addAction(m_guardarComo);
+    archivo->addSeparator();
+    archivo->addAction(m_salir);
+    QMenu *const editar = v->menuBar()->addMenu("&Editar");
+    m_deshacer = new QAction("&Deshacer", editar);
+    m_deshacer->setEnabled(false);
+    m_copiar = new QAction("&Copiar", editar);
+    m_copiar->setEnabled(false);
+    m_cortar = new QAction("Cor&tar", editar);
+    m_cortar->setEnabled(false);
+    m_pegar = new QAction("&Pegar", editar);
+    m_pegar->setEnabled(false);
+    editar->addAction(m_deshacer);
+    editar->addSeparator();
+    editar->addAction(m_copiar);
+    editar->addAction(m_cortar);
+    editar->addAction(m_pegar);
+    QObject::connect(m_nuevo, SIGNAL(triggered(bool)), this, SLOT(nuevo()));
+    QObject::connect(m_abrir, SIGNAL(triggered(bool)), this, SLOT(abrir()));
+    QObject::connect(m_guardar, SIGNAL(triggered(bool)), this, SLOT(guardar()));
+    QObject::connect(m_guardarComo, SIGNAL(triggered(bool)), this, SLOT(guardarComo()));
+    QObject::connect(m_salir, SIGNAL(triggered(bool)), this, SLOT(salir()));
+    QObject::connect(m_deshacer, SIGNAL(triggered(bool)), this, SLOT(deshacer()));
+    QObject::connect(m_copiar, SIGNAL(triggered(bool)), this, SLOT(copiar()));
+    QObject::connect(m_cortar, SIGNAL(triggered(bool)), this, SLOT(cortar()));
+    QObject::connect(m_pegar, SIGNAL(triggered(bool)), this, SLOT(pegar()));
 }
 
 Escena::~Escena()
@@ -82,6 +125,58 @@ void Escena::cambioHerramienta(uint herramienta)
     }
 }
 
+void Escena::nuevo()
+{
+    if (m_escenaModificada) {
+        if (QMessageBox::question(this, "Nuevo", "Seguro que quieres comenzar un nuevo documento?", QMessageBox::Yes |
+                                                                                                    QMessageBox::No) == QMessageBox::No) {
+            return;
+        }
+    }
+    m_oldPos = QPointF();
+    m_listaDibujoLineas.clear();
+    m_dibujoManualAct = 0;
+    m_ultimoClick = QPointF();
+    m_posActual = QPointF();
+    m_estado = Idle;
+    m_listaSeleccion.clear();
+    m_escenaModificada = false;
+    emit elementosSeleccionados(QList<DibujoLineas*>());
+    update();
+}
+
+void Escena::abrir()
+{
+}
+
+void Escena::guardar()
+{
+}
+
+void Escena::guardarComo()
+{
+}
+
+void Escena::salir()
+{
+}
+
+void Escena::deshacer()
+{
+}
+
+void Escena::copiar()
+{
+}
+
+void Escena::cortar()
+{
+}
+
+void Escena::pegar()
+{
+}
+
 QSize Escena::sizeHint() const
 {
     return QSize(640, 480);
@@ -115,11 +210,16 @@ void Escena::keyPressEvent(QKeyEvent *event)
         case Qt::Key_Period:
             centrar();
             break;
+        case Qt::Key_Delete:
+            borrar();
+            emit elementosSeleccionados(m_listaSeleccion);
+            break;
         default:
             event->ignore();
             return;
     }
     event->accept();
+    update();
 }
 
 void Escena::mousePressEvent(QMouseEvent *event)
@@ -134,7 +234,11 @@ void Escena::mousePressEvent(QMouseEvent *event)
         while (it != m_listaDibujoLineas.end()) {
             DibujoLineas *const dibujoLineas = *it;
             if (dibujoLineas->clickSobreFigura(PV2f(posClick.x(), posClick.y()))) {
-                m_listaSeleccion << dibujoLineas;
+                if ((event->modifiers() & Qt::ControlModifier) && m_listaSeleccion.contains(dibujoLineas)) {
+                    m_listaSeleccion.removeAll(dibujoLineas);
+                } else {
+                    m_listaSeleccion << dibujoLineas;
+                }
                 return;
             }
             ++it;
@@ -169,6 +273,7 @@ void Escena::mousePressEvent(QMouseEvent *event)
     }
     if (dibujoLineas) {
         m_listaDibujoLineas << dibujoLineas;
+        m_escenaModificada = true;
         connect(dibujoLineas, SIGNAL(invalidada()), this, SLOT(update()));
     }
 }
@@ -265,6 +370,18 @@ void Escena::resizeGL(int width, int height)
     m_ratio = (GLfloat) width / (GLfloat) height;
     m_width = width;
     m_height = height;
+}
+
+void Escena::borrar()
+{
+    QList<DibujoLineas*>::ConstIterator it = m_listaSeleccion.begin();
+    while (it != m_listaSeleccion.end()) {
+        DibujoLineas *const dibujoLineas = *it;
+        m_listaDibujoLineas.removeAll(dibujoLineas);
+        delete dibujoLineas;
+        ++it;
+    }
+    m_listaSeleccion.clear();
 }
 
 QPointF Escena::mapeaPVaAVE(const QPoint &p)

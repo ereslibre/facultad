@@ -16,8 +16,12 @@ public:
     void invalidar();
 
 private:
+    void calculaSegmentos();
+
     GLfloat m_lado;
     uint    m_nLados;
+    class ConfigWidget;
+    ConfigWidget *m_configWidget;
 };
 
 #endif

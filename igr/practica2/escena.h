@@ -28,6 +28,16 @@ public Q_SLOTS:
     void centrar();
     void cambioHerramienta(uint herramienta);
 
+    void nuevo();
+    void abrir();
+    void guardar();
+    void guardarComo();
+    void salir();
+    void deshacer();
+    void copiar();
+    void cortar();
+    void pegar();
+
 Q_SIGNALS:
     void zoomIn();
     void zoomOut();
@@ -51,6 +61,7 @@ private:
         Recortando
     };
 
+    void borrar();
     QPointF mapeaPVaAVE(const QPoint &p);
 
     GLfloat              m_width;
@@ -68,6 +79,18 @@ private:
     uint                 m_herramienta;
     Estado               m_estado;
     QList<DibujoLineas*> m_listaSeleccion;
+    bool                 m_escenaModificada;
+
+    QAction *m_nuevo;
+    QAction *m_abrir;
+    QAction *m_guardar;
+    QAction *m_guardarComo;
+    QAction *m_salir;
+
+    QAction *m_deshacer;
+    QAction *m_copiar;
+    QAction *m_cortar;
+    QAction *m_pegar;
 };
 
 #endif
