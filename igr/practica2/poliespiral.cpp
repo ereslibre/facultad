@@ -81,26 +81,6 @@ QString PoliEspiral::getNombre() const
     return "Poli-espiral";
 }
 
-void PoliEspiral::dibuja(Estado estado) const
-{
-    if (estado & Seleccionado) {
-        glColor3f(1.0, 1.0, 0);
-    } else {
-        glColor3f(1.0, 1.0, 1.0);
-    }
-    glBegin(GL_LINES);
-    QList<Segmento>::ConstIterator it = m_listaSegmentos.begin();
-    while (it != m_listaSegmentos.end()) {
-        const Segmento segmento = *it;
-        if (segmento.esValido()) {
-            glVertex2d(segmento.getA().getX(), segmento.getA().getY());
-            glVertex2d(segmento.getB().getX(), segmento.getB().getY());
-        }
-        ++it;
-    }
-    glEnd();
-}
-
 QWidget *PoliEspiral::configWidget()
 {
     if (m_configWidget) {
@@ -112,6 +92,10 @@ QWidget *PoliEspiral::configWidget()
     connect(m_configWidget->incDir(), SIGNAL(textEdited(QString)), this, SLOT(invalidar()));
     connect(m_configWidget->lado(), SIGNAL(textEdited(QString)), this, SLOT(invalidar()));
     return m_configWidget;
+}
+
+void PoliEspiral::salva(QTextStream &stream) const
+{
 }
 
 void PoliEspiral::invalidar()

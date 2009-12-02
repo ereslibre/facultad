@@ -59,26 +59,6 @@ QString PoligonoRegular::getNombre() const
     return "Poligono Regular";
 }
 
-void PoligonoRegular::dibuja(Estado estado) const
-{
-    if (estado & Seleccionado) {
-        glColor3f(1.0, 1.0, 0);
-    } else {
-        glColor3f(1.0, 1.0, 1.0);
-    }
-    glBegin(GL_LINES);
-    QList<Segmento>::ConstIterator it = m_listaSegmentos.begin();
-    while (it != m_listaSegmentos.end()) {
-        const Segmento segmento = *it;
-        if (segmento.esValido()) {
-            glVertex2d(segmento.getA().getX(), segmento.getA().getY());
-            glVertex2d(segmento.getB().getX(), segmento.getB().getY());
-        }
-        ++it;
-    }
-    glEnd();
-}
-
 QWidget *PoligonoRegular::configWidget()
 {
     if (m_configWidget) {
@@ -88,6 +68,10 @@ QWidget *PoligonoRegular::configWidget()
     connect(m_configWidget->lado(), SIGNAL(textEdited(QString)), this, SLOT(invalidar()));
     connect(m_configWidget->nLados(), SIGNAL(textEdited(QString)), this, SLOT(invalidar()));
     return m_configWidget;
+}
+
+void PoligonoRegular::salva(QTextStream &stream) const
+{   
 }
 
 void PoligonoRegular::invalidar()

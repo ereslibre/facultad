@@ -12,6 +12,7 @@
 #include <QtGui/QPainter>
 #include <QtGui/QMenuBar>
 #include <QtGui/QMessageBox>
+#include <QtGui/QFileDialog>
 
 #include <math.h>
 
@@ -155,6 +156,12 @@ void Escena::guardar()
 
 void Escena::guardarComo()
 {
+    const QString fichero = QFileDialog::getSaveFileName(this);
+    QList<DibujoLineas*>::ConstIterator it = m_listaDibujoLineas.begin();
+    while (it != m_listaDibujoLineas.end()) {
+        
+        ++it;
+    }
 }
 
 void Escena::salir()

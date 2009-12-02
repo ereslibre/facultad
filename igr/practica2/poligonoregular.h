@@ -11,8 +11,8 @@ public:
 
     QString getNombre() const;
 
-    void dibuja(Estado estado) const;
     QWidget *configWidget();
+    void salva(QTextStream &stream) const;
     void invalidar();
 
 private:

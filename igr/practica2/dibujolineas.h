@@ -1,12 +1,15 @@
 #ifndef DIBUJOLINEAS_H
 #define DIBUJOLINEAS_H
 
-#include <GL/gl.h>
+#include "segmento.h"
+#include "lapiz.h"
+
 #include <QtCore/QObject>
 #include <QtCore/QList>
 #include <QtCore/QString>
-#include "segmento.h"
-#include "lapiz.h"
+#include <QtCore/QTextStream>
+
+#include <GL/gl.h>
 
 class QWidget;
 
@@ -36,8 +39,10 @@ public:
 
     void cohenSutherland(const PV2f &tl, const PV2f &br);
 
-    virtual void dibuja(Estado estado = Ninguno) const = 0;
+    void dibuja(Estado estado = Ninguno) const;
+
     virtual QWidget *configWidget() = 0;
+    virtual void salva(QTextStream &stream) const = 0;
 
 public Q_SLOTS:
     virtual void invalidar();

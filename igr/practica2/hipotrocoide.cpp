@@ -100,26 +100,6 @@ QString Hipotrocoide::getNombre() const
     return "Hipotrocoide";
 }
 
-void Hipotrocoide::dibuja(Estado estado) const
-{
-    if (estado & Seleccionado) {
-        glColor3f(1.0, 1.0, 0);
-    } else {
-        glColor3f(1.0, 1.0, 1.0);
-    }
-    glBegin(GL_LINES);
-    QList<Segmento>::ConstIterator it = m_listaSegmentos.begin();
-    while (it != m_listaSegmentos.end()) {
-        const Segmento segmento = *it;
-        if (segmento.esValido()) {
-            glVertex2d(segmento.getA().getX(), segmento.getA().getY());
-            glVertex2d(segmento.getB().getX(), segmento.getB().getY());
-        }
-        ++it;
-    }
-    glEnd();
-}
-
 QWidget *Hipotrocoide::configWidget()
 {
     if (m_configWidget) {
@@ -132,6 +112,10 @@ QWidget *Hipotrocoide::configWidget()
     connect(m_configWidget->precision(), SIGNAL(textEdited(QString)), this, SLOT(invalidar()));
     connect(m_configWidget->rotacion(), SIGNAL(valueChanged(int)), this, SLOT(invalidar()));
     return m_configWidget;
+}
+
+void Hipotrocoide::salva(QTextStream &stream) const
+{
 }
 
 void Hipotrocoide::invalidar()
