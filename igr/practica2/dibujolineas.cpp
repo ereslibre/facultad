@@ -54,7 +54,6 @@ void DibujoLineas::cohenSutherland(const PV2f &tl, const PV2f &br)
         segmento.cohenSutherland(tl, br);
         ++it;
     }
-    invalidar();
 }
 
 void DibujoLineas::dibuja(Estado estado) const
