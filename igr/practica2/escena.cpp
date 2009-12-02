@@ -6,6 +6,7 @@
 #include "hipotrocoide.h"
 #include "herramientas.h"
 
+#include <QtGui/QApplication>
 #include <QtGui/QMainWindow>
 #include <QtGui/QWheelEvent>
 #include <QtGui/QKeyEvent>
@@ -31,11 +32,12 @@ Escena::Escena(QWidget *parent)
     QMainWindow *const v = qobject_cast<QMainWindow*>(parentWidget());
     QMenu *const archivo = v->menuBar()->addMenu("&Archivo");
     m_nuevo = new QAction("&Nuevo", archivo);
+    m_nuevo->setEnabled(false);
     m_abrir = new QAction("&Abrir...", archivo);
     m_guardar = new QAction("&Guardar", archivo);
     m_guardar->setEnabled(false);
     m_guardarComo = new QAction("Guardar &como...", archivo);
-    m_salir = new QAction("&Salir...", archivo);
+    m_salir = new QAction("&Salir", archivo);
     archivo->addAction(m_nuevo);
     archivo->addSeparator();
     archivo->addAction(m_abrir);
@@ -142,6 +144,8 @@ void Escena::nuevo()
     m_estado = Idle;
     m_listaSeleccion.clear();
     m_escenaModificada = false;
+    m_guardarRuta = QString();
+    m_guardar->setEnabled(false);
     emit elementosSeleccionados(QList<DibujoLineas*>());
     update();
 }
@@ -149,8 +153,8 @@ void Escena::nuevo()
 void Escena::abrir()
 {
     if (m_escenaModificada) {
-        if (QMessageBox::question(this, "Nuevo", "Seguro que quieres comenzar un nuevo documento?", QMessageBox::Yes |
-                                                                                                    QMessageBox::No) == QMessageBox::No) {
+        if (QMessageBox::question(this, "Abrir", "Seguro que quieres abrir un nuevo documento?", QMessageBox::Yes |
+                                                                                                 QMessageBox::No) == QMessageBox::No) {
             return;
         }
     }
@@ -165,6 +169,8 @@ void Escena::abrir()
     const QString ruta = QFileDialog::getOpenFileName(this);
     QFile fichero(ruta);
     if (fichero.open(QFile::ReadOnly)) {
+        m_guardarRuta = ruta;
+        m_guardar->setEnabled(true);
         EstadoParser estado = PTipo;
         SiguienteFigura siguiente = SManual;
         DibujoManual *dibujoManual = 0;
@@ -203,9 +209,11 @@ void Escena::abrir()
                                                      PV2f(vertices[2].toFloat(), vertices[3].toFloat())));
                 if (segmentoActual == numSegmentos) {
                     m_listaDibujoLineas << dibujoManual;
+                    connect(dibujoManual, SIGNAL(invalidada()), this, SLOT(update()));
                     estado = PTipo;
                 }
             } else {
+                DibujoLineas *dibujoLineas = 0;
                 if (siguiente == SPoliEspiral) {
                     const QStringList centroCoord = line.split(',');
                     const QPointF centro(centroCoord[0].toFloat(), centroCoord[1].toFloat());
@@ -215,7 +223,7 @@ void Escena::abrir()
                     GLfloat incLado = atributos[1].toFloat();
                     GLfloat incDir = atributos[2].toFloat();
                     GLfloat lado = atributos[3].toFloat();
-                    m_listaDibujoLineas << new PoliEspiral(m_lapiz, PV2f(centro.x(), centro.y()), nPasos, incLado, incDir, lado);
+                    dibujoLineas = new PoliEspiral(m_lapiz, PV2f(centro.x(), centro.y()), nPasos, incLado, incDir, lado);
                 } else if (siguiente == SPoliRegular) {
                     const QStringList centroCoord = line.split(',');
                     const QPointF centro(centroCoord[0].toFloat(), centroCoord[1].toFloat());
@@ -223,7 +231,7 @@ void Escena::abrir()
                     const QStringList atributos = line.split(',');
                     GLfloat lado = atributos[0].toFloat();
                     int nLados = atributos[1].toInt();
-                    m_listaDibujoLineas << new PoligonoRegular(m_lapiz, PV2f(centro.x(), centro.y()), lado, nLados);
+                    dibujoLineas = new PoligonoRegular(m_lapiz, PV2f(centro.x(), centro.y()), lado, nLados);
                 } else if (siguiente == SPoliArco) {
                 } else {
                     const QStringList centroCoord = line.split(',');
@@ -235,7 +243,11 @@ void Escena::abrir()
                     uint c = atributos[2].toInt();
                     uint precision = atributos[3].toInt();
                     uint rotacion = atributos[4].toInt();
-                    m_listaDibujoLineas << new Hipotrocoide(m_lapiz, PV2f(centro.x(), centro.y()), a, b, c, precision, rotacion);
+                    dibujoLineas = new Hipotrocoide(m_lapiz, PV2f(centro.x(), centro.y()), a, b, c, precision, rotacion);
+                }
+                if (dibujoLineas) {
+                    m_listaDibujoLineas << dibujoLineas;
+                    connect(dibujoLineas, SIGNAL(invalidada()), this, SLOT(update()));
                 }
                 estado = PTipo;
             }
@@ -247,12 +259,7 @@ void Escena::abrir()
 
 void Escena::guardar()
 {
-}
-
-void Escena::guardarComo()
-{
-    const QString ruta = QFileDialog::getSaveFileName(this);
-    QFile fichero(ruta);
+    QFile fichero(m_guardarRuta);
     if (fichero.open(QFile::WriteOnly | QFile::Truncate)) {
         QTextStream out(&fichero);
         QList<DibujoLineas*>::ConstIterator it = m_listaDibujoLineas.begin();
@@ -265,8 +272,30 @@ void Escena::guardarComo()
     }
 }
 
+void Escena::guardarComo()
+{
+    const QString ruta = QFileDialog::getSaveFileName(this);
+    QFile fichero(ruta);
+    bool correcto = false;
+    if (fichero.open(QFile::WriteOnly | QFile::Truncate)) {
+        m_guardarRuta = ruta;
+        correcto = true;
+        fichero.close();
+    }
+    if (correcto) {
+        guardar();
+    }
+}
+
 void Escena::salir()
 {
+    if (m_escenaModificada) {
+        if (QMessageBox::question(this, "Salir", "Seguro que quieres salir?", QMessageBox::Yes |
+                                                                              QMessageBox::No) == QMessageBox::No) {
+            return;
+        }
+    }
+    QApplication::quit();
 }
 
 void Escena::deshacer()

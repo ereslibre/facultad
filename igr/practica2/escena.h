@@ -95,6 +95,7 @@ private:
     Estado               m_estado;
     QList<DibujoLineas*> m_listaSeleccion;
     bool                 m_escenaModificada;
+    QString              m_guardarRuta;
 
     QAction *m_nuevo;
     QAction *m_abrir;
