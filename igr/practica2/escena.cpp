@@ -531,10 +531,9 @@ void Escena::paintGL()
     glOrtho(left * m_zoom + m_xoffsetAcumulado / 2.0, right * m_zoom + m_xoffsetAcumulado / 2.0,
             bottom * m_zoom + m_yoffsetAcumulado / 2.0, top * m_zoom + m_yoffsetAcumulado / 2.0, -1.0, 1.0);
     glMatrixMode(GL_MODELVIEW);
-    QList<DibujoLineas*>::ConstIterator it = m_listaDibujoLineas.begin();
-    while (it != m_listaDibujoLineas.end()) {
+    for (int i = m_listaDibujoLineas.count() - 1; i >= 0; --i) {
         m_lapiz.salvaEstado();
-        DibujoLineas *const dibujoLineas = *it;
+        DibujoLineas *const dibujoLineas = m_listaDibujoLineas[i];
         m_lapiz.setPos(dibujoLineas->getCentro());
         if (m_listaSeleccion.contains(dibujoLineas)) {
             dibujoLineas->dibuja(DibujoLineas::Seleccionado);
@@ -542,7 +541,6 @@ void Escena::paintGL()
             dibujoLineas->dibuja();
         }
         m_lapiz.recuperaEstado();
-        ++it;
     }
     if (m_herramienta == Herramientas::Recortar && m_estado == Recortando) {
         const GLfloat minx = qMin(m_ultimoClick.x(), m_posActual.x());
