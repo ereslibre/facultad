@@ -3,19 +3,20 @@
 #include <QtGui/QBoxLayout>
 #include <QtGui/QPushButton>
 
-#define NUM_HERRAMIENTAS 7
+#define NUM_HERRAMIENTAS 8
 
 Herramientas::Herramientas(QWidget *parent)
     : QWidget(parent)
     , m_ninguna(new QPushButton("Ninguna", this))
     , m_recortar(new QPushButton("Recortar", this))
+    , m_mover(new QPushButton("Mover", this))
     , m_manual(new QPushButton("Manual", this))
     , m_poliEspiral(new QPushButton("Poli-espiral", this))
     , m_poliRegular(new QPushButton("Poligono regular", this))
     , m_poliArco(new QPushButton("Poli-arco", this))
     , m_hipotrocoide(new QPushButton("Hipotrocoide", this))
 {
-    QPushButton *herramientas[] = { m_ninguna, m_recortar, m_manual, m_poliEspiral, m_poliRegular,
+    QPushButton *herramientas[] = { m_ninguna, m_recortar, m_mover, m_manual, m_poliEspiral, m_poliRegular,
                                     m_poliArco, m_hipotrocoide };
     QVBoxLayout *layout = new QVBoxLayout;
     for (uint i = 0; i < NUM_HERRAMIENTAS; ++i) {
@@ -36,7 +37,7 @@ Herramientas::~Herramientas()
 
 void Herramientas::herramientaSeleccionada()
 {
-    QPushButton *herramientas[] = { m_ninguna, m_recortar, m_manual, m_poliEspiral, m_poliRegular,
+    QPushButton *herramientas[] = { m_ninguna, m_recortar, m_mover, m_manual, m_poliEspiral, m_poliRegular,
                                     m_poliArco, m_hipotrocoide };
     QPushButton *herramienta = qobject_cast<QPushButton*>(sender());
     for (uint i = 0; i < NUM_HERRAMIENTAS; ++i) {

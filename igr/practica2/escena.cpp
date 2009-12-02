@@ -399,6 +399,7 @@ void Escena::mousePressEvent(QMouseEvent *event)
     const QPointF posClick = mapeaPVaAVE(event->pos());
     DibujoLineas *dibujoLineas = 0;
     if (m_herramienta == Herramientas::Ninguna) {
+        m_estado = Idle;
         if (!(event->modifiers() & Qt::ControlModifier)) {
             m_listaSeleccion.clear();
         }
@@ -420,6 +421,11 @@ void Escena::mousePressEvent(QMouseEvent *event)
             m_estado = Recortando;
             m_ultimoClick = posClick;
             m_posActual = posClick;
+        }
+    } else if (m_herramienta == Herramientas::Mover) {
+        if (m_estado == Idle) {
+            m_estado = Arrastrando;
+            m_oldPos = posClick;
         }
     } else if (m_herramienta == Herramientas::Manual) {
         if (!m_dibujoManualAct) {
@@ -454,6 +460,18 @@ void Escena::mouseMoveEvent(QMouseEvent *event)
     if (m_herramienta == Herramientas::Recortar && m_estado == Recortando) {
         m_posActual = mapeaPVaAVE(event->pos());
         update();
+    } else if (m_herramienta == Herramientas::Mover && m_estado == Arrastrando) {
+            const QPointF punto = mapeaPVaAVE(event->pos());
+            QList<DibujoLineas*>::Iterator it = m_listaSeleccion.begin();
+            while (it != m_listaSeleccion.end()) {
+                DibujoLineas *const dibujoLineas = *it;
+                const PV2f centro = dibujoLineas->getCentro();
+                dibujoLineas->setCentro(PV2f(centro.getX() + (punto.x() - m_oldPos.x()),
+                                             centro.getY() + (punto.y() - m_oldPos.y())));
+                ++it;
+            }
+            m_oldPos = punto;
+            update();
     }
 }
 
@@ -474,6 +492,9 @@ void Escena::mouseReleaseEvent(QMouseEvent *event)
         m_estado = Idle;
         m_ultimoClick = QPointF();
         m_posActual = QPointF();
+    } else if (m_herramienta == Herramientas::Mover) {
+        m_estado = Idle;
+        m_oldPos = QPointF();
     }
     m_copiar->setEnabled(m_listaSeleccion.count());
     m_cortar->setEnabled(m_listaSeleccion.count());

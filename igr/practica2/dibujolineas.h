@@ -28,6 +28,7 @@ public:
 
     virtual QString getNombre() const = 0;
 
+    void setCentro(const PV2f &centro);
     const PV2f &getCentro() const;
 
     void anadeSegmento(const Segmento &segmento);

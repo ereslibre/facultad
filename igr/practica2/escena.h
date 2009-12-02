@@ -58,7 +58,8 @@ private:
     enum Estado {
         Idle = 0,
         CreandoDibujo,
-        Recortando
+        Recortando,
+        Arrastrando
     };
 
     enum EstadoParser {

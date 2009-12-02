@@ -7,6 +7,12 @@ DibujoLineas::DibujoLineas(Lapiz &l, const PV2f &centro)
 {
 }
 
+void DibujoLineas::setCentro(const PV2f &centro)
+{
+    m_centro = centro;
+    invalidar();
+}
+
 const PV2f &DibujoLineas::getCentro() const
 {
     return m_centro;
@@ -15,11 +21,13 @@ const PV2f &DibujoLineas::getCentro() const
 void DibujoLineas::anadeSegmento(const Segmento &segmento)
 {
     m_listaSegmentos << segmento;
+    invalidar();
 }
 
 void DibujoLineas::girar(GLdouble radianes)
 {
     m_radianes += radianes;
+    invalidar();
 }
 
 bool DibujoLineas::clickSobreFigura(const PV2f &posClick) const
@@ -46,6 +54,7 @@ void DibujoLineas::cohenSutherland(const PV2f &tl, const PV2f &br)
         segmento.cohenSutherland(tl, br);
         ++it;
     }
+    invalidar();
 }
 
 void DibujoLineas::dibuja(Estado estado) const
