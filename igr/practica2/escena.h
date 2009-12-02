@@ -74,7 +74,6 @@ private:
         SManual = 0,
         SPoliEspiral,
         SPoliRegular,
-        SPoliArco,
         SHipotrocoide
     };
 

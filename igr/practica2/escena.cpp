@@ -194,9 +194,6 @@ void Escena::abrir()
                 } else if (line == "PoligonoRegular") {
                     siguiente = SPoliRegular;
                     estado = PAtributos;
-                } else if (line == "PoliArco") {
-                    siguiente = SPoliArco;
-                    estado = PAtributos;
                 } else {
                     siguiente = SHipotrocoide;
                     estado = PAtributos;
@@ -235,7 +232,6 @@ void Escena::abrir()
                     GLfloat lado = atributos[0].toFloat();
                     int nLados = atributos[1].toInt();
                     dibujoLineas = new PoligonoRegular(m_lapiz, PV2f(centro.x(), centro.y()), lado, nLados);
-                } else if (siguiente == SPoliArco) {
                 } else {
                     const QStringList centroCoord = line.split(',');
                     const QPointF centro(centroCoord[0].toFloat(), centroCoord[1].toFloat());

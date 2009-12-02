@@ -21,7 +21,6 @@ public:
         Manual,
         PoliEspiral,
         PoliRegular,
-        PoliArco,
         Hipotrocoide
     };
 
@@ -38,7 +37,6 @@ private:
     QPushButton *m_manual;
     QPushButton *m_poliEspiral;
     QPushButton *m_poliRegular;
-    QPushButton *m_poliArco;
     QPushButton *m_hipotrocoide;
 };
 
