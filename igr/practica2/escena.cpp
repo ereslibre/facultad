@@ -549,6 +549,7 @@ void Escena::paintGL()
         const GLfloat miny = qMin(m_ultimoClick.y(), m_posActual.y());
         const GLfloat maxx = qMax(m_ultimoClick.x(), m_posActual.x());
         const GLfloat maxy = qMax(m_ultimoClick.y(), m_posActual.y());
+        glColor3f(1.0, 1.0, 1.0);
         glBegin(GL_LINE_STRIP);
         glVertex2d(minx, miny);
         glVertex2d(minx, maxy);
