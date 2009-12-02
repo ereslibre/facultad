@@ -59,6 +59,11 @@ QString PoligonoRegular::getNombre() const
     return "Poligono Regular";
 }
 
+DibujoLineas *PoligonoRegular::clonar() const
+{
+    return new PoligonoRegular(m_l, m_centro, m_lado, m_nLados);
+}
+
 QWidget *PoligonoRegular::configWidget()
 {
     if (m_configWidget) {

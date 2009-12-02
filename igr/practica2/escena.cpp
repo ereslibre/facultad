@@ -146,6 +146,9 @@ void Escena::nuevo()
     m_escenaModificada = false;
     m_guardarRuta = QString();
     m_guardar->setEnabled(false);
+    m_deshacer->setEnabled(false);
+    m_copiar->setEnabled(false);
+    m_cortar->setEnabled(false);
     emit elementosSeleccionados(QList<DibujoLineas*>());
     update();
 }
@@ -253,6 +256,9 @@ void Escena::abrir()
             }
         } while (!line.isNull());
     }
+    m_deshacer->setEnabled(false);
+    m_copiar->setEnabled(false);
+    m_cortar->setEnabled(false);
     emit elementosSeleccionados(QList<DibujoLineas*>());
     update();
 }
@@ -304,14 +310,40 @@ void Escena::deshacer()
 
 void Escena::copiar()
 {
+    m_bufferCopia.clear();
+    QList<DibujoLineas*>::ConstIterator it = m_listaSeleccion.begin();
+    while (it != m_listaSeleccion.end()) {
+        DibujoLineas *const dibujoLineas = *it;
+        m_bufferCopia << dibujoLineas->clonar();
+        ++it;
+    }
+    m_pegar->setEnabled(true);
 }
 
 void Escena::cortar()
 {
+    m_bufferCopia = m_listaSeleccion;
+    QList<DibujoLineas*>::ConstIterator it = m_listaSeleccion.begin();
+    while (it != m_listaSeleccion.end()) {
+        DibujoLineas *const dibujoLineas = *it;
+        m_listaDibujoLineas.removeAll(dibujoLineas);
+        m_listaSeleccion.removeAll(dibujoLineas);
+        ++it;
+    }
+    m_pegar->setEnabled(true);
+    update();
 }
 
 void Escena::pegar()
 {
+    QList<DibujoLineas*>::ConstIterator it = m_bufferCopia.begin();
+    while (it != m_bufferCopia.end()) {
+        DibujoLineas *const dibujoLineas = *it;
+        m_listaDibujoLineas << dibujoLineas;
+        ++it;
+    }
+    m_pegar->setEnabled(false);
+    update();
 }
 
 QSize Escena::sizeHint() const
@@ -349,6 +381,9 @@ void Escena::keyPressEvent(QKeyEvent *event)
             break;
         case Qt::Key_Delete:
             borrar();
+            m_deshacer->setEnabled(true);
+            m_copiar->setEnabled(false);
+            m_cortar->setEnabled(false);
             emit elementosSeleccionados(m_listaSeleccion);
             break;
         default:
@@ -440,6 +475,8 @@ void Escena::mouseReleaseEvent(QMouseEvent *event)
         m_ultimoClick = QPointF();
         m_posActual = QPointF();
     }
+    m_copiar->setEnabled(m_listaSeleccion.count());
+    m_cortar->setEnabled(m_listaSeleccion.count());
     emit elementosSeleccionados(m_listaSeleccion);
     update();
 }

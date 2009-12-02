@@ -11,6 +11,7 @@ public:
 
     QString getNombre() const;
 
+    DibujoLineas *clonar() const;
     QWidget *configWidget();
     void salva(QTextStream &stream) const;
     void invalidar();

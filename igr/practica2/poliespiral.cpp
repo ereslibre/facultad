@@ -81,6 +81,11 @@ QString PoliEspiral::getNombre() const
     return "Poli-espiral";
 }
 
+DibujoLineas *PoliEspiral::clonar() const
+{
+    return new PoliEspiral(m_l, m_centro, m_nPasos, m_incLado, m_incDir, m_lado);
+}
+
 QWidget *PoliEspiral::configWidget()
 {
     if (m_configWidget) {

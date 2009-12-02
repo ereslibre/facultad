@@ -100,6 +100,11 @@ QString Hipotrocoide::getNombre() const
     return "Hipotrocoide";
 }
 
+DibujoLineas *Hipotrocoide::clonar() const
+{
+    return new Hipotrocoide(m_l, m_centro, m_a, m_b, m_c, m_precision, m_rotacion);
+}
+
 QWidget *Hipotrocoide::configWidget()
 {
     if (m_configWidget) {

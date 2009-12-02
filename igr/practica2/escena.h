@@ -97,6 +97,8 @@ private:
     bool                 m_escenaModificada;
     QString              m_guardarRuta;
 
+    QList<DibujoLineas*> m_bufferCopia;
+
     QAction *m_nuevo;
     QAction *m_abrir;
     QAction *m_guardar;

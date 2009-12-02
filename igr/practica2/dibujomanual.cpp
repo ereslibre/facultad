@@ -10,6 +10,16 @@ QString DibujoManual::getNombre() const
     return "Dibujo Manual";
 }
 
+DibujoLineas *DibujoManual::clonar() const
+{
+    DibujoManual *res = new DibujoManual(m_l);
+    QList<Segmento>::ConstIterator it = m_listaSegmentos.begin();
+    while (it != m_listaSegmentos.end()) {
+        res->anadeSegmento(*it);
+    }
+    return res;
+}
+
 QWidget *DibujoManual::configWidget()
 {
     return 0;

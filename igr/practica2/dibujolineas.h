@@ -41,6 +41,7 @@ public:
 
     void dibuja(Estado estado = Ninguno) const;
 
+    virtual DibujoLineas *clonar() const = 0;
     virtual QWidget *configWidget() = 0;
     virtual void salva(QTextStream &stream) const = 0;
 
