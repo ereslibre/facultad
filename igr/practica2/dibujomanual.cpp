@@ -16,6 +16,7 @@ DibujoLineas *DibujoManual::clonar() const
     QList<Segmento>::ConstIterator it = m_listaSegmentos.begin();
     while (it != m_listaSegmentos.end()) {
         res->anadeSegmento(*it);
+        ++it;
     }
     return res;
 }

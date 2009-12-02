@@ -362,7 +362,6 @@ void Escena::wheelEvent(QWheelEvent *event)
     } else {
         emit zoomOut();
     }
-    event->accept();
 }
 
 void Escena::keyPressEvent(QKeyEvent *event)
@@ -394,7 +393,6 @@ void Escena::keyPressEvent(QKeyEvent *event)
             event->ignore();
             return;
     }
-    event->accept();
     update();
 }
 
@@ -446,7 +444,6 @@ void Escena::mousePressEvent(QMouseEvent *event)
                                                       PV2f(posClick.x(), posClick.y())));
             m_ultimoClick = posClick;
         }
-        event->accept();
     } else if (m_herramienta == Herramientas::PoliEspiral) {
         dibujoLineas = new PoliEspiral(m_lapiz, PV2f(posClick.x(), posClick.y()), 10, 2, M_PI / 4.0, 5);
     } else if (m_herramienta == Herramientas::PoliRegular) {
