@@ -148,6 +148,96 @@ void Escena::nuevo()
 
 void Escena::abrir()
 {
+    if (m_escenaModificada) {
+        if (QMessageBox::question(this, "Nuevo", "Seguro que quieres comenzar un nuevo documento?", QMessageBox::Yes |
+                                                                                                    QMessageBox::No) == QMessageBox::No) {
+            return;
+        }
+    }
+    m_oldPos = QPointF();
+    m_listaDibujoLineas.clear();
+    m_dibujoManualAct = 0;
+    m_ultimoClick = QPointF();
+    m_posActual = QPointF();
+    m_estado = Idle;
+    m_listaSeleccion.clear();
+    m_escenaModificada = false;
+    const QString ruta = QFileDialog::getOpenFileName(this);
+    QFile fichero(ruta);
+    if (fichero.open(QFile::ReadOnly)) {
+        EstadoParser estado = PTipo;
+        SiguienteFigura siguiente = SManual;
+        int numSegmentos = 0;
+        int segmentoActual = 0;
+        QTextStream in(&fichero);
+        QString line;
+        do {
+            line = in.readLine();
+            if (estado == PTipo) {
+                if (line == "DibujoManual") {
+                    siguiente = SManual;
+                    estado = PNumSegmentos;
+                } else if (line == "PoliEspiral") {
+                    siguiente = SPoliEspiral;
+                    estado = PAtributos;
+                } else if (line == "PoligonoRegular") {
+                    siguiente = SPoliRegular;
+                    estado = PAtributos;
+                } else if (line == "PoliArco") {
+                    siguiente = SPoliArco;
+                    estado = PAtributos;
+                } else {
+                    siguiente = SHipotrocoide;
+                    estado = PAtributos;
+                }
+            } else if (estado == PNumSegmentos) {
+                numSegmentos = line.toInt();
+                segmentoActual = 0;
+                estado = PSegmento;
+            } else if (estado == PSegmento) {
+                ++segmentoActual;
+                const QStringList vertices = line.split(',');
+                if (segmentoActual == numSegmentos) {
+                    estado = PTipo;
+                }
+            } else {
+                if (siguiente == SPoliEspiral) {
+                    const QStringList centroCoord = line.split(',');
+                    const QPointF centro(centroCoord[0].toFloat(), centroCoord[1].toFloat());
+                    line = in.readLine();
+                    const QStringList atributos = line.split(',');
+                    uint nPasos = atributos[0].toInt();
+                    GLfloat incLado = atributos[1].toFloat();
+                    GLfloat incDir = atributos[2].toFloat();
+                    GLfloat lado = atributos[3].toFloat();
+                    m_listaDibujoLineas << new PoliEspiral(m_lapiz, PV2f(centro.x(), centro.y()), nPasos, incLado, incDir, lado);
+                } else if (siguiente == SPoliRegular) {
+                    const QStringList centroCoord = line.split(',');
+                    const QPointF centro(centroCoord[0].toFloat(), centroCoord[1].toFloat());
+                    line = in.readLine();
+                    const QStringList atributos = line.split(',');
+                    GLfloat lado = atributos[0].toFloat();
+                    int nLados = atributos[1].toInt();
+                    m_listaDibujoLineas << new PoligonoRegular(m_lapiz, PV2f(centro.x(), centro.y()), lado, nLados);
+                } else if (siguiente == SPoliArco) {
+                } else {
+                    const QStringList centroCoord = line.split(',');
+                    const QPointF centro(centroCoord[0].toFloat(), centroCoord[1].toFloat());
+                    line = in.readLine();
+                    const QStringList atributos = line.split(',');
+                    uint a = atributos[0].toInt();
+                    uint b = atributos[1].toInt();
+                    uint c = atributos[2].toInt();
+                    uint precision = atributos[3].toInt();
+                    uint rotacion = atributos[4].toInt();
+                    m_listaDibujoLineas << new Hipotrocoide(m_lapiz, PV2f(centro.x(), centro.y()), a, b, c, precision, rotacion);
+                }
+                estado = PTipo;
+            }
+        } while (!line.isNull());
+    }
+    emit elementosSeleccionados(QList<DibujoLineas*>());
+    update();
 }
 
 void Escena::guardar()
@@ -156,11 +246,17 @@ void Escena::guardar()
 
 void Escena::guardarComo()
 {
-    const QString fichero = QFileDialog::getSaveFileName(this);
-    QList<DibujoLineas*>::ConstIterator it = m_listaDibujoLineas.begin();
-    while (it != m_listaDibujoLineas.end()) {
-        
-        ++it;
+    const QString ruta = QFileDialog::getSaveFileName(this);
+    QFile fichero(ruta);
+    if (fichero.open(QFile::WriteOnly | QFile::Truncate)) {
+        QTextStream out(&fichero);
+        QList<DibujoLineas*>::ConstIterator it = m_listaDibujoLineas.begin();
+        while (it != m_listaDibujoLineas.end()) {
+            DibujoLineas *const dibujoLineas = *it;
+            dibujoLineas->salva(out);
+            ++it;
+        }
+        fichero.close();
     }
 }
 
@@ -260,7 +356,6 @@ void Escena::mousePressEvent(QMouseEvent *event)
         if (!m_dibujoManualAct) {
             m_dibujoManualAct = new DibujoManual(m_lapiz);
             dibujoLineas = m_dibujoManualAct;
-            m_listaDibujoLineas << m_dibujoManualAct;
         }
         if (m_estado == Idle) {
             m_ultimoClick = mapeaPVaAVE(event->pos());

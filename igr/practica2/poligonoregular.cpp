@@ -71,7 +71,10 @@ QWidget *PoligonoRegular::configWidget()
 }
 
 void PoligonoRegular::salva(QTextStream &stream) const
-{   
+{
+    stream << "PoligonoRegular\n";
+    stream << QString::number(m_centro.getX()) << ',' << QString::number(m_centro.getY()) << '\n';
+    stream << QString::number(m_lado) << ',' << QString::number(m_nLados) << '\n';
 }
 
 void PoligonoRegular::invalidar()

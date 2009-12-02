@@ -7,7 +7,7 @@ class Hipotrocoide
     : public DibujoLineas
 {
 public:
-    Hipotrocoide(Lapiz &l, const PV2f &centro, uint a, uint b, uint c, uint precision);
+    Hipotrocoide(Lapiz &l, const PV2f &centro, uint a, uint b, uint c, uint precision, uint rotacion = 0);
 
     QString getNombre() const;
 

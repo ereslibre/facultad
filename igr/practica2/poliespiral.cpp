@@ -96,6 +96,10 @@ QWidget *PoliEspiral::configWidget()
 
 void PoliEspiral::salva(QTextStream &stream) const
 {
+    stream << "PoliEspiral\n";
+    stream << QString::number(m_centro.getX()) << ',' << QString::number(m_centro.getY()) << '\n';
+    stream << QString::number(m_nPasos) << ',' << QString::number(m_incLado) << ',' <<
+              QString::number(m_incDir) << ',' << QString::number(m_lado) << '\n';
 }
 
 void PoliEspiral::invalidar()

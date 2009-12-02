@@ -61,6 +61,21 @@ private:
         Recortando
     };
 
+    enum EstadoParser {
+        PTipo = 0,
+        PNumSegmentos,
+        PSegmento,
+        PAtributos
+    };
+
+    enum SiguienteFigura {
+        SManual = 0,
+        SPoliEspiral,
+        SPoliRegular,
+        SPoliArco,
+        SHipotrocoide
+    };
+
     void borrar();
     QPointF mapeaPVaAVE(const QPoint &p);
 

@@ -83,13 +83,13 @@ Hipotrocoide::ConfigWidget::ConfigWidget(int a, int b, int c, int precision, int
     setLayout(layout);
 }
 
-Hipotrocoide::Hipotrocoide(Lapiz &l, const PV2f &centro, uint a, uint b, uint c, uint precision)
+Hipotrocoide::Hipotrocoide(Lapiz &l, const PV2f &centro, uint a, uint b, uint c, uint precision, uint rotacion)
     : DibujoLineas(l, centro)
     , m_a(a)
     , m_b(b)
     , m_c(c)
     , m_precision(precision)
-    , m_rotacion(0)
+    , m_rotacion(rotacion)
     , m_configWidget(0)
 {
     calculaSegmentos();
@@ -116,6 +116,10 @@ QWidget *Hipotrocoide::configWidget()
 
 void Hipotrocoide::salva(QTextStream &stream) const
 {
+    stream << "Hipotrocoide\n";
+    stream << QString::number(m_centro.getX()) << ',' << QString::number(m_centro.getY()) << '\n';
+    stream << QString::number(m_a) << ',' << QString::number(m_b) << ',' << QString::number(m_c) << ',' <<
+              QString::number(m_precision) << ',' << QString::number(m_rotacion) << '\n';
 }
 
 void Hipotrocoide::invalidar()
