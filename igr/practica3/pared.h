@@ -1,9 +1,9 @@
-#ifndef POLIGONOCONVEXO_H
-#define POLIGONOCONVEXO_H
+#ifndef PARED_H
+#define PARED_H
 
 #include "obstaculo.h"
 
-class PoligonoConvexo
+class Pared
     : public Obstaculo
 {
 public:
