@@ -7,6 +7,7 @@
 #include "lapiz.h"
 
 class DibujoLineas;
+class Obstaculo;
 
 class Escena
     : public QGLWidget
@@ -25,13 +26,11 @@ protected:
     virtual void resizeGL(int width, int height);
 
 private:
-    void dibujaVectores();
-
-    GLfloat     m_width;
-    GLfloat     m_height;
-    GLfloat     m_ratio;
-    Lapiz       m_lapiz;
-    QList<PV2f> m_listaVectores;
+    GLfloat           m_width;
+    GLfloat           m_height;
+    GLfloat           m_ratio;
+    Lapiz             m_lapiz;
+    QList<Obstaculo*> m_listaObstaculos;
 };
 
 #endif

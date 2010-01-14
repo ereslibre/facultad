@@ -7,8 +7,14 @@ class Pared
     : public Obstaculo
 {
 public:
-    virtual void dibuja() const;
+    Pared(const PV2f &pos, GLdouble anchura, GLdouble altura);
+
+    virtual void dibuja(Lapiz &lapiz) const;
     virtual bool colisiona(const Pelota &pelota, GLdouble &thit, PV2f &n);
+
+private:
+    GLdouble m_anchura;
+    GLdouble m_altura;
 };
 
 #endif

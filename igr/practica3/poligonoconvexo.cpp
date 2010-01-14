@@ -1,6 +1,11 @@
 #include "poligonoconvexo.h"
 
-void PoligonoConvexo::dibuja() const
+PoligonoConvexo::PoligonoConvexo(const PV2f &pos)
+    : Obstaculo(pos)
+{
+}
+
+void PoligonoConvexo::dibuja(Lapiz &lapiz) const
 {
 }
 

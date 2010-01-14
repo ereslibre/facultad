@@ -1,10 +1,11 @@
 #include "pelota.h"
+#include "general.h"
 
 Pelota::Pelota()
     : m_centro(0, 0)
     , m_sentido(PV2f::Vector)
     , m_fuerza(0)
-    , m_radio(10)
+    , m_radio(RADIO_PELOTA)
 {
 }
 

@@ -1,4 +1,6 @@
 #include "escena.h"
+#include "pared.h"
+#include "general.h"
 
 #include <QtGui/QApplication>
 #include <QtGui/QMainWindow>
@@ -44,7 +46,7 @@ void Escena::keyPressEvent(QKeyEvent *event)
 
 void Escena::initializeGL()
 {
-    m_listaVectores << PV2f(10, 10, PV2f::Vector);
+    m_listaObstaculos << new Pared(PV2f(-3, 0), 1 , 1);
 }
 
 void Escena::paintGL()
@@ -69,9 +71,13 @@ void Escena::paintGL()
     glViewport(0, 0, m_width, m_height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(left * 50 / 2.0, right * 50 / 2.0, bottom * 50 / 2.0, top * 50 / 2.0, -1.0, 1.0);
+    glOrtho(left, right, bottom, top, -1.0, 1.0);
     glMatrixMode(GL_MODELVIEW);
-    dibujaVectores();
+    Q_FOREACH(Obstaculo *const obstaculo, m_listaObstaculos) {
+        m_lapiz.salvaEstado();
+        obstaculo->dibuja(m_lapiz);
+        m_lapiz.recuperaEstado();
+    }
 }
 
 void Escena::resizeGL(int width, int height)
@@ -79,13 +85,4 @@ void Escena::resizeGL(int width, int height)
     m_ratio = (GLfloat) width / (GLfloat) height;
     m_width = width;
     m_height = height;
-}
-
-void Escena::dibujaVectores()
-{
-    glBegin(GL_LINE_STRIP);
-    Q_FOREACH(const PV2f &pv2f, m_listaVectores) {
-        glVertex2f(pv2f.getX(), pv2f.getY());
-    }
-    glEnd();
 }
