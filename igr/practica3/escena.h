@@ -25,12 +25,13 @@ protected:
     virtual void resizeGL(int width, int height);
 
 private:
-    QPointF mapeaPVaAVE(const QPoint &p);
+    void dibujaVectores();
 
-    GLfloat              m_width;
-    GLfloat              m_height;
-    GLfloat              m_ratio;
-    Lapiz                m_lapiz;
+    GLfloat     m_width;
+    GLfloat     m_height;
+    GLfloat     m_ratio;
+    Lapiz       m_lapiz;
+    QList<PV2f> m_listaVectores;
 };
 
 #endif

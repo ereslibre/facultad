@@ -47,6 +47,7 @@ void Escena::keyPressEvent(QKeyEvent *event)
 
 void Escena::initializeGL()
 {
+    m_listaVectores << PV2f(10, 10, PV2f::Vector);
 }
 
 void Escena::paintGL()
@@ -71,8 +72,9 @@ void Escena::paintGL()
     glViewport(0, 0, m_width, m_height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(left / 2.0, right / 2.0, bottom / 2.0, top / 2.0, -1.0, 1.0);
-    glMatrixMode(GL_MODELVIEW);    
+    glOrtho(left * 50 / 2.0, right * 50 / 2.0, bottom * 50 / 2.0, top * 50 / 2.0, -1.0, 1.0);
+    glMatrixMode(GL_MODELVIEW);
+    dibujaVectores();
 }
 
 void Escena::resizeGL(int width, int height)
@@ -82,29 +84,11 @@ void Escena::resizeGL(int width, int height)
     m_height = height;
 }
 
-QPointF Escena::mapeaPVaAVE(const QPoint &p)
+void Escena::dibujaVectores()
 {
-    QPointF res;
-    GLdouble left;
-    GLdouble right;
-    GLdouble bottom;
-    GLdouble top;
-    if (m_ratio < 1.0) {
-        left = -2.0;
-        right = 2.0;
-        bottom = -2.0 * (1.0 / m_ratio);
-        top = 2.0 * (1.0 / m_ratio);
-    } else {
-        left = -2.0 * m_ratio;
-        right = 2.0 * m_ratio;
-        bottom = -2.0;
-        top = 2.0;
+    glBegin(GL_LINE_STRIP);
+    Q_FOREACH(const PV2f &pv2f, m_listaVectores) {
+        glVertex2f(pv2f.getX(), pv2f.getY());
     }
-    left = left / 2.0;
-    right = right / 2.0;
-    bottom = bottom / 2.0;
-    top = top / 2.0;
-    res.setX((p.x() * (right - left) / width()) + left);
-    res.setY(-((p.y() * (top - bottom) / height()) + bottom));
-    return res;
+    glEnd();
 }

@@ -13,16 +13,16 @@ public:
 
     PV2f(Tipo tipo = Punto);
     PV2f(const PV2f &pv2f, Tipo tipo = Punto);
-    PV2f(GLfloat x, GLfloat y, Tipo tipo = Punto);
+    PV2f(GLdouble x, GLdouble y, Tipo tipo = Punto);
 
-    GLfloat getX() const;
-    GLfloat getY() const;
+    GLdouble getX() const;
+    GLdouble getY() const;
 
-    GLfloat &rX();
-    GLfloat &rY();
+    GLdouble &rX();
+    GLdouble &rY();
 
-    void setX(GLfloat x);
-    void setY(GLfloat y);
+    void setX(GLdouble x);
+    void setY(GLdouble y);
 
     Tipo getTipo() const;
 
@@ -30,7 +30,7 @@ public:
     GLdouble mod() const;
 
     void normalizar();
-    void rotar(const PV2f &centro, GLfloat angulo);
+    void rotar(const PV2f &centro, GLdouble angulo);
 
     PV2f operator*(const PV2f &pv2f) const;
     PV2f &operator*=(const PV2f &pv2f);
@@ -47,9 +47,9 @@ public:
     bool operator!=(const PV2f &rhs) const;
 
 private:
-    GLfloat m_x;
-    GLfloat m_y;
-    Tipo    m_tipo;
+    GLdouble m_x;
+    GLdouble m_y;
+    Tipo     m_tipo;
 };
 
 #endif
