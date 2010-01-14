@@ -2,59 +2,10 @@
 
 #include <math.h>
 
-#include <QtGui/QLabel>
-#include <QtGui/QWidget>
-#include <QtGui/QLineEdit>
-#include <QtGui/QGridLayout>
-
-class PoligonoRegular::ConfigWidget
-    : public QWidget
-{
-public:
-    ConfigWidget(GLfloat lado, int nLados);
-
-    QLineEdit *lado() const;
-    QLineEdit *nLados() const;
-
-private:
-    QLineEdit *m_lado;
-    QLineEdit *m_nLados;
-};
-
-QLineEdit *PoligonoRegular::ConfigWidget::lado() const
-{
-    return m_lado;
-}
-
-QLineEdit *PoligonoRegular::ConfigWidget::nLados() const
-{
-    return m_nLados;
-}
-
-PoligonoRegular::ConfigWidget::ConfigWidget(GLfloat lado, int nLados)
-    : m_lado(new QLineEdit(this))
-    , m_nLados(new QLineEdit(this))
-{
-    QGridLayout *layout = new QGridLayout;
-    layout->addWidget(new QLabel("Lado", this), 0, 0);
-    layout->addWidget(new QLabel("Num. Lados", this), 1, 0);
-    m_lado->setText(QString::number(lado));
-    m_nLados->setText(QString::number(nLados));
-    layout->addWidget(m_lado, 0, 1);
-    layout->addWidget(m_nLados, 1, 1);
-    setLayout(layout);
-}
-
 PoligonoRegular::PoligonoRegular(Lapiz &l, const PV2f &centro, GLfloat lado, int nLados)
     : DibujoLineas(l, centro)
     , m_lado(lado)
     , m_nLados(nLados)
-    , m_configWidget(0)
-{
-    calculaSegmentos();
-}
-
-void PoligonoRegular::calculaSegmentos()
 {
     m_listaSegmentos.clear();
     m_l.salvaEstado();
