@@ -14,7 +14,6 @@
 class QWidget;
 
 class DibujoLineas
-    : public QObject
 {
 public:
     enum Estado {

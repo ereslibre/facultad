@@ -11,6 +11,11 @@ public:
         Vector
     };
 
+    enum Normal {
+        Izquierda = 0,
+        Derecha
+    };
+
     PV2f(Tipo tipo = Punto);
     PV2f(const PV2f &pv2f, Tipo tipo = Punto);
     PV2f(GLdouble x, GLdouble y, Tipo tipo = Punto);
@@ -29,6 +34,7 @@ public:
     GLdouble dot(const PV2f &pv2f) const;
     GLdouble mod() const;
 
+    PV2f normal(Normal normal = Izquierda) const;
     void normalizar();
     void rotar(const PV2f &centro, GLdouble angulo);
 

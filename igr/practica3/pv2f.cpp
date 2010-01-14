@@ -74,6 +74,23 @@ GLdouble PV2f::mod() const
     return sqrt(m_x * m_x + m_y * m_y);
 }
 
+PV2f PV2f::normal(Normal normal) const
+{
+    PV2f res;
+    if (m_tipo != Vector) {
+        return res;
+    }
+    res.m_tipo = Vector;
+    if (normal == Izquierda) {
+        res.m_x = -m_y;
+        res.m_y = m_x;
+    } else {
+        res.m_x = m_y;
+        res.m_y = -m_x;
+    }
+    return res;
+}
+
 void PV2f::normalizar()
 {
     if (m_tipo != Vector) {
@@ -98,10 +115,14 @@ void PV2f::rotar(const PV2f &centro, GLdouble angulo)
 
 PV2f PV2f::operator*(const PV2f &pv2f) const
 {
+    // TODO
+    return *this;
 }
 
 PV2f &PV2f::operator*=(const PV2f &pv2f)
 {
+    // TODO
+    return *this;
 }
 
 PV2f PV2f::operator*(GLdouble x) const

@@ -9,4 +9,3 @@ bld.new_task_gen(
                   'QTGUI',
                   'QTOPENGL'],
       install_path = None)
-
