@@ -1,10 +1,7 @@
 #include "escena.h"
 
-#include "poligonoregular.h"
-
 #include <QtGui/QApplication>
 #include <QtGui/QMainWindow>
-#include <QtGui/QWheelEvent>
 #include <QtGui/QKeyEvent>
 #include <QtGui/QPainter>
 
