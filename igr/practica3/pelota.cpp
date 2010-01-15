@@ -1,7 +1,6 @@
 #include "pelota.h"
 #include "general.h"
 #include "lapiz.h"
-#include "poligonoconvexo.h"
 
 #include <math.h>
 
@@ -11,13 +10,11 @@ Pelota::Pelota(const PV2f &pos)
     , m_sentido(PV2f::Vector)
     , m_fuerza(0)
     , m_radio(RADIO_PELOTA)
-    , m_poligonoConvexo(new PoligonoConvexo(pos, 1, 150))
 {
 }
 
 Pelota::~Pelota()
 {
-    delete m_poligonoConvexo;
 }
 
 PV2f Pelota::getCentro() const
@@ -45,7 +42,11 @@ void Pelota::reflexion(const PV2f &n)
 
 void Pelota::dibuja(Lapiz &lapiz) const
 {
-    m_poligonoConvexo->dibuja(lapiz);
+//     glBegin(GL_LINE_STRIP);
+//     for(size_t i = 0; i <= 360; i++) {
+//         glVertex2d(sin(i * M_PI / 180.0) * pos, cos(i * M_PI / 180.0) * 5);
+//     }
+//     glEnd();
 }
 
 void Pelota::dibujaEnvoltorio(Lapiz &lapiz) const

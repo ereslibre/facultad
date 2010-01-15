@@ -5,7 +5,6 @@
 #include "pv2f.h"
 
 class Lapiz;
-class PoligonoConvexo;
 
 class Pelota
     : public Obstaculo
@@ -31,7 +30,6 @@ private:
     PV2f             m_sentido;
     GLdouble         m_fuerza;
     GLdouble         m_radio;
-    PoligonoConvexo *m_poligonoConvexo;
 };
 
 #endif
