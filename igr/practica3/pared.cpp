@@ -26,6 +26,32 @@ void Pared::dibujaEnvoltorio(Lapiz &lapiz) const
 {
 }
 
+void Pared::dibujaNormales() const
+{
+    {
+        PV2f pos(m_pos);
+        pos.rX() += m_anchura / 2.0;
+        dibujaNormal(pos, -M_PI / 2);
+    }
+    {
+        PV2f pos(m_pos);
+        pos.rX() += m_anchura;
+        pos.rY() += m_altura / 2.0;
+        dibujaNormal(pos);
+    }
+    {
+        PV2f pos(m_pos);
+        pos.rY() += m_altura / 2.0;
+        dibujaNormal(pos, M_PI);
+    }
+    {
+        PV2f pos(m_pos);
+        pos.rX() += m_anchura / 2.0;
+        pos.rY() += m_altura;
+        dibujaNormal(pos, M_PI / 2.0);
+    }
+}
+
 bool Pared::colisiona(const Pelota &pelota, GLdouble &thit, PV2f &n)
 {
     return false;

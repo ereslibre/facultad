@@ -41,6 +41,10 @@ void PoligonoConvexo::dibujaEnvoltorio(Lapiz &lapiz) const
     }
 }
 
+void PoligonoConvexo::dibujaNormales() const
+{
+}
+
 bool PoligonoConvexo::colisiona(const Pelota &pelota, GLdouble &thit, PV2f &n)
 {
     return false;

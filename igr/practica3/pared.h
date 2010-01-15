@@ -11,6 +11,7 @@ public:
 
     virtual void dibuja(Lapiz &lapiz) const;
     virtual void dibujaEnvoltorio(Lapiz &lapiz) const;
+    virtual void dibujaNormales() const;
     virtual bool colisiona(const Pelota &pelota, GLdouble &thit, PV2f &n);
 
 private:

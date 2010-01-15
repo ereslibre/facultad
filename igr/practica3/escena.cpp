@@ -2,6 +2,7 @@
 #include "pared.h"
 #include "general.h"
 #include "poligonoconvexo.h"
+#include "pelota.h"
 
 #include <QtGui/QApplication>
 #include <QtGui/QMainWindow>
@@ -55,11 +56,12 @@ void Escena::initializeGL()
     m_listaObstaculos << new Pared(PV2f(0, ESCENA_HEIGHT - 20), ESCENA_WIDTH, 20);
     m_listaObstaculos << new Pared(PV2f(ESCENA_WIDTH - 20, 0), 20, ESCENA_HEIGHT);
     m_listaObstaculos << new PoligonoConvexo(PV2f(400, 250), 100, 8);
+    m_listaObstaculos << new Pelota(PV2f(100, 250));
 }
 
 void Escena::paintGL()
 {
-    Q_FOREACH(Obstaculo *const obstaculo, m_listaObstaculos) {
+    Q_FOREACH (Obstaculo *const obstaculo, m_listaObstaculos) {
         {
             glColor3f(1.0f, 1.0f, 1.0f);
             glPushMatrix();
@@ -68,6 +70,7 @@ void Escena::paintGL()
             m_lapiz.recuperaEstado();
             glPopMatrix();
         }
+#if DEBUG_MODE
         {
             glColor3f(0.0f, 0.0f, 1.0f);
             glPushMatrix();
@@ -76,5 +79,14 @@ void Escena::paintGL()
             m_lapiz.recuperaEstado();
             glPopMatrix();
         }
+        {
+            glColor3f(0.0f, 0.0f, 1.0f);
+            glPushMatrix();
+            m_lapiz.salvaEstado();
+            obstaculo->dibujaNormales();
+            m_lapiz.recuperaEstado();
+            glPopMatrix();
+        }
+#endif
     }
 }
