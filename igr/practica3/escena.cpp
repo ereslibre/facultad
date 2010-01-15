@@ -1,6 +1,7 @@
 #include "escena.h"
 #include "pared.h"
 #include "general.h"
+#include "poligonoconvexo.h"
 
 #include <QtGui/QApplication>
 #include <QtGui/QMainWindow>
@@ -53,15 +54,27 @@ void Escena::initializeGL()
     m_listaObstaculos << new Pared(PV2f(0, 0), 20, ESCENA_HEIGHT);
     m_listaObstaculos << new Pared(PV2f(0, ESCENA_HEIGHT - 20), ESCENA_WIDTH, 20);
     m_listaObstaculos << new Pared(PV2f(ESCENA_WIDTH - 20, 0), 20, ESCENA_HEIGHT);
+    m_listaObstaculos << new PoligonoConvexo(PV2f(400, 250), 100, 8);
 }
 
 void Escena::paintGL()
 {
     Q_FOREACH(Obstaculo *const obstaculo, m_listaObstaculos) {
-        glPushMatrix();
-        m_lapiz.salvaEstado();
-        obstaculo->dibuja(m_lapiz);
-        m_lapiz.recuperaEstado();
-        glPopMatrix();
+        {
+            glColor3f(1.0f, 1.0f, 1.0f);
+            glPushMatrix();
+            m_lapiz.salvaEstado();
+            obstaculo->dibuja(m_lapiz);
+            m_lapiz.recuperaEstado();
+            glPopMatrix();
+        }
+        {
+            glColor3f(0.0f, 0.0f, 1.0f);
+            glPushMatrix();
+            m_lapiz.salvaEstado();
+            obstaculo->dibujaEnvoltorio(m_lapiz);
+            m_lapiz.recuperaEstado();
+            glPopMatrix();
+        }
     }
 }

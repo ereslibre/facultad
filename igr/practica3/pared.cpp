@@ -1,5 +1,6 @@
 #include "pared.h"
 #include "lapiz.h"
+#include "general.h"
 
 #include <math.h>
 
@@ -19,6 +20,10 @@ void Pared::dibuja(Lapiz &lapiz) const
     glVertex2d(m_pos.getX() + m_anchura, m_pos.getY() + m_altura);
     glVertex2d(m_pos.getX() + m_anchura, m_pos.getY());
     glEnd();
+}
+
+void Pared::dibujaEnvoltorio(Lapiz &lapiz) const
+{
 }
 
 bool Pared::colisiona(const Pelota &pelota, GLdouble &thit, PV2f &n)

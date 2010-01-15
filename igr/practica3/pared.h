@@ -10,6 +10,7 @@ public:
     Pared(const PV2f &pos, GLdouble anchura, GLdouble altura);
 
     virtual void dibuja(Lapiz &lapiz) const;
+    virtual void dibujaEnvoltorio(Lapiz &lapiz) const;
     virtual bool colisiona(const Pelota &pelota, GLdouble &thit, PV2f &n);
 
 private:
