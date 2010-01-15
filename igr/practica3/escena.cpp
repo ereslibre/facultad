@@ -81,7 +81,7 @@ void Escena::paintGL()
             glPopMatrix();
         }
         {
-            glColor3f(0.0f, 0.0f, 1.0f);
+            glColor3f(1.0f, 1.0f, 0.0f);
             glPushMatrix();
             m_lapiz.salvaEstado();
             obstaculo->dibujaNormales(m_lapiz);
