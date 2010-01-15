@@ -12,15 +12,13 @@ Pared::Pared(const PV2f &pos, GLdouble anchura, GLdouble altura)
 
 void Pared::dibuja(Lapiz &lapiz) const
 {
-    lapiz.setPos(m_pos);
-    lapiz.setDir(M_PI / 2.0);
-    lapiz.avanzar(m_altura);
-    lapiz.setDir(0);
-    lapiz.avanzar(m_anchura);
-    lapiz.setDir(-M_PI / 2.0);
-    lapiz.avanzar(m_altura);
-    lapiz.setDir(M_PI);
-    lapiz.avanzar(m_anchura);
+    glBegin(GL_QUADS);
+    glColor3f(1.0f, 0.0f, 0.0f);
+    glVertex2d(m_pos.getX(), m_pos.getY());
+    glVertex2d(m_pos.getX(), m_pos.getY() + m_altura);
+    glVertex2d(m_pos.getX() + m_anchura, m_pos.getY() + m_altura);
+    glVertex2d(m_pos.getX() + m_anchura, m_pos.getY());
+    glEnd();
 }
 
 bool Pared::colisiona(const Pelota &pelota, GLdouble &thit, PV2f &n)

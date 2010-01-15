@@ -6,6 +6,9 @@
 #include <QtOpenGL/QGLWidget>
 #include "lapiz.h"
 
+#define ESCENA_WIDTH  800.0
+#define ESCENA_HEIGHT 500.0
+
 class DibujoLineas;
 class Obstaculo;
 
@@ -16,19 +19,13 @@ public:
     Escena(QWidget *parent = 0);
     ~Escena();
 
-    virtual QSize sizeHint() const;
-
 protected:
     virtual void keyPressEvent(QKeyEvent *event);
 
     virtual void initializeGL();
     virtual void paintGL();
-    virtual void resizeGL(int width, int height);
 
 private:
-    GLfloat           m_width;
-    GLfloat           m_height;
-    GLfloat           m_ratio;
     Lapiz             m_lapiz;
     QList<Obstaculo*> m_listaObstaculos;
 };
