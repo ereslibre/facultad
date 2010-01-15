@@ -52,9 +52,9 @@ void Pelota::dibujaEnvoltorio(Lapiz &lapiz) const
 {
 }
 
-void Pelota::dibujaNormales() const
+void Pelota::dibujaNormales(Lapiz &lapiz) const
 {
-    dibujaNormal(m_pos, M_PI / 4.0);
+    dibujaNormal(m_pos);
 }
 
 bool Pelota::colisiona(const Pelota &pelota, GLdouble &thit, PV2f &n)

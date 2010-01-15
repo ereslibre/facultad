@@ -51,12 +51,12 @@ void Escena::initializeGL()
     glOrtho(0, ESCENA_WIDTH, 0, ESCENA_HEIGHT, -1.0, 1.0);
     glMatrixMode(GL_MODELVIEW);
 
-    m_listaObstaculos << new Pared(PV2f(0, 0), ESCENA_WIDTH , 20);
-    m_listaObstaculos << new Pared(PV2f(0, 0), 20, ESCENA_HEIGHT);
-    m_listaObstaculos << new Pared(PV2f(0, ESCENA_HEIGHT - 20), ESCENA_WIDTH, 20);
-    m_listaObstaculos << new Pared(PV2f(ESCENA_WIDTH - 20, 0), 20, ESCENA_HEIGHT);
+    m_listaObstaculos << new Pared(PV2f(0, 0), ESCENA_WIDTH , 20, Pared::EsTablero);
+    m_listaObstaculos << new Pared(PV2f(0, 0), 20, ESCENA_HEIGHT, Pared::EsTablero);
+    m_listaObstaculos << new Pared(PV2f(0, ESCENA_HEIGHT - 20), ESCENA_WIDTH, 20, Pared::EsTablero);
+    m_listaObstaculos << new Pared(PV2f(ESCENA_WIDTH - 20, 0), 20, ESCENA_HEIGHT, Pared::EsTablero);
     m_listaObstaculos << new Pared(PV2f(620, 350), 40, 40);
-    m_listaObstaculos << new PoligonoConvexo(PV2f(400, 250), 100, 8);
+    m_listaObstaculos << new PoligonoConvexo(PV2f(300, 250), 100, 8);
     m_listaObstaculos << new Pelota(PV2f(100, 250));
 }
 
@@ -84,7 +84,7 @@ void Escena::paintGL()
             glColor3f(0.0f, 0.0f, 1.0f);
             glPushMatrix();
             m_lapiz.salvaEstado();
-            obstaculo->dibujaNormales();
+            obstaculo->dibujaNormales(m_lapiz);
             m_lapiz.recuperaEstado();
             glPopMatrix();
         }

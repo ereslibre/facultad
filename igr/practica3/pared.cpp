@@ -4,10 +4,11 @@
 
 #include <math.h>
 
-Pared::Pared(const PV2f &pos, GLdouble anchura, GLdouble altura)
+Pared::Pared(const PV2f &pos, GLdouble anchura, GLdouble altura, Tipo tipo)
     : Obstaculo(pos)
     , m_anchura(anchura)
     , m_altura(altura)
+    , m_tipo(tipo)
 {
 }
 
@@ -24,9 +25,18 @@ void Pared::dibuja(Lapiz &lapiz) const
 
 void Pared::dibujaEnvoltorio(Lapiz &lapiz) const
 {
+    if (m_tipo == NoEsTablero) {
+        glBegin(GL_LINE_STRIP);
+        glVertex2d(m_pos.getX() - RADIO_PELOTA, m_pos.getY() - RADIO_PELOTA);
+        glVertex2d(m_pos.getX() - RADIO_PELOTA, m_pos.getY() + m_altura + RADIO_PELOTA);
+        glVertex2d(m_pos.getX() + m_anchura + RADIO_PELOTA, m_pos.getY() + m_altura + RADIO_PELOTA);
+        glVertex2d(m_pos.getX() + m_anchura + RADIO_PELOTA, m_pos.getY() - RADIO_PELOTA);
+        glVertex2d(m_pos.getX() - RADIO_PELOTA, m_pos.getY() - RADIO_PELOTA);
+        glEnd();
+    }
 }
 
-void Pared::dibujaNormales() const
+void Pared::dibujaNormales(Lapiz &lapiz) const
 {
     {
         PV2f pos(m_pos);
