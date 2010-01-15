@@ -22,7 +22,7 @@ void Lapiz::girar(GLdouble radianes)
     m_e.dir += radianes;
 }
 
-void Lapiz::avanzar(GLfloat distancia, Comportamiento comportamiento)
+void Lapiz::avanzar(GLdouble distancia, Comportamiento comportamiento)
 {
     if (comportamiento == DejarRastro) {
         glBegin(GL_LINE_STRIP);

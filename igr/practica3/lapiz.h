@@ -18,7 +18,7 @@ public:
     void recuperaEstado();
 
     void girar(GLdouble radianes);
-    void avanzar(GLfloat distancia, Comportamiento comportamiento = DejarRastro);
+    void avanzar(GLdouble distancia, Comportamiento comportamiento = DejarRastro);
 
     void setDir(GLdouble dir);
     void setPos(const PV2f &pos);
