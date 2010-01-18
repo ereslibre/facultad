@@ -42,11 +42,13 @@ void Pelota::reflexion(const PV2f &n)
 
 void Pelota::dibuja(Lapiz &lapiz) const
 {
-//     glBegin(GL_LINE_STRIP);
-//     for(size_t i = 0; i <= 360; i++) {
-//         glVertex2d(sin(i * M_PI / 180.0) * pos, cos(i * M_PI / 180.0) * 5);
-//     }
-//     glEnd();
+    const GLdouble DEG2RAD = M_PI / 180.0;
+    glBegin(GL_LINE_LOOP);
+    for (int i = 0; i < 360; i++) {
+        float degInRad = i * DEG2RAD;
+        glVertex2f(m_pos.getX() + cos(degInRad) * RADIO_PELOTA, m_pos.getY() + sin(degInRad) * RADIO_PELOTA);
+    }
+    glEnd();
 }
 
 void Pelota::dibujaEnvoltorio(Lapiz &lapiz) const

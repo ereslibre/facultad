@@ -56,8 +56,8 @@ void Escena::initializeGL()
     m_listaObstaculos << new Pared(PV2f(0, ESCENA_HEIGHT - 20), ESCENA_WIDTH, 20, Pared::EsTablero);
     m_listaObstaculos << new Pared(PV2f(ESCENA_WIDTH - 20, 0), 20, ESCENA_HEIGHT, Pared::EsTablero);
     m_listaObstaculos << new Pared(PV2f(620, 350), 40, 40);
-    m_listaObstaculos << new PoligonoConvexo(PV2f(300, 250), 100, 8);
-    m_listaObstaculos << new Pelota(PV2f(100, 250));
+    m_listaObstaculos << new PoligonoConvexo(PV2f(300, 250), 200, 4);
+    m_listaObstaculos << new Pelota(PV2f(650, 150));
 }
 
 void Escena::paintGL()

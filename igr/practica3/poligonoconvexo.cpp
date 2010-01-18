@@ -14,10 +14,11 @@ PoligonoConvexo::PoligonoConvexo(const PV2f &pos, GLdouble lado, size_t nLados)
 void PoligonoConvexo::dibuja(Lapiz &lapiz) const
 {
     const GLdouble alpha = 2.0 * M_PI / (GLdouble) m_nLados;
-    const GLdouble beta = (M_PI - alpha) / 2;
+    const GLdouble beta = (M_PI - alpha) / 2.0;
     const GLdouble gamma = M_PI - beta;
-    lapiz.setPos(m_pos);
-    lapiz.avanzar(m_lado, Lapiz::NoDejarRastro);
+    const GLdouble radio = (m_lado / 2.0) / cos(beta);
+    PV2f pos(m_pos.getX() + radio, m_pos.getY());
+    lapiz.setPos(pos);
     lapiz.girar(gamma);
     for (size_t i = 0; i < m_nLados; ++i) {
         lapiz.avanzar(m_lado);
@@ -28,13 +29,14 @@ void PoligonoConvexo::dibuja(Lapiz &lapiz) const
 void PoligonoConvexo::dibujaEnvoltorio(Lapiz &lapiz) const
 {
     const GLdouble alpha = 2.0 * M_PI / (GLdouble) m_nLados;
-    const GLdouble beta = (M_PI - alpha) / 2;
+    const GLdouble beta = (M_PI - alpha) / 2.0;
     const GLdouble gamma = M_PI - beta;
-    lapiz.setPos(m_pos);
-    lapiz.avanzar(m_lado + RADIO_PELOTA, Lapiz::NoDejarRastro);
+    const GLdouble radio = ((m_lado + RADIO_PELOTA * 2.0) / 2.0) / cos(beta);
+    PV2f pos(m_pos.getX() + radio, m_pos.getY());
+    lapiz.setPos(pos);
     lapiz.girar(gamma);
     for (size_t i = 0; i < m_nLados; ++i) {
-        lapiz.avanzar(m_lado + RADIO_PELOTA);
+        lapiz.avanzar(m_lado + RADIO_PELOTA * 2.0);
         lapiz.girar(alpha);
     }
 }
@@ -42,18 +44,17 @@ void PoligonoConvexo::dibujaEnvoltorio(Lapiz &lapiz) const
 void PoligonoConvexo::dibujaNormales(Lapiz &lapiz) const
 {
     const GLdouble alpha = 2.0 * M_PI / (GLdouble) m_nLados;
-    const GLdouble beta = (M_PI - alpha) / 2;
+    const GLdouble beta = (M_PI - alpha) / 2.0;
     const GLdouble gamma = M_PI - beta;
-    lapiz.setPos(m_pos);
-    lapiz.avanzar(m_lado, Lapiz::NoDejarRastro);
+    const GLdouble radio = (m_lado / 2.0) / cos(beta);
+    PV2f pos(m_pos.getX() + radio, m_pos.getY());
+    lapiz.setPos(pos);
     lapiz.girar(gamma);
-    GLdouble currAlpha = alpha / 2.0;
     for (size_t i = 0; i < m_nLados; ++i) {
-        lapiz.avanzar(m_lado / 2.0, Lapiz::NoDejarRastro);
-        dibujaNormal(lapiz.getPos(), currAlpha);
-        lapiz.avanzar(m_lado / 2.0, Lapiz::NoDejarRastro);
+        lapiz.avanzar(m_lado / 2.0);
+        dibujaNormal(lapiz.getPos(), lapiz.getDir() - M_PI / 2.0);
+        lapiz.avanzar(m_lado / 2.0);
         lapiz.girar(alpha);
-        currAlpha += alpha;
     }
 }
 
