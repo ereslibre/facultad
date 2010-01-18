@@ -4,6 +4,8 @@
 
 #include <math.h>
 
+#define ROZAMIENTO 0.95
+
 Pelota::Pelota(const PV2f &pos)
     : Obstaculo(pos)
     , m_centro(0, 0)
@@ -51,8 +53,9 @@ void Pelota::decrementaAngulo()
     m_angulo -= 0.1;
 }
 
-void Pelota::avanza(GLdouble pasos)
+void Pelota::avanza()
 {
+    m_fuerza *= ROZAMIENTO;
 }
 
 void Pelota::reflexion(const PV2f &n)

@@ -16,9 +16,14 @@ class Pelota;
 class Escena
     : public QGLWidget
 {
+    Q_OBJECT
+
 public:
     Escena(QWidget *parent = 0);
     ~Escena();
+
+public Q_SLOTS:
+    void actualizaEstado();
 
 protected:
     virtual void keyPressEvent(QKeyEvent *event);
@@ -31,6 +36,7 @@ private:
     Lapiz             m_lapiz;
     QList<Obstaculo*> m_listaObstaculos;
     Pelota           *m_pelota;
+    QTimer           *m_timer;
 };
 
 #endif

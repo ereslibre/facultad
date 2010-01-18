@@ -4,6 +4,7 @@
 #include "poligonoconvexo.h"
 #include "pelota.h"
 
+#include <QtCore/QTimer>
 #include <QtGui/QApplication>
 #include <QtGui/QMainWindow>
 #include <QtGui/QKeyEvent>
@@ -14,14 +15,23 @@
 Escena::Escena(QWidget *parent)
     : QGLWidget(parent)
     , m_pelota(0)
+    , m_timer(new QTimer)
 {
     setFocusPolicy(Qt::StrongFocus);
     setMouseTracking(true);
+    m_timer->setInterval(100);
+    connect(m_timer, SIGNAL(timeout()), this, SLOT(actualizaEstado()));
 }
 
 Escena::~Escena()
 {
     makeCurrent();
+}
+
+void Escena::actualizaEstado()
+{
+    m_pelota->avanza();
+    update();
 }
 
 void Escena::keyPressEvent(QKeyEvent *event)
@@ -48,6 +58,7 @@ void Escena::keyReleaseEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Up) {
         m_pelota->incrementaFuerza();
+        m_timer->start();
     } else {
         event->ignore();
         return;
