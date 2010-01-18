@@ -103,6 +103,9 @@ void PV2f::normalizar()
 
 void PV2f::rotar(const PV2f &centro, GLdouble angulo)
 {
+    if (m_tipo != Punto) {
+        return;
+    }
     const GLdouble cx = centro.getX();
     const GLdouble cy = centro.getY();
     const GLdouble dx = (1.0 - cos(angulo)) * cx + sin(angulo) * cy;

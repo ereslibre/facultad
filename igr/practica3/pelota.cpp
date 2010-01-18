@@ -10,6 +10,7 @@ Pelota::Pelota(const PV2f &pos)
     , m_sentido(PV2f::Vector)
     , m_fuerza(0)
     , m_radio(RADIO_PELOTA)
+    , m_angulo(0)
 {
 }
 
@@ -30,6 +31,21 @@ GLdouble Pelota::getFuerza() const
 GLdouble Pelota::getRadio() const
 {
     return m_radio;
+}
+
+void Pelota::incrementaFuerza()
+{
+    m_fuerza += 0.5;
+}
+
+void Pelota::incrementaAngulo()
+{
+    m_angulo += 0.1;
+}
+
+void Pelota::decrementaAngulo()
+{
+    m_angulo -= 0.1;
 }
 
 void Pelota::avanza(GLdouble pasos)
@@ -57,7 +73,7 @@ void Pelota::dibujaEnvoltorio(Lapiz &lapiz) const
 
 void Pelota::dibujaNormales(Lapiz &lapiz) const
 {
-    dibujaNormal(m_pos);
+    dibujaNormal(m_pos, m_angulo, RADIO_PELOTA + m_fuerza);
 }
 
 bool Pelota::colisiona(const Pelota &pelota, GLdouble &thit, PV2f &n)

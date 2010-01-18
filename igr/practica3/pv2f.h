@@ -36,6 +36,7 @@ public:
 
     PV2f normal(Normal normal = Izquierda) const;
     void normalizar();
+
     void rotar(const PV2f &centro, GLdouble angulo);
 
     PV2f operator*(const PV2f &pv2f) const;

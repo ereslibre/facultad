@@ -17,6 +17,11 @@ public:
     GLdouble getFuerza() const;
     GLdouble getRadio() const;
 
+    void incrementaFuerza();
+
+    void incrementaAngulo();
+    void decrementaAngulo();
+
     void avanza(GLdouble pasos);
     void reflexion(const PV2f &n);
 
@@ -30,6 +35,7 @@ private:
     PV2f             m_sentido;
     GLdouble         m_fuerza;
     GLdouble         m_radio;
+    GLdouble         m_angulo;
 };
 
 #endif

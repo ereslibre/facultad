@@ -13,6 +13,7 @@
 
 Escena::Escena(QWidget *parent)
     : QGLWidget(parent)
+    , m_pelota(0)
 {
     setFocusPolicy(Qt::StrongFocus);
     setMouseTracking(true);
@@ -31,8 +32,10 @@ void Escena::keyPressEvent(QKeyEvent *event)
         case Qt::Key_Down:
             break;
         case Qt::Key_Left:
+            m_pelota->decrementaAngulo();
             break;
         case Qt::Key_Right:
+            m_pelota->incrementaAngulo();
             break;
         default:
             event->ignore();
@@ -41,10 +44,19 @@ void Escena::keyPressEvent(QKeyEvent *event)
     update();
 }
 
+void Escena::keyReleaseEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Up) {
+        m_pelota->incrementaFuerza();
+    } else {
+        event->ignore();
+        return;
+    }
+    update();
+}
+
 void Escena::initializeGL()
 {
-    glClearColor(0, 0, 0, 0);
-    glClear(GL_COLOR_BUFFER_BIT);
     glViewport(0, 0, ESCENA_WIDTH, ESCENA_HEIGHT);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -57,11 +69,14 @@ void Escena::initializeGL()
     m_listaObstaculos << new Pared(PV2f(ESCENA_WIDTH - 20, 0), 20, ESCENA_HEIGHT, Pared::EsTablero);
     m_listaObstaculos << new Pared(PV2f(620, 350), 40, 40);
     m_listaObstaculos << new PoligonoConvexo(PV2f(300, 250), 200, 4);
-    m_listaObstaculos << new Pelota(PV2f(650, 150));
+    m_pelota = new Pelota(PV2f(650, 150));
+    m_listaObstaculos << m_pelota;
 }
 
 void Escena::paintGL()
 {
+    glClearColor(0, 0, 0, 0);
+    glClear(GL_COLOR_BUFFER_BIT);
     Q_FOREACH (Obstaculo *const obstaculo, m_listaObstaculos) {
         {
             glColor3f(1.0f, 1.0f, 1.0f);
@@ -91,3 +106,5 @@ void Escena::paintGL()
 #endif
     }
 }
+
+#include "escena.moc"

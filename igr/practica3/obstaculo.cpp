@@ -7,12 +7,10 @@ Obstaculo::Obstaculo(const PV2f &pos)
 {
 }
 
-#define LONGITUD_VECTOR 50.0
-
-void Obstaculo::dibujaNormal(const PV2f &pos, GLdouble orientacion) const
+void Obstaculo::dibujaNormal(const PV2f &pos, GLdouble orientacion, GLdouble tamano) const
 {
-    const GLdouble baseX = pos.getX() + LONGITUD_VECTOR * cos(orientacion);
-    const GLdouble baseY = pos.getY() + LONGITUD_VECTOR * sin(orientacion);
+    const GLdouble baseX = pos.getX() + tamano * cos(orientacion);
+    const GLdouble baseY = pos.getY() + tamano * sin(orientacion);
     glBegin(GL_LINES);
     glVertex2d(pos.getX(), pos.getY());
     glVertex2d(baseX, baseY);

@@ -11,6 +11,7 @@
 
 class DibujoLineas;
 class Obstaculo;
+class Pelota;
 
 class Escena
     : public QGLWidget
@@ -21,6 +22,7 @@ public:
 
 protected:
     virtual void keyPressEvent(QKeyEvent *event);
+    virtual void keyReleaseEvent(QKeyEvent *event);
 
     virtual void initializeGL();
     virtual void paintGL();
@@ -28,6 +30,7 @@ protected:
 private:
     Lapiz             m_lapiz;
     QList<Obstaculo*> m_listaObstaculos;
+    Pelota           *m_pelota;
 };
 
 #endif

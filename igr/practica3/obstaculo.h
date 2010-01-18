@@ -19,7 +19,7 @@ public:
 
     Obstaculo(const PV2f &pos);
 
-    void dibujaNormal(const PV2f &pos, GLdouble orientacion = 0) const;
+    void dibujaNormal(const PV2f &pos, GLdouble orientacion = 0, GLdouble tamano = 50.0) const;
 
     virtual void dibuja(Lapiz &lapiz) const = 0;
     virtual void dibujaEnvoltorio(Lapiz &lapiz) const = 0;
