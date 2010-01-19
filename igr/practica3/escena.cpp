@@ -120,6 +120,9 @@ void Escena::paintGL()
             m_lapiz.recuperaEstado();
             glPopMatrix();
         }
+#else
+        glColor3f(1.0f, 1.0f, 0.0f);
+        m_pelota->dibujaNormales(m_lapiz);
 #endif
     }
 }
