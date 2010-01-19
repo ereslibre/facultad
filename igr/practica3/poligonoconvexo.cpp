@@ -52,9 +52,9 @@ void PoligonoConvexo::dibujaNormales(Lapiz &lapiz) const
     lapiz.girar(gamma);
     for (size_t i = 0; i < m_nLados; ++i) {
         const PV2f oldPos = lapiz.getPos();
-        lapiz.avanzar((m_lado + RADIO_PELOTA * 2.0) / 2.0);
+        lapiz.avanzar((m_lado + RADIO_PELOTA * 2.0) / 2.0, Lapiz::NoDejarRastro);
         const PV2f medPos = lapiz.getPos();
-        lapiz.avanzar((m_lado + RADIO_PELOTA * 2.0) / 2.0);
+        lapiz.avanzar((m_lado + RADIO_PELOTA * 2.0) / 2.0, Lapiz::NoDejarRastro);
         const PV2f pos = lapiz.getPos();
         PV2f aux = oldPos - pos;
         aux = aux.normal(PV2f::Izquierda);

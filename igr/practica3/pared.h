@@ -7,12 +7,7 @@ class Pared
     : public Obstaculo
 {
 public:
-    enum Tipo {
-        EsTablero = 0,
-        NoEsTablero
-    };
-
-    Pared(const PV2f &pos, GLdouble anchura, GLdouble altura, Tipo tipo = NoEsTablero);
+    Pared(const PV2f &pos, GLdouble anchura, GLdouble altura);
 
     virtual void dibuja(Lapiz &lapiz) const;
     virtual void dibujaEnvoltorio(Lapiz &lapiz) const;
@@ -22,7 +17,6 @@ public:
 private:
     GLdouble m_anchura;
     GLdouble m_altura;
-    Tipo     m_tipo;
 };
 
 #endif
