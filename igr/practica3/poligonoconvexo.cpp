@@ -58,7 +58,7 @@ void PoligonoConvexo::dibujaNormales(Lapiz &lapiz) const
         const PV2f pos = lapiz.getPos();
         PV2f aux = oldPos - pos;
         aux = aux.normal(PV2f::Izquierda);
-        aux *= 0.1;
+        aux *= 0.2;
         glBegin(GL_LINES);
         glVertex2d(medPos.getX(), medPos.getY());
         glVertex2d((aux + medPos).getX(), (aux + medPos).getY());

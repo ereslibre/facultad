@@ -77,10 +77,10 @@ void Escena::initializeGL()
     glOrtho(0, ESCENA_WIDTH, 0, ESCENA_HEIGHT, -1.0, 1.0);
     glMatrixMode(GL_MODELVIEW);
 
-    m_listaObstaculos << new Pared(PV2f(0, 0), ESCENA_WIDTH , 20);
-    m_listaObstaculos << new Pared(PV2f(0, 0), 20, ESCENA_HEIGHT);
-    m_listaObstaculos << new Pared(PV2f(0, ESCENA_HEIGHT - 20), ESCENA_WIDTH, 20);
-    m_listaObstaculos << new Pared(PV2f(ESCENA_WIDTH - 20, 0), 20, ESCENA_HEIGHT);
+    m_listaObstaculos << new Pared(PV2f(0, 0), ESCENA_WIDTH , 20, Pared::EsPared);
+    m_listaObstaculos << new Pared(PV2f(0, 0), 20, ESCENA_HEIGHT, Pared::EsPared);
+    m_listaObstaculos << new Pared(PV2f(0, ESCENA_HEIGHT - 20), ESCENA_WIDTH, 20, Pared::EsPared);
+    m_listaObstaculos << new Pared(PV2f(ESCENA_WIDTH - 20, 0), 20, ESCENA_HEIGHT, Pared::EsPared);
     m_listaObstaculos << new Pared(PV2f(620, 350), 40, 40);
     m_listaObstaculos << new PoligonoConvexo(PV2f(300, 250), 100, 5);
     m_pelota = new Pelota(PV2f(650, 150));
