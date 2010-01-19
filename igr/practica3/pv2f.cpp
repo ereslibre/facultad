@@ -1,5 +1,6 @@
 #include "pv2f.h"
 
+#include <QtCore/QDebug>
 #include <math.h>
 
 PV2f::PV2f(Tipo tipo)
