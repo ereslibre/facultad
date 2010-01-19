@@ -30,7 +30,7 @@ Escena::~Escena()
 
 void Escena::actualizaEstado()
 {
-    if (m_pelota->getFuerza() < 0.01) {
+    if (m_pelota->getFuerza() < 0.5) {
         m_timer->stop();
     }
     m_pelota->avanza();
@@ -39,6 +39,9 @@ void Escena::actualizaEstado()
 
 void Escena::keyPressEvent(QKeyEvent *event)
 {
+    if (m_timer->isActive()) {
+        return;
+    }
     switch (event->key()) {
         case Qt::Key_Up:
             break;

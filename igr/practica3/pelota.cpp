@@ -8,8 +8,7 @@
 
 Pelota::Pelota(const PV2f &pos)
     : Obstaculo(pos)
-    , m_centro(0, 0)
-    , m_sentido(PV2f::Vector)
+    , m_sentido(1, 0, PV2f::Vector)
     , m_fuerza(0)
     , m_radio(RADIO_PELOTA)
     , m_angulo(0)
@@ -22,7 +21,7 @@ Pelota::~Pelota()
 
 PV2f Pelota::getCentro() const
 {
-    return m_centro;
+    return m_pos;
 }
 
 GLdouble Pelota::getFuerza() const
@@ -46,15 +45,18 @@ void Pelota::incrementaFuerza()
 void Pelota::incrementaAngulo()
 {
     m_angulo += 0.1;
+    m_sentido = PV2f(cos(m_angulo), sin(m_angulo), PV2f::Vector);
 }
 
 void Pelota::decrementaAngulo()
 {
     m_angulo -= 0.1;
+    m_sentido = PV2f(cos(m_angulo), sin(m_angulo), PV2f::Vector);
 }
 
 void Pelota::avanza()
 {
+    m_pos = (m_sentido * m_fuerza) + m_pos;
     m_fuerza *= ROZAMIENTO;
 }
 
