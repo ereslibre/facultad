@@ -58,7 +58,8 @@ void PoligonoConvexo::dibujaNormales(Lapiz &lapiz) const
         const PV2f pos = lapiz.getPos();
         PV2f aux = oldPos - pos;
         aux = aux.normal(PV2f::Izquierda);
-        aux *= 0.2;
+        aux.normalizar();
+        aux *= RADIO_PELOTA;
         glBegin(GL_LINES);
         glVertex2d(medPos.getX(), medPos.getY());
         glVertex2d((aux + medPos).getX(), (aux + medPos).getY());
