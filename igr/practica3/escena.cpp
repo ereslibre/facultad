@@ -30,6 +30,9 @@ Escena::~Escena()
 
 void Escena::actualizaEstado()
 {
+    if (m_pelota->getFuerza() < 0.01) {
+        m_timer->stop();
+    }
     m_pelota->avanza();
     update();
 }
