@@ -35,14 +35,42 @@ void Pared::dibujaEnvoltorio(Lapiz &lapiz) const
 
 void Pared::dibujaNormales(Lapiz &lapiz) const
 {
+    const PV2f bl = PV2f(m_pos.getX() - RADIO_PELOTA, m_pos.getY() - RADIO_PELOTA);
+    const PV2f tl = PV2f(m_pos.getX() - RADIO_PELOTA, m_pos.getY() + m_altura + RADIO_PELOTA);
+    const PV2f tr = PV2f(m_pos.getX() + m_anchura + RADIO_PELOTA, m_pos.getY() + m_altura + RADIO_PELOTA);
+    const PV2f br = PV2f(m_pos.getX() + m_anchura + RADIO_PELOTA, m_pos.getY() - RADIO_PELOTA);
     glBegin(GL_LINES);
     {
+        const PV2f medPos = PV2f(tl.getX(), tl.getY() - (m_altura + RADIO_PELOTA * 2.0) / 2.0);
+        PV2f aux = tl - bl;
+        aux = aux.normal(PV2f::Izquierda);
+        aux *= 0.1;
+        glVertex2d(medPos.getX(), medPos.getY());
+        glVertex2d((aux + medPos).getX(), (aux + medPos).getY());
     }
     {
+        const PV2f medPos = PV2f(tl.getX() + (m_anchura + RADIO_PELOTA * 2.0) / 2.0, tl.getY());
+        PV2f aux = tr - tl;
+        aux = aux.normal(PV2f::Izquierda);
+        aux *= 0.1;
+        glVertex2d(medPos.getX(), medPos.getY());
+        glVertex2d((aux + medPos).getX(), (aux + medPos).getY());
     }
     {
+        const PV2f medPos = PV2f(tr.getX(), tr.getY() - (m_altura + RADIO_PELOTA * 2.0) / 2.0);
+        PV2f aux = br - tr;
+        aux = aux.normal(PV2f::Izquierda);
+        aux *= 0.1;
+        glVertex2d(medPos.getX(), medPos.getY());
+        glVertex2d((aux + medPos).getX(), (aux + medPos).getY());
     }
     {
+        const PV2f medPos = PV2f(br.getX() - (m_anchura + RADIO_PELOTA * 2.0) / 2.0, br.getY());
+        PV2f aux = bl - br;
+        aux = aux.normal(PV2f::Izquierda);
+        aux *= 0.1;
+        glVertex2d(medPos.getX(), medPos.getY());
+        glVertex2d((aux + medPos).getX(), (aux + medPos).getY());
     }
     glEnd();
 }
