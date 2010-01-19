@@ -79,7 +79,7 @@ void Pared::dibujaNormales(Lapiz &lapiz) const
     glEnd();
 }
 
-bool Pared::colisiona(const Pelota &pelota, GLdouble &thit, PV2f &n)
+bool Pared::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n)
 {
     return false;
 }

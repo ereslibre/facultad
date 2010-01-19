@@ -28,12 +28,23 @@ Escena::~Escena()
     makeCurrent();
 }
 
+#include <QtCore/QDebug>
 void Escena::actualizaEstado()
 {
     if (m_pelota->getFuerza() < 0.5) {
         m_timer->stop();
     }
-    m_pelota->avanza();
+    bool hayColision = false;
+    GLdouble thit;
+    PV2f n;
+    Q_FOREACH (Obstaculo *const obstaculo, m_listaObstaculos) {
+        if (obstaculo->colisiona(m_pelota, thit, n)) {
+            qDebug() << "COLISIONNNNNNNNNNNNNNnn";
+        }
+    }
+    if (!hayColision) {
+        m_pelota->avanza();
+    }
     update();
 }
 

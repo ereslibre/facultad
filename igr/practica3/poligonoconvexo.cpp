@@ -74,7 +74,7 @@ void PoligonoConvexo::dibujaNormales(Lapiz &lapiz) const
     }
 }
 
-bool PoligonoConvexo::colisiona(const Pelota &pelota, GLdouble &thit, PV2f &n)
+bool PoligonoConvexo::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n)
 {
     return false;
 }

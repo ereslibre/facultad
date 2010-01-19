@@ -96,10 +96,10 @@ void Pelota::dibujaNormales(Lapiz &lapiz) const
     }
 }
 
-bool Pelota::colisiona(const Pelota &pelota, GLdouble &thit, PV2f &n)
+bool Pelota::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n)
 {
     if (m_tipo == Protagonista) {
         return false;
     }
-    
+    return false;
 }
