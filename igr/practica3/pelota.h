@@ -31,10 +31,10 @@ public:
     virtual bool colisiona(const Pelota &pelota, GLdouble &thit, PV2f &n);
 
 private:
-    PV2f             m_sentido;
-    GLdouble         m_fuerza;
-    GLdouble         m_radio;
-    GLdouble         m_angulo;
+    PV2f     m_sentido;
+    GLdouble m_fuerza;
+    GLdouble m_radio;
+    GLdouble m_angulo;
 };
 
 #endif
