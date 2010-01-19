@@ -9,10 +9,10 @@ PV2f::PV2f(Tipo tipo)
 {
 }
 
-PV2f::PV2f(const PV2f &pv2f, Tipo tipo)
+PV2f::PV2f(const PV2f &pv2f)
     : m_x(pv2f.m_x)
     , m_y(pv2f.m_y)
-    , m_tipo(tipo)
+    , m_tipo(pv2f.m_tipo)
 {
 }
 
@@ -61,6 +61,7 @@ PV2f::Tipo PV2f::getTipo() const
 GLdouble PV2f::dot(const PV2f &pv2f) const
 {
     if (m_tipo != Vector) {
+        qDebug() << "!!! cuenta con PV2f ilegal en dot";
         return 0;
     }
     return m_x * pv2f.m_x + m_y * pv2f.m_y;
@@ -69,6 +70,7 @@ GLdouble PV2f::dot(const PV2f &pv2f) const
 GLdouble PV2f::mod() const
 {
     if (m_tipo != Vector) {
+        qDebug() << "!!! cuenta con PV2f ilegal en mod";
         return 0;
     }
     return sqrt(m_x * m_x + m_y * m_y);
@@ -78,6 +80,7 @@ PV2f PV2f::normal(Normal normal) const
 {
     PV2f res;
     if (m_tipo != Vector) {
+        qDebug() << "!!! cuenta con PV2f ilegal en normal";
         return res;
     }
     res.m_tipo = Vector;
@@ -94,6 +97,7 @@ PV2f PV2f::normal(Normal normal) const
 void PV2f::normalizar()
 {
     if (m_tipo != Vector) {
+        qDebug() << "!!! cuenta con PV2f ilegal en normalizar";
         return;
     }
     const GLdouble c = 1 / sqrt(m_x * m_x + m_y * m_y);
@@ -104,6 +108,7 @@ void PV2f::normalizar()
 void PV2f::rotar(const PV2f &centro, GLdouble angulo)
 {
     if (m_tipo != Punto) {
+        qDebug() << "!!! cuenta con PV2f ilegal en rotar";
         return;
     }
     const GLdouble cx = centro.getX();
@@ -118,13 +123,13 @@ void PV2f::rotar(const PV2f &centro, GLdouble angulo)
 
 PV2f PV2f::operator*(const PV2f &pv2f) const
 {
-    // TODO
+    qDebug() << "!!! cuenta con PV2f ilegal en operator*(PV2f)";
     return *this;
 }
 
 PV2f &PV2f::operator*=(const PV2f &pv2f)
 {
-    // TODO
+    qDebug() << "!!! cuenta con PV2f ilegal en operator*=(PV2f)";
     return *this;
 }
 
@@ -135,6 +140,8 @@ PV2f PV2f::operator*(GLdouble x) const
         res.m_tipo = Vector;
         res.m_x = m_x * x;
         res.m_y = m_y * x;
+    } else {
+        qDebug() << "!!! cuenta con PV2f ilegal en operator*(GLdouble)";
     }
     return res;
 }
@@ -142,6 +149,7 @@ PV2f PV2f::operator*(GLdouble x) const
 PV2f &PV2f::operator*=(GLdouble x)
 {
     if (m_tipo != Vector) {
+        qDebug() << "!!! cuenta con PV2f ilegal en operator*=(GLdouble)";
         return *this;
     }
     m_x *= x;
@@ -157,6 +165,7 @@ PV2f PV2f::operator+(const PV2f &pv2f) const
     } else if (m_tipo == Vector && pv2f.m_tipo == Vector) {
         res.m_tipo = Vector;
     } else {
+        qDebug() << "!!! cuenta con PV2f ilegal en operator+(PV2f)";
         return res;
     }
     res.m_x = m_x + pv2f.m_x;
@@ -171,6 +180,7 @@ PV2f &PV2f::operator+=(const PV2f &pv2f)
     } else if (m_tipo == Vector && pv2f.m_tipo == Vector) {
         m_tipo = Vector;
     } else {
+        qDebug() << "!!! cuenta con PV2f ilegal en operator+=(PV2f)";
         return *this;
     }
     m_x += pv2f.m_x;
@@ -184,6 +194,7 @@ PV2f PV2f::operator-(const PV2f &pv2f) const
     if (m_tipo == Punto && pv2f.m_tipo == Punto || m_tipo == Vector && pv2f.m_tipo == Vector) {
         res.m_tipo = Vector;
     } else {
+        qDebug() << "!!! cuenta con PV2f ilegal en operator-(PV2f)";
         return res;
     }
     res.m_x = m_x - pv2f.m_x;
@@ -196,6 +207,7 @@ PV2f &PV2f::operator-=(const PV2f &pv2f)
     if (m_tipo == Punto && pv2f.m_tipo == Punto || m_tipo == Vector && pv2f.m_tipo == Vector) {
         m_tipo = Vector;
     } else {
+        qDebug() << "!!! cuenta con PV2f ilegal en operator-=(PV2f)";
         return *this;
     }
     m_x -= pv2f.m_x;

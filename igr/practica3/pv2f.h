@@ -17,7 +17,7 @@ public:
     };
 
     PV2f(Tipo tipo = Punto);
-    PV2f(const PV2f &pv2f, Tipo tipo = Punto);
+    PV2f(const PV2f &pv2f);
     PV2f(GLdouble x, GLdouble y, Tipo tipo = Punto);
 
     GLdouble getX() const;
