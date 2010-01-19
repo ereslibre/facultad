@@ -35,9 +35,12 @@ void Escena::actualizaEstado()
     }
     Obstaculo *colisionado = 0;
     bool hayColision = false;
-    GLdouble thit;
+    GLdouble thit = -1;
     PV2f n;
     Q_FOREACH (Obstaculo *const obstaculo, m_listaObstaculos) {
+        if (obstaculo == m_pelota) {
+            continue;
+        }
         if (obstaculo->colisiona(m_pelota, thit, n)) {
             colisionado = obstaculo;
             hayColision = true;
