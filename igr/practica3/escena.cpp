@@ -39,7 +39,7 @@ void Escena::actualizaEstado()
     PV2f n;
     Q_FOREACH (Obstaculo *const obstaculo, m_listaObstaculos) {
         if (obstaculo->colisiona(m_pelota, thit, n)) {
-            qDebug() << "COLISIONNNNNNNNNNNNNNnn";
+            // hay colisión
         }
     }
     if (!hayColision) {
