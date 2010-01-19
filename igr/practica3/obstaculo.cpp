@@ -7,7 +7,7 @@ Obstaculo::Obstaculo(const PV2f &pos)
 {
 }
 
-void Obstaculo::dibujaNormal(const PV2f &pos, GLdouble orientacion, GLdouble tamano) const
+void Obstaculo::dibujaLinea(const PV2f &pos, GLdouble orientacion, GLdouble tamano) const
 {
     const GLdouble baseX = pos.getX() + tamano * cos(orientacion);
     const GLdouble baseY = pos.getY() + tamano * sin(orientacion);

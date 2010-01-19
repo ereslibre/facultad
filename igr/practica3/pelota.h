@@ -10,7 +10,12 @@ class Pelota
     : public Obstaculo
 {
 public:
-    Pelota(const PV2f &pos);
+    enum Tipo {
+        Protagonista = 0,
+        NoProtagonista
+    };
+
+    Pelota(const PV2f &pos, Tipo tipo = NoProtagonista);
     virtual ~Pelota();
 
     PV2f getCentro() const;
@@ -35,6 +40,7 @@ private:
     GLdouble m_fuerza;
     GLdouble m_radio;
     GLdouble m_angulo;
+    Tipo     m_tipo;
 };
 
 #endif
