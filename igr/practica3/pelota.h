@@ -18,7 +18,7 @@ public:
     Pelota(const PV2f &pos, Tipo tipo = NoProtagonista);
     virtual ~Pelota();
 
-    PV2f getCentro() const;
+    PV2f getSentido() const;
     GLdouble getFuerza() const;
     GLdouble getRadio() const;
 

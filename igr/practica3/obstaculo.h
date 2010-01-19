@@ -19,6 +19,8 @@ public:
 
     Obstaculo(const PV2f &pos);
 
+    PV2f getPos() const;
+
     void dibujaLinea(const PV2f &pos, GLdouble orientacion = 0, GLdouble tamano = 50.0) const;
 
     virtual void dibuja(Lapiz &lapiz) const = 0;

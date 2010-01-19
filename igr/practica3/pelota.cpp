@@ -20,9 +20,9 @@ Pelota::~Pelota()
 {
 }
 
-PV2f Pelota::getCentro() const
+PV2f Pelota::getSentido() const
 {
-    return m_pos;
+    return m_sentido;
 }
 
 GLdouble Pelota::getFuerza() const
@@ -61,8 +61,11 @@ void Pelota::avanza()
     m_fuerza *= ROZAMIENTO;
 }
 
-void Pelota::reflexion(const PV2f &n)
+void Pelota::reflexion(const PV2f &n_)
 {
+    PV2f n(n_);
+    n.normalizar();
+    m_sentido = m_sentido - (n * (n.dot(m_sentido) * 2.0));
 }
 
 void Pelota::dibuja(Lapiz &lapiz) const
@@ -92,6 +95,6 @@ bool Pelota::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n)
     if (m_tipo == Protagonista) {
         return false;
     }
-    const PV2f distancia = pelota->getCentro() - m_pos;
+    const PV2f distancia = pelota->getPos() - m_pos;
     return distancia.mod() <= pelota->getRadio() + m_radio;
 }

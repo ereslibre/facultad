@@ -7,6 +7,11 @@ Obstaculo::Obstaculo(const PV2f &pos)
 {
 }
 
+PV2f Obstaculo::getPos() const
+{
+    return m_pos;
+}
+
 void Obstaculo::dibujaLinea(const PV2f &pos, GLdouble orientacion, GLdouble tamano) const
 {
     const GLdouble baseX = pos.getX() + tamano * cos(orientacion);
