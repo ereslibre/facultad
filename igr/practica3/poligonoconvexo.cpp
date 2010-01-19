@@ -28,15 +28,10 @@ void PoligonoConvexo::dibuja(Lapiz &lapiz) const
 
 void PoligonoConvexo::dibujaEnvoltorio(Lapiz &lapiz) const
 {
-    GLdouble a = 0;
-    GLdouble c = 0;
-    {
-        const GLdouble alpha = 2.0 * M_PI / m_nLados;
-        const GLdouble b = RADIO_PELOTA;
-        c = b / cos(alpha);
-        a = sin(alpha) * c;
-    }
     const GLdouble alpha = 2.0 * M_PI / (GLdouble) m_nLados;
+    const GLdouble b = RADIO_PELOTA;
+    const GLdouble c = b / cos(alpha / 2.0);
+    const GLdouble a = c * sin(alpha / 2.0);
     const GLdouble beta = (M_PI - alpha) / 2.0;
     const GLdouble gamma = M_PI - beta;
     const GLdouble radio = (m_lado / 2.0) / cos(beta) + c;
@@ -44,7 +39,7 @@ void PoligonoConvexo::dibujaEnvoltorio(Lapiz &lapiz) const
     lapiz.setPos(pos);
     lapiz.girar(gamma);
     for (size_t i = 0; i < m_nLados; ++i) {
-        lapiz.avanzar(m_lado + a * 2.0);
+        lapiz.avanzar(m_lado + 2 * a);
         lapiz.girar(alpha);
     }
 }
