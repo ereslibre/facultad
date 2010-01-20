@@ -24,6 +24,11 @@ PV2f Pelota::getSentido() const
     return m_sentido;
 }
 
+void Pelota::setFuerza(GLdouble fuerza)
+{
+    m_fuerza = fuerza;
+}
+
 GLdouble Pelota::getFuerza() const
 {
     return m_fuerza;
@@ -96,7 +101,9 @@ bool Pelota::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n, Lapiz &lapiz)
     }
     const PV2f distancia = pelota->getPos() - m_pos;
     if (distancia.mod() <= pelota->getRadio() + (pelota->getSentido() * pelota->getFuerza()).mod() + m_radio) {
-        n = pelota->getPos() - m_pos;
+        PV2f res = pelota->getPos() - m_pos;
+        res.normalizar();
+        n = res;
         return true;
     }
     return false;

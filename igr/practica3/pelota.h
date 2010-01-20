@@ -20,6 +20,7 @@ public:
     virtual ~Pelota();
 
     PV2f getSentido() const;
+    void setFuerza(GLdouble fuerza);
     GLdouble getFuerza() const;
     GLdouble getRadio() const;
 

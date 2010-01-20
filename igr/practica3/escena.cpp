@@ -50,12 +50,11 @@ void Escena::actualizaEstado()
         }
         m_lapiz.recuperaEstado();
     }
-    if (!hayColision) {
-        m_pelota->avanza();
-    } else {
+    if (hayColision) {
         m_pelota->reflexion(n);
-        m_pelota->avanza();
+        m_pelota->setFuerza(m_pelota->getFuerza() * 0.7);
     }
+    m_pelota->avanza();
     update();
 }
 
@@ -109,7 +108,7 @@ void Escena::initializeGL()
     m_listaObstaculos << new Pared(PV2f(620, 350), 40, 40);
     m_listaObstaculos << new PoligonoConvexo(PV2f(300, 250), 100, 8);
     m_listaObstaculos << new Pelota(PV2f(650, 200), 20.0);
-    m_pelota = new Pelota(PV2f(650, 150), RADIO_PELOTA, Pelota::Protagonista);
+    m_pelota = new Pelota(PV2f(550, 100), RADIO_PELOTA, Pelota::Protagonista);
     m_listaObstaculos << m_pelota;
 }
 

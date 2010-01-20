@@ -90,7 +90,6 @@ bool Pared::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n, Lapiz &lapiz)
     const PV2f br(m_pos.getX() + m_anchura + pelota->getRadio(), m_pos.getY() - pelota->getRadio());
     QList<PV2f> vertices;
     vertices << br << tr << tl << bl;
-    size_t vertice = 0;
     for (size_t i = 0; i < 4; ++i) {
         if (tin > tout) {
             break;
@@ -107,7 +106,6 @@ bool Pared::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n, Lapiz &lapiz)
                 return false;
             }
         } else {
-            vertice = i;
             thit = (num / den) + (pelota->getSentido() * pelota->getFuerza()).mod();
             if (den < 0) {
                 tin = qMax(tin, thit);
@@ -117,19 +115,20 @@ bool Pared::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n, Lapiz &lapiz)
         }
     }
     if (tin <= tout) {
-        switch (vertice) {
-            case 0: //aaa
-                n = pelota->getPos() - PV2f(m_pos.getX(), pelota->getPos().getY());
-                break;
-            case 1:
-                n = pelota->getPos() - PV2f(pelota->getPos().getX(), m_pos.getY());
-                break;
-            case 2: //aaa
-                n = pelota->getPos() - PV2f(m_pos.getX() + m_anchura, pelota->getPos().getY());
-                break;
-            case 3:
-                n = pelota->getPos() - PV2f(pelota->getPos().getX(), m_pos.getY() + m_altura);
-                break;
+        if (pelota->getPos().getX() < m_pos.getX()) {
+            if (pelota->getPos().getY() > m_pos.getY() && pelota->getPos().getY() < m_pos.getY() + m_altura) {
+                n = PV2f(-1.0, 0.0, PV2f::Vector);
+            }
+        } else if (pelota->getPos().getX() < m_pos.getX() + m_anchura) {
+            if (pelota->getPos().getY() < m_pos.getY()) {
+                n = PV2f(0.0, -1.0, PV2f::Vector);
+            } else {
+                n = PV2f(0.0, 1.0, PV2f::Vector);
+            }
+        } else {
+            if (pelota->getPos().getY() > m_pos.getY() && pelota->getPos().getY() < m_pos.getY() + m_altura) {
+                n = PV2f(1.0, 0.0, PV2f::Vector);
+            }
         }
         return true;
     }
