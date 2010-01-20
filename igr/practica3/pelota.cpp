@@ -95,5 +95,9 @@ bool Pelota::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n, Lapiz &lapiz)
         return false;
     }
     const PV2f distancia = pelota->getPos() - m_pos;
-    return distancia.mod() <= pelota->getRadio() + (pelota->getSentido() * pelota->getFuerza()).mod() + m_radio;
+    if (distancia.mod() <= pelota->getRadio() + (pelota->getSentido() * pelota->getFuerza()).mod() + m_radio) {
+        n = pelota->getPos() - m_pos;
+        return true;
+    }
+    return false;
 }

@@ -1,6 +1,7 @@
 #include "pared.h"
 #include "lapiz.h"
 #include "general.h"
+#include "pelota.h"
 
 #include <math.h>
 
@@ -81,41 +82,56 @@ void Pared::dibujaNormales(Lapiz &lapiz) const
 
 bool Pared::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n, Lapiz &lapiz)
 {
-//     GLdouble tin = 0.0;
-//     GLdouble tout = 1.0;
-//     const GLdouble alpha = 2.0 * M_PI / (GLdouble) m_nLados;
-//     const GLdouble beta = (M_PI - alpha) / 2.0;
-//     const GLdouble gamma = M_PI - beta;
-//     const GLdouble radio = (m_lado / 2.0) / cos(beta);
-//     PV2f pos(m_pos.getX() + radio, m_pos.getY());
-//     lapiz.setPos(pos);
-//     lapiz.girar(gamma);
-//     for (size_t i = 0; i < m_nLados; ++i) {
-//         if (tin > tout) {
-//             break;
-//         }
-//         const PV2f oldPos = lapiz.getPos();
-//         lapiz.avanzar(m_lado, Lapiz::NoDejarRastro);
-//         const PV2f pos = lapiz.getPos();
-//         const PV2f co = pelota->getPos() - pos;
-//         n = (pos - oldPos).normal(PV2f::Izquierda);
-//         n.normalizar();
-//         const GLdouble num = n.dot(co);
-//         const GLdouble den = pelota->getSentido().dot(n);
-//         if (den > -0.0001f && den < 0.0001f) {
-//             if (num <= 0.0) {
-//                 return false;
-//             }
-//         } else {
-//             thit = (num / den) + (pelota->getSentido() * pelota->getFuerza()).mod() + pelota->getRadio();
-//             if (den < 0) {
-//                 tin = qMax(tin, thit);
-//             } else {
-//                 tout = qMin(tout, thit);
-//             }
-//         }
-//         lapiz.girar(alpha);
-//     }
-//     return tin <= tout;
+    GLdouble tin = 0.0;
+    GLdouble tout = 1.0;
+    const PV2f bl(m_pos.getX() - pelota->getRadio(), m_pos.getY() - pelota->getRadio());
+    const PV2f tl(m_pos.getX() - pelota->getRadio(), m_pos.getY() + m_altura + pelota->getRadio());
+    const PV2f tr(m_pos.getX() + m_anchura + pelota->getRadio(), m_pos.getY() + m_altura + pelota->getRadio());
+    const PV2f br(m_pos.getX() + m_anchura + pelota->getRadio(), m_pos.getY() - pelota->getRadio());
+    QList<PV2f> vertices;
+    vertices << br << tr << tl << bl;
+    size_t vertice = 0;
+    for (size_t i = 0; i < 4; ++i) {
+        if (tin > tout) {
+            break;
+        }
+        const PV2f oldPos = vertices[i];
+        const PV2f pos = vertices[(i + 1) % 4];
+        const PV2f co = pelota->getPos() - pos;
+        n = (pos - oldPos).normal(PV2f::Izquierda);
+        n.normalizar();
+        const GLdouble num = n.dot(co);
+        const GLdouble den = pelota->getSentido().dot(n);
+        if (den > -0.0001f && den < 0.0001f) {
+            if (num <= 0.0) {
+                return false;
+            }
+        } else {
+            vertice = i;
+            thit = (num / den) + (pelota->getSentido() * pelota->getFuerza()).mod();
+            if (den < 0) {
+                tin = qMax(tin, thit);
+            } else {
+                tout = qMin(tout, thit);
+            }
+        }
+    }
+    if (tin <= tout) {
+        switch (vertice) {
+            case 0: //aaa
+                n = pelota->getPos() - PV2f(m_pos.getX(), pelota->getPos().getY());
+                break;
+            case 1:
+                n = pelota->getPos() - PV2f(pelota->getPos().getX(), m_pos.getY());
+                break;
+            case 2:
+                n = pelota->getPos() - PV2f(m_pos.getX() + m_anchura, pelota->getPos().getY());
+                break;
+            case 3: //aaa
+                n = pelota->getPos() - PV2f(pelota->getPos().getX(), m_pos.getY() + m_altura);
+                break;
+        }
+        return true;
+    }
     return false;
 }

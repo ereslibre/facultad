@@ -53,7 +53,7 @@ void Escena::actualizaEstado()
     if (!hayColision) {
         m_pelota->avanza();
     } else {
-        m_pelota->reflexion(m_pelota->getPos() - colisionado->getPos());
+        m_pelota->reflexion(n);
         m_pelota->avanza();
     }
     update();

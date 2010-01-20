@@ -115,5 +115,9 @@ bool PoligonoConvexo::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n, Lapiz &
         }
         lapiz.girar(alpha);
     }
-    return tin <= tout;
+    if (tin <= tout) {
+        n = pelota->getPos() - m_pos;
+        return true;
+    }
+    return false;
 }
