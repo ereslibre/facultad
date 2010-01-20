@@ -40,7 +40,6 @@ private:
     PV2f     m_sentido;
     GLdouble m_fuerza;
     GLdouble m_radio;
-    GLdouble m_angulo;
     Tipo     m_tipo;
 };
 

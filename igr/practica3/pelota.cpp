@@ -11,7 +11,6 @@ Pelota::Pelota(const PV2f &pos, GLdouble radio, Tipo tipo)
     , m_sentido(1, 0, PV2f::Vector)
     , m_fuerza(0)
     , m_radio(radio)
-    , m_angulo(0)
     , m_tipo(tipo)
 {
 }
@@ -45,14 +44,14 @@ void Pelota::incrementaFuerza()
 
 void Pelota::incrementaAngulo()
 {
-    m_angulo += 0.1;
-    m_sentido = PV2f(cos(m_angulo), sin(m_angulo), PV2f::Vector);
+    m_sentido = PV2f(m_sentido.getX() * cos(0.1) - m_sentido.getY() * sin(0.1),
+                     m_sentido.getX() * sin(0.1) + m_sentido.getY() * cos(0.1), PV2f::Vector);
 }
 
 void Pelota::decrementaAngulo()
 {
-    m_angulo -= 0.1;
-    m_sentido = PV2f(cos(m_angulo), sin(m_angulo), PV2f::Vector);
+    m_sentido = PV2f(m_sentido.getX() * cos(-0.1) - m_sentido.getY() * sin(-0.1),
+                     m_sentido.getX() * sin(-0.1) + m_sentido.getY() * cos(-0.1), PV2f::Vector);
 }
 
 void Pelota::avanza(GLdouble pasos)
