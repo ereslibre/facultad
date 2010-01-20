@@ -74,7 +74,7 @@ void PoligonoConvexo::dibujaNormales(Lapiz &lapiz) const
         lapiz.girar(alpha);
     }
 }
-
+#include <QtCore/QDebug>
 bool PoligonoConvexo::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n, Lapiz &lapiz)
 {
     GLdouble tin = 0.0;
@@ -96,24 +96,26 @@ bool PoligonoConvexo::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n, Lapiz &
         const PV2f oldPos = lapiz.getPos();
         lapiz.avanzar(m_lado + 2 * a, Lapiz::NoDejarRastro);
         const PV2f pos = lapiz.getPos();
-        const PV2f posPelota = (pelota->getSentido() * pelota->getFuerza()) + pelota->getPos();
-        const PV2f co = posPelota - pos;
-        PV2f n_ = (pos - oldPos).normal(PV2f::Izquierda);
+        const PV2f co = pos - pelota->getPos();
+        PV2f n_ = (pos - oldPos).normal(PV2f::Derecha);
         n_.normalizar();
         const GLdouble num = n_.dot(co);
         const GLdouble den = pelota->getSentido().dot(n_);
         if (!den) {
-            if (num <= 0.0) {
+            if (num <= 0) {
                 return false;
             }
         } else {
             thit = num / den;
             if (den < 0) {
-                tin = qMax(tin, thit);
-                if (thit == tin) {
+                if (thit > tin) {
                     n = n_;
                 }
+                tin = qMax(tin, thit);
             } else {
+                if (thit < tout) {
+                    n = n_;
+                }
                 tout = qMin(tout, thit);
             }
         }

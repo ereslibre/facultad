@@ -48,9 +48,13 @@ void Escena::actualizaEstado()
         m_lapiz.recuperaEstado();
     }
     if (hayColision) {
-        m_pelota->avanza(m_pelota->getFuerza() - thit);
-        m_pelota->reflexion(n);
-        m_pelota->setFuerza(m_pelota->getFuerza() * 0.7);
+        if (thit < -0.1) {
+            m_pelota->avanza(thit);
+            m_pelota->reflexion(n);
+            m_pelota->setFuerza(m_pelota->getFuerza() * 0.7);
+        } else {
+            m_pelota->avanza();
+        }
     } else {
         m_pelota->avanza();
     }
