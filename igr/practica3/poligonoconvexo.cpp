@@ -80,9 +80,12 @@ bool PoligonoConvexo::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n, Lapiz &
     GLdouble tin = 0.0;
     GLdouble tout = 1.0;
     const GLdouble alpha = 2.0 * M_PI / (GLdouble) m_nLados;
+    const GLdouble b = RADIO_PELOTA;
+    const GLdouble c = b / cos(alpha / 2.0);
+    const GLdouble a = c * sin(alpha / 2.0);
     const GLdouble beta = (M_PI - alpha) / 2.0;
     const GLdouble gamma = M_PI - beta;
-    const GLdouble radio = (m_lado / 2.0) / cos(beta);
+    const GLdouble radio = (m_lado / 2.0) / cos(beta) + c;
     PV2f pos(m_pos.getX() + radio, m_pos.getY());
     lapiz.setPos(pos);
     lapiz.girar(gamma);
@@ -91,7 +94,7 @@ bool PoligonoConvexo::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n, Lapiz &
             break;
         }
         const PV2f oldPos = lapiz.getPos();
-        lapiz.avanzar(m_lado, Lapiz::NoDejarRastro);
+        lapiz.avanzar(m_lado + 2 * a, Lapiz::NoDejarRastro);
         const PV2f pos = lapiz.getPos();
         const PV2f co = pelota->getPos() - pos;
         n = (pos - oldPos).normal(PV2f::Izquierda);
@@ -103,7 +106,7 @@ bool PoligonoConvexo::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n, Lapiz &
                 return false;
             }
         } else {
-            thit = (num / den) + (pelota->getSentido() * pelota->getFuerza()).mod() + pelota->getRadio();
+            thit = (num / den) + (pelota->getSentido() * pelota->getFuerza()).mod();
             if (den < 0) {
                 tin = qMax(tin, thit);
             } else {

@@ -21,7 +21,7 @@ public:
 
     PV2f getPos() const;
 
-    void dibujaLinea(const PV2f &pos, GLdouble orientacion = 0, GLdouble tamano = 50.0) const;
+    void dibujaLinea(const PV2f &pos, const PV2f &sentido) const;
 
     virtual void dibuja(Lapiz &lapiz) const = 0;
     virtual void dibujaEnvoltorio(Lapiz &lapiz) const = 0;

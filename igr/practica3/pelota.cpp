@@ -86,7 +86,7 @@ void Pelota::dibujaEnvoltorio(Lapiz &lapiz) const
 void Pelota::dibujaNormales(Lapiz &lapiz) const
 {
     if (m_tipo == Protagonista) {
-        dibujaLinea(m_pos, m_angulo, m_radio + m_fuerza);
+        dibujaLinea(m_pos, m_sentido * (RADIO_PELOTA + m_fuerza));
     }
 }
 
