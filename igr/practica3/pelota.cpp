@@ -54,9 +54,9 @@ void Pelota::decrementaAngulo()
                      m_sentido.getX() * sin(-0.1) + m_sentido.getY() * cos(-0.1), PV2f::Vector);
 }
 
-void Pelota::avanza(GLdouble pasos)
+void Pelota::avanza()
 {
-    m_pos = (m_sentido * (pasos ? pasos : m_fuerza)) + m_pos;
+    m_pos = (m_sentido * m_fuerza) + m_pos;
     m_fuerza *= ROZAMIENTO;
 }
 

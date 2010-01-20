@@ -28,7 +28,7 @@ public:
     void incrementaAngulo();
     void decrementaAngulo();
 
-    void avanza(GLdouble pasos = 0.0);
+    void avanza();
     void reflexion(const PV2f &n);
 
     virtual void dibuja(Lapiz &lapiz) const;
