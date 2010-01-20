@@ -105,9 +105,8 @@ void Escena::initializeGL()
     m_listaObstaculos << new Pared(PV2f(0, 0), 20, ESCENA_HEIGHT);
     m_listaObstaculos << new Pared(PV2f(0, ESCENA_HEIGHT - 20), ESCENA_WIDTH, 20);
     m_listaObstaculos << new Pared(PV2f(ESCENA_WIDTH - 20, 0), 20, ESCENA_HEIGHT);
-    m_listaObstaculos << new Pared(PV2f(620, 350), 40, 40);
     m_listaObstaculos << new PoligonoConvexo(PV2f(300, 250), 100, 8);
-    m_listaObstaculos << new Pelota(PV2f(650, 200), 20.0);
+    m_listaObstaculos << new Pelota(PV2f(650, 400), 20.0);
     m_pelota = new Pelota(PV2f(550, 100), RADIO_PELOTA, Pelota::Protagonista);
     m_listaObstaculos << m_pelota;
 }
