@@ -124,10 +124,10 @@ bool Pared::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n, Lapiz &lapiz)
             case 1:
                 n = pelota->getPos() - PV2f(pelota->getPos().getX(), m_pos.getY());
                 break;
-            case 2:
+            case 2: //aaa
                 n = pelota->getPos() - PV2f(m_pos.getX() + m_anchura, pelota->getPos().getY());
                 break;
-            case 3: //aaa
+            case 3:
                 n = pelota->getPos() - PV2f(pelota->getPos().getX(), m_pos.getY() + m_altura);
                 break;
         }
