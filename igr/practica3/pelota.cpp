@@ -59,9 +59,9 @@ void Pelota::decrementaAngulo()
                      m_sentido.getX() * sin(-0.1) + m_sentido.getY() * cos(-0.1), PV2f::Vector);
 }
 
-void Pelota::avanza()
+void Pelota::avanza(GLdouble paso)
 {
-    m_pos = (m_sentido * m_fuerza) + m_pos;
+    m_pos = (m_sentido * (paso == -1.0 ? m_fuerza : paso)) + m_pos;
     m_fuerza *= ROZAMIENTO;
 }
 
@@ -100,7 +100,8 @@ bool Pelota::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n, Lapiz &lapiz)
         return false;
     }
     const PV2f distancia = pelota->getPos() - m_pos;
-    if (distancia.mod() <= pelota->getRadio() + (pelota->getSentido() * pelota->getFuerza()).mod() + m_radio) {
+    if (distancia.mod() < pelota->getRadio() + (pelota->getSentido() * pelota->getFuerza()).mod() + m_radio) {
+        thit = (pelota->getPos() - m_pos).mod() - pelota->getRadio() - m_radio;
         PV2f res = pelota->getPos() - m_pos;
         res.normalizar();
         n = res;

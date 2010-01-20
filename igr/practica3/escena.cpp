@@ -38,9 +38,6 @@ void Escena::actualizaEstado()
     GLdouble thit = -1;
     PV2f n;
     Q_FOREACH (Obstaculo *const obstaculo, m_listaObstaculos) {
-        if (obstaculo == m_pelota) {
-            continue;
-        }
         m_lapiz.salvaEstado();
         if (obstaculo->colisiona(m_pelota, thit, n, m_lapiz)) {
             colisionado = obstaculo;
@@ -51,10 +48,12 @@ void Escena::actualizaEstado()
         m_lapiz.recuperaEstado();
     }
     if (hayColision) {
+        m_pelota->avanza(thit);
         m_pelota->reflexion(n);
         m_pelota->setFuerza(m_pelota->getFuerza() * 0.7);
+    } else {
+        m_pelota->avanza();
     }
-    m_pelota->avanza();
     update();
 }
 
@@ -69,10 +68,10 @@ void Escena::keyPressEvent(QKeyEvent *event)
         case Qt::Key_Down:
             break;
         case Qt::Key_Left:
-            m_pelota->decrementaAngulo();
+            m_pelota->incrementaAngulo();
             break;
         case Qt::Key_Right:
-            m_pelota->incrementaAngulo();
+            m_pelota->decrementaAngulo();
             break;
         default:
             event->ignore();
