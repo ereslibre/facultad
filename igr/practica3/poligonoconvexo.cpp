@@ -97,29 +97,26 @@ bool PoligonoConvexo::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n, Lapiz &
         lapiz.avanzar(m_lado + 2 * a, Lapiz::NoDejarRastro);
         const PV2f pos = lapiz.getPos();
         const PV2f co = pelota->getPos() - pos;
-        n = (pos - oldPos).normal(PV2f::Izquierda);
-        n.normalizar();
-        const GLdouble num = n.dot(co);
-        const GLdouble den = pelota->getSentido().dot(n);
+        PV2f n_ = (pos - oldPos).normal(PV2f::Izquierda);
+        n_.normalizar();
+        const GLdouble num = n_.dot(co);
+        const GLdouble den = pelota->getSentido().dot(n_);
         if (den > -0.0001f && den < 0.0001f) {
             if (num <= 0.0) {
                 return false;
             }
         } else {
-            thit = (num / den) + (pelota->getSentido() * pelota->getFuerza()).mod();
+            thit = num / den;
             if (den < 0) {
                 tin = qMax(tin, thit);
+                if (thit == tin) {
+                    n = n_;
+                }
             } else {
                 tout = qMin(tout, thit);
             }
         }
         lapiz.girar(alpha);
     }
-    if (tin <= tout) {
-        PV2f res = pelota->getPos() - m_pos;
-        res.normalizar();
-        n = res;
-        return true;
-    }
-    return false;
+    return tin <= tout;
 }

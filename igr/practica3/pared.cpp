@@ -97,40 +97,25 @@ bool Pared::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n, Lapiz &lapiz)
         const PV2f oldPos = vertices[i];
         const PV2f pos = vertices[(i + 1) % 4];
         const PV2f co = pelota->getPos() - pos;
-        n = (pos - oldPos).normal(PV2f::Izquierda);
-        n.normalizar();
-        const GLdouble num = n.dot(co);
-        const GLdouble den = pelota->getSentido().dot(n);
+        PV2f n_ = (pos - oldPos).normal(PV2f::Izquierda);
+        n_.normalizar();
+        const GLdouble num = n_.dot(co);
+        const GLdouble den = pelota->getSentido().dot(n_);
         if (den > -0.0001f && den < 0.0001f) {
             if (num <= 0.0) {
                 return false;
             }
         } else {
-            thit = (num / den) + (pelota->getSentido() * pelota->getFuerza()).mod();
+            thit = num / den;
             if (den < 0) {
                 tin = qMax(tin, thit);
+                if (thit == tin) {
+                    n = n_;
+                }
             } else {
                 tout = qMin(tout, thit);
             }
         }
     }
-    if (tin <= tout) {
-        if (pelota->getPos().getX() < m_pos.getX()) {
-            if (pelota->getPos().getY() > m_pos.getY() && pelota->getPos().getY() < m_pos.getY() + m_altura) {
-                n = PV2f(-1.0, 0.0, PV2f::Vector);
-            }
-        } else if (pelota->getPos().getX() < m_pos.getX() + m_anchura) {
-            if (pelota->getPos().getY() < m_pos.getY()) {
-                n = PV2f(0.0, -1.0, PV2f::Vector);
-            } else {
-                n = PV2f(0.0, 1.0, PV2f::Vector);
-            }
-        } else {
-            if (pelota->getPos().getY() > m_pos.getY() && pelota->getPos().getY() < m_pos.getY() + m_altura) {
-                n = PV2f(1.0, 0.0, PV2f::Vector);
-            }
-        }
-        return true;
-    }
-    return false;
+    return tin <= tout;
 }
