@@ -101,7 +101,7 @@ bool Pared::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n, Lapiz &lapiz)
         n_.normalizar();
         const GLdouble num = n_.dot(co);
         const GLdouble den = pelota->getSentido().dot(n_);
-        if (den > -0.0001f && den < 0.0001f) {
+        if (!den) {
             if (num <= 0.0) {
                 return false;
             }
