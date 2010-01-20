@@ -79,7 +79,43 @@ void Pared::dibujaNormales(Lapiz &lapiz) const
     glEnd();
 }
 
-bool Pared::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n)
+bool Pared::colisiona(Pelota *pelota, GLdouble &thit, PV2f &n, Lapiz &lapiz)
 {
+//     GLdouble tin = 0.0;
+//     GLdouble tout = 1.0;
+//     const GLdouble alpha = 2.0 * M_PI / (GLdouble) m_nLados;
+//     const GLdouble beta = (M_PI - alpha) / 2.0;
+//     const GLdouble gamma = M_PI - beta;
+//     const GLdouble radio = (m_lado / 2.0) / cos(beta);
+//     PV2f pos(m_pos.getX() + radio, m_pos.getY());
+//     lapiz.setPos(pos);
+//     lapiz.girar(gamma);
+//     for (size_t i = 0; i < m_nLados; ++i) {
+//         if (tin > tout) {
+//             break;
+//         }
+//         const PV2f oldPos = lapiz.getPos();
+//         lapiz.avanzar(m_lado, Lapiz::NoDejarRastro);
+//         const PV2f pos = lapiz.getPos();
+//         const PV2f co = pelota->getPos() - pos;
+//         n = (pos - oldPos).normal(PV2f::Izquierda);
+//         n.normalizar();
+//         const GLdouble num = n.dot(co);
+//         const GLdouble den = pelota->getSentido().dot(n);
+//         if (den > -0.0001f && den < 0.0001f) {
+//             if (num <= 0.0) {
+//                 return false;
+//             }
+//         } else {
+//             thit = (num / den) + (pelota->getSentido() * pelota->getFuerza()).mod() + pelota->getRadio();
+//             if (den < 0) {
+//                 tin = qMax(tin, thit);
+//             } else {
+//                 tout = qMin(tout, thit);
+//             }
+//         }
+//         lapiz.girar(alpha);
+//     }
+//     return tin <= tout;
     return false;
 }

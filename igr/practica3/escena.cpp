@@ -41,11 +41,14 @@ void Escena::actualizaEstado()
         if (obstaculo == m_pelota) {
             continue;
         }
-        if (obstaculo->colisiona(m_pelota, thit, n)) {
+        m_lapiz.salvaEstado();
+        if (obstaculo->colisiona(m_pelota, thit, n, m_lapiz)) {
             colisionado = obstaculo;
             hayColision = true;
+            m_lapiz.recuperaEstado();
             break;
         }
+        m_lapiz.recuperaEstado();
     }
     if (!hayColision) {
         m_pelota->avanza();
@@ -105,8 +108,8 @@ void Escena::initializeGL()
     m_listaObstaculos << new Pared(PV2f(ESCENA_WIDTH - 20, 0), 20, ESCENA_HEIGHT);
     m_listaObstaculos << new Pared(PV2f(620, 350), 40, 40);
     m_listaObstaculos << new PoligonoConvexo(PV2f(300, 250), 100, 8);
-    m_listaObstaculos << new Pelota(PV2f(650, 200));
-    m_pelota = new Pelota(PV2f(650, 150), Pelota::Protagonista);
+    m_listaObstaculos << new Pelota(PV2f(650, 200), RADIO_PELOTA);
+    m_pelota = new Pelota(PV2f(650, 150), RADIO_PELOTA, Pelota::Protagonista);
     m_listaObstaculos << m_pelota;
 }
 
@@ -142,7 +145,9 @@ void Escena::paintGL()
         }
 #else
         glColor3f(1.0f, 1.0f, 0.0f);
+        m_lapiz.salvaEstado();
         m_pelota->dibujaNormales(m_lapiz);
+        m_lapiz.recuperaEstado();
 #endif
     }
 }

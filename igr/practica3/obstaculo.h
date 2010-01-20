@@ -26,7 +26,7 @@ public:
     virtual void dibuja(Lapiz &lapiz) const = 0;
     virtual void dibujaEnvoltorio(Lapiz &lapiz) const = 0;
     virtual void dibujaNormales(Lapiz &lapiz) const = 0;
-    virtual bool colisiona(Pelota *pelota, GLdouble &thit, PV2f &n) = 0;
+    virtual bool colisiona(Pelota *pelota, GLdouble &thit, PV2f &n, Lapiz &lapiz) = 0;
 
 protected:
     PV2f m_pos;
