@@ -42,7 +42,7 @@ GLdouble Pelota::getRadio() const
 void Pelota::incrementaFuerza()
 {
     m_fuerza += 0.5;
-    if (m_fuerza == 50.0) {
+    if (m_fuerza >= 50.0) {
         m_fuerza = 0;
     }
 }
