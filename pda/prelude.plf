@@ -1,0 +1,91 @@
+nf(X)=Y :- nfPred(X,Y).
+
+unquote(X)=X@dummy.
+
+ifThen(true,X)=X@dummy.
+
+ifThenElse(true,X,_)=X@dummy.
+ifThenElse(false,_,Y)=Y@dummy.
+
+?(X,Y)=X@dummy.
+?(X,Y)=Y@dummy.
+
+
++(X,Y)=Z :- Z is X+Y.
+-(X,Y)=Z :- Z is X-Y.
+*(X,Y)=Z :- Z is X*Y.
+/(X,Y)=Z :- Z is X/Y.
+
+mod(X,Y)=Z :- Z is X mod Y.
+==(X,Y)=true :- X==Y,!.
+==(X,Y)=false.
+
+=\=(X,Y)=true :- X=\=Y,!.
+=\=(X,Y)=false.
+
+
+<(X,Y) = true :- X<Y,!.
+<(X,Y) = false.
+
+>(X,Y) = true :- X>Y,!.
+>(X,Y) = false.
+
+
+=<(X,Y) = true :- X=<Y,!.
+=<(X,Y) = false.
+
+>=(X,Y) = true :- X>=Y,!.
+>=(X,Y) = false.
+
+abs(N)=ifThenElse((N>=0),N,N*(-1)).
+
+and(true,X)=X.
+and(false,X)=false.
+
+map(F,[])=[].
+map(F,[X|Xs])=[F@X|map(F,Xs)].
+
+nth(0,[X|Xs])=X :- !.
+nth(N,[X|Xs])=nth(N-1,Xs).
+
+take(0,L)=[]:-!.
+take(N,[])=[]:-!.
+take(N,[X|Xs])=[X|take(N-1,Xs)].
+
+
+filter(P,[]) = [].
+filter(P,[X|Xs]) = [X|filter(P,Xs)] :- P@X=true, !.
+filter(P,[X|Xs]) = filter(P,Xs).
+
+foldr(F,E,[])=[].
+foldr(F,E,[X|Xs])=(F@X)@(foldr(F,E,Xs)).
+
+foldl(F,E,[])=[].
+foldl(F,E,[X|Xs])=foldl(F,(F@E)@X,Xs).
+
+head([X|_])=X.
+tail([_|Xs])=Xs.
+
+zip([],Xs)=[] :-!.
+zip(Xs,[])=[] :-!.
+zip([X|Xs],[Y|Ys])=[(X,Y)|zip(Xs,Ys)].
+
+zipWith(F,[],Xs)=[] :-!.
+zipWith(F,Xs,[])=[] :-!.
+zipWith(F,[X|Xs],[Y|Ys])=[(F@X)@Y|zipWith(F,Xs,Ys)].
+
+
+concat([[]])=[] :-!.
+concat([[]|Yss])=concat(Yss).
+concat([[X|Xs]|Yss])=[X|concat([Xs|Yss])].
+
+app([],Xs)=Xs.
+app([X|Xs],Ys)=[X|app(Xs,Ys)].
+
+
+concatMap(F,[])=[].
+concatMap(F,[X|Xs])= app((F@X),concatMap(F,Xs)).
+
+
+proy(X,E)=X :- E.
+
