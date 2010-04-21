@@ -108,14 +108,28 @@ según una constante $B$ a la altura del depósito):
 
 Podemos reformular las ecuaciones (\ref{eq:tanque1}) y (\ref{eq:tanque2}) utilizando (\ref{eq:bernoulliqt}), quedando:
 \begin{align*}
-    {d \over dt} A_1 h_1(t) &= q_{e1}(t) - B h_1(t)\\
+    {d \over dt} A_1 h_1(t) &= q_{e1}(t) - B h_1(t) \\
     {d \over dt} A_2 h_2(t) &= q_{e2}(t) - B h_2(t)
+\end{align*}
+
+Volviendo a la notación genérica:
+\begin{align*}
+    A_i h_i(t) &= \int q_{ei}(t) \, dt - B \int h_i(t) \, dt \\
+    A_i h_i(t + 1) &= q_{ei}(t) - B h_i(t) \\
+    h_i(t + 1) &= {1 \over A_i} \left( q_{ei}(t) - B h_i(t) \right)
 \end{align*}
 
 También podemos reformular la ecuación de la salida del sistema (\ref{eq:salida}) utilizando (\ref{eq:bernoulliqt}):
 \begin{align*}
     {d \over dt} qs(t) &= B h_1(t) + B h_2(t) \\
                        &= B (h_1(t) + h_2(t))
+\end{align*}
+
+Con lo que tenemos:
+\begin{align*}
+    qs(t) &= B \int h_1(t) \, dt + B \int h_2(t) \, dt \\
+    qs(t + 1) &= B h_1(t) + B h_2(t) \\
+              &= B (h_1(t) + h_2(t))
 \end{align*}
 
 \newpage
