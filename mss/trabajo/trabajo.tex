@@ -22,7 +22,7 @@
 \newpage
 
 \section{Ejercicio 1}
-El modelo propuesto consta de las siguientes señales:
+El modelo propuesto es no lineal y consta de las siguientes señales:
 \begin{itemize}
     \item $q_{e1}(t)$
     \begin{itemize}
@@ -99,28 +99,24 @@ De este modo, y como ya se comentó anteriormente, la salida será por tanto:
 \end{equation}
 
 Generalizando a partir de ahora me referiré a las ecuaciones con subíndice $i$ para denotar que es
-válido para ambos tanques. Como hemos visto en clase y con las restricciones del problema, por el
-principio de Bernoulli tenemos:
+válido para ambos tanques. Con las restricciones del problema\footnote{Una solución más elegante hubiera sido linealizar. Es decir, buscar un intervalo de la función en que ésta se comporte prácticamente como una función lineal y desarrollar \emph{Taylor} para posteriormente aplicar las transformadas de \emph{LaPlace} (ya que éstas necesitan un sistema lineal).} (salida de caudal es proporcional
+según una constante $B$ a la altura del depósito):
 \begin{equation}
     \label{eq:bernoulliqt}
-    {qs_i(t) = B h_i(t) v_i(t)}
+    {qs_i(t) = B h_i(t)}
 \end{equation}
 
-\begin{equation}
-    \label{eq:bernoullivt}
-    {v_i(t) = \sqrt{2 g h_i(t)}}
-\end{equation}
+Podemos reformular las ecuaciones (\ref{eq:tanque1}) y (\ref{eq:tanque2}) utilizando (\ref{eq:bernoulliqt}), quedando:
+\begin{align*}
+    {d \over dt} A_1 h_1(t) &= q_{e1}(t) - B h_1(t)\\
+    {d \over dt} A_2 h_2(t) &= q_{e2}(t) - B h_2(t)
+\end{align*}
 
-Aplicando ahora (\ref{eq:bernoullivt}) en (\ref{eq:bernoulliqt}) obtenemos:
-\begin{equation}
-    \label{eq:qsi}
-    {qs_i(t) = B h_i(t) \sqrt{2 g h_i(t)}}
-\end{equation}
-
-Podemos reformular las ecuaciones (\ref{eq:tanque1}) y (\ref{eq:tanque2}) utilizando (\ref{eq:qsi}), quedando:
-\begin{equation}
-    {}
-\end{equation}
+También podemos reformular la ecuación de la salida del sistema (\ref{eq:salida}) utilizando (\ref{eq:bernoulliqt}):
+\begin{align*}
+    {d \over dt} qs(t) &= B h_1(t) + B h_2(t) \\
+                       &= B (h_1(t) + h_2(t))
+\end{align*}
 
 \newpage
 
@@ -153,6 +149,62 @@ para $u_0 = 0$.
 \newpage
 
 \section{Ejercicio 3}
+Tipos de modelos:
+\begin{itemize}
+    \item Determinista
+        \begin{itemize}
+            \item Modelo matemático que trate aspectos físicos de reacciones químicas. Es conocida la
+                  reacción de varios elementos en conjunción, y también se sabe si por ejemplo será
+                  exotérmica o endotérmica.
+        \end{itemize}
+    \item Estocástico
+        \begin{itemize}
+            \item Modelo matemático que intente predecir en una partida de póker si apostar o no
+                  apostar. Tiene que tratar con probabilidades sobre qué cartas podrían llevar otros
+                  jugadores.
+        \end{itemize}
+    \item Estático
+        \begin{itemize}
+            \item Modelo matemático que sea capaz de resolver un problema de planificación. Aquí
+                  se plantea un sistema que no requiere un modelo con memoria.
+        \end{itemize}
+    \item Dinámico
+        \begin{itemize}
+            \item Sistema de predicción de erupción de volcanes. Requiere una historia para poder
+                  determinar la actividad de un volcán.
+        \end{itemize}
+    \item Discreto
+        \begin{itemize}
+            \item Modelo que trate de comportarse como un satélite, al que le llegan peticiones y
+                  a las que tiene que contestar, con periodos intermitentes de inactividad.
+        \end{itemize}
+    \item Continuo
+        \begin{itemize}
+            \item El análisis de una onda de audio para reconocer una voz y realizar una determinada
+                  acción (como pueda ser, arrancar una aplicación que el usuario haya solicitado por el
+                  micrófono en el ordenador, por ejemplo).
+        \end{itemize}
+    \item Lineal
+        \begin{itemize}
+            \item Un modelo que describa si un año es bisiesto o no.
+        \end{itemize}
+    \item No lineal
+        \begin{itemize}
+            \item Modelo que trate de explicar las interacciones y fuerzas que existen entre los
+                  planetas del sistema solar.
+        \end{itemize}
+    \item Parámetros concentrados (\emph{lumped})
+        \begin{itemize}
+            \item Modelo que describa las notas medias de todos los alumnos de una facultad determinada.
+        \end{itemize}
+    \item Parámetros distribuidos
+        \begin{itemize}
+            \item Modelo que trate de imitar el desplazamiento de un animal hasta ahora desconocido
+                  que siempre (o nunca) alcanza su comida acercándose a ella $x \over 2$ donde $x$ era
+                  la distancia original.
+        \end{itemize}
+\end{itemize}
+Tipos de sistemas:
 \begin{itemize}
     \item Estático
         \begin{itemize}
