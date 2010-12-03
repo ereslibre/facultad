@@ -1,0 +1,121 @@
+\documentclass[12pt]{article}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[utf8]{inputenc}
+\setlength{\topmargin}{-3.5cm}
+\setlength{\footskip}{2cm}
+\setlength{\oddsidemargin}{0cm}
+\setlength{\evensidemargin}{0cm}
+\setlength{\textwidth}{6.5in}
+\setlength{\textheight}{11in}
+\title{Modelo dinámico de un sistema físico\\Velocidad de crucero de un coche}
+\author{Rafael Fernández López}
+\date{}
+
+\pagestyle{empty}
+
+\begin{document}
+\maketitle
+
+Muchos coches en la actualidad cuentan con un sistema de ``velocidad de crucero'', que consiste en
+mantener el coche con una velocidad constante sin necesidad de apretar el acelerador. A continuación
+haré un diseño y análisis de un posible modelo dinámico para este sistema.
+
+Como en todo sistema medianamente complejo actúan un gran número de variables. En este caso se
+adoptará un enfoque sencillo, teniendo en cuenta varios factores determinantes:
+
+\begin{itemize}
+  \item $v$: velocidad real del coche
+  \item $v_r$: velocidad deseada del coche
+  \item $u$: salida de nuestro modelo. Controla el acelerador
+  \item $T$: par de torsión. Parte que modela el comportamiento del motor
+  \item $F$: fuerza generada por el par de torsión, aplicada finalmente a las ruedas del coche
+  \item $F_d$: fuerza desequilibrante, generada por desniveles en la carretera, rozamiento y presión
+               aerodinámica
+  \item $m$: masa total del coche
+\end{itemize}
+
+El tipo de controlador más adecuado sería un PI, ya que disminuirá el error en estado estacionario, y
+tendrá noción del error acumulado hasta el momento, promediándolo. Sin embargo, no podemos añadir a
+nuestro controlador un componente derivativo, ya que por la propia naturaleza del problema que queremos
+resolver, no podemos saber como cambiarán las variables de estado, esto es, en gran medida: la fuerza
+desequilibrante, marcada principalmente por los desniveles en la carretera.
+
+Una posible ecuación para el movimiento del coche podría ser la siguiente:
+
+\begin{equation}
+  m \dfrac{dv}{dt} = F - F_d
+\end{equation}
+
+La fuerza generada por el par de torsión podría estar representada por la siguiente ecuación:
+
+\begin{equation}
+  T(\omega) = T_m \left(1 - \beta \left(\dfrac{\omega}{\omega_m}-1\right)^2\right)
+\end{equation}
+
+La máxima fuerza que puede ejercer el par de torsión se alcanza cuando $w=w_m$, es decir, cuando la velocidad
+angular alcanza su máximo. $\beta$ es un factor de corrección para aplicar más realidad al modelo.
+
+La velocidad del motor está relacionada con la velocidad del coche por la expresión:
+
+\begin{equation}
+  \omega = \dfrac{n}{r} v = \alpha_n v
+\end{equation}
+
+donde $n$ representa la relación de transmisión y $r$ el radio de las ruedas.
+
+De tal forma, que la fuerza aplicada a la conducción sería:
+
+\begin{equation}
+  F = \dfrac{nu}{r} T(\omega) = \alpha_n u T(\alpha_n v)
+\end{equation}
+
+Las fuerzas desequilibrantes ($F_d$) son tres principalmente: $F_g$, que representa la fuerza que ejerce
+la gravedad, $F_r$ que representa la fricción y $F_a$ que representa la resistencia aerodinámica.
+
+La fuerza $F_g$ ejercida por la gravedad se podría representar así:
+
+\begin{equation}
+  F_g = m g sen(\theta)
+\end{equation}
+
+donde $\theta$ es el ángulo de desnivel de la carretera.
+
+Un posible modelo para la fuerza de rozamiento podría ser el siguiente:
+
+\begin{equation}
+  F_r = m g C_r
+\end{equation}
+
+donde $C_r$ es el coeficiente de fricción, dependiente del tipo de carretera que estemos atravesando.
+
+Por último, la fuerza de la resistencia aerodinámica se puede representar de la siguiente forma:
+
+\begin{equation}
+  F_a = \dfrac{1}{2} \rho C_d A v^2
+\end{equation}
+
+donde $\rho$ es la densidad del aire, $C_d$ es el coeficiente aerodinámico dependiente de la forma
+del coche, y $A$ es la sección frontal del coche.
+
+Por tanto, la ecuación completa para nuestro controlador de la velocidad de crucero del coche
+quedaría:
+
+\begin{equation}
+  m \dfrac{dv(t)}{dt} = \alpha_n u T(a_n v(t)) - m g C_r - \dfrac{1}{2} \rho C_d A v^2 - m g sen(\theta)
+\end{equation}
+
+Aplicando la transformada de Laplace:
+
+\begin{equation}
+  m s V(s) = \alpha_n u T(a_n V(s)) V(s) - m g C_r V(s) - \dfrac{1}{2} \rho C_d A v^2 V(s) - m g sen(\theta) V(s)
+\end{equation}
+
+\hfill
+
+\begin{flushright}
+  $\blacksquare$
+\end{flushright}
+
+\end{document}
