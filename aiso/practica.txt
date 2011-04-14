@@ -1,0 +1,13 @@
+kernel thread
+    - allow_signal(SIGKILL);
+    - msleep();
+    - if (signal_pending(current)) break;
+
+int clipkthread(void *data) {
+    allow_signal(SIGKILL);
+    for (;;) {
+        if (signal_pending(current)) break;
+        printk(...);
+        msleep(10000);
+    }
+}
