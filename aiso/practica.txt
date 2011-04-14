@@ -11,3 +11,27 @@ int clipkthread(void *data) {
         msleep(10000);
     }
 }
+
+
+---------------------------------------------
+
+for (;;) {
+    ...
+    add_wait_queue(&clipboard_waitqueue, &espera);
+    set_current_state(TASK_INTERRUPTIBLE);
+    schuedule(); // asi dejamos de estar en running, y se da el control a otro proceso
+    remove_wait_queue(&clipboard_waitqueue, &espera);
+    ...
+}
+
+¿Cómo despertarlo luego? WAIT QUEUES -> Lista enlazada (#include <linux/wait.h>)
+    - Este es un método muy manual
+
+    global modulo
+        DECLARE_WAIT_QUEUE_HEAD(clipboard_waitqueue)
+    kthread
+        DECLARE_WAIT_QUEUE(espera, current)
+
+Para despertar al kthread, hay que (desde fuera del thread obviamente) hacer esto:
+    wake_up_interruptible(&clipboard_waitqueue);
+    -> se llegara al kthread despues de la llamada a schedule()
