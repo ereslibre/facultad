@@ -19,7 +19,7 @@ for (;;) {
     ...
     add_wait_queue(&clipboard_waitqueue, &espera);
     set_current_state(TASK_INTERRUPTIBLE);
-    schuedule(); // asi dejamos de estar en running, y se da el control a otro proceso
+    schedule(); // asi dejamos de estar en running, y se da el control a otro proceso
     remove_wait_queue(&clipboard_waitqueue, &espera);
     ...
 }

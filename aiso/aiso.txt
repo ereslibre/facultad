@@ -1,0 +1,25 @@
+- interaccion con /proc/aisoclip
+- NCLIP clipboards (/proc/aisoclip/clipboard)
+- seleccion /proc/aisoclip/selection
+- el valor de NCLIP en tiempo de carga
+
+- dispositivo kernel thread asociado (clipkthread)
+    - log del kernel que indice del clipboard esta activo y cuantos caracteres contiene
+    - registrara cada vez que se escriba en el clipboard
+    - registrara en cambio de clipboard activo
+    - configurar para que se haga periodicamente cad X segundos en /proc/aisoclip/periodo un valor != 0
+
+- lista doblemente enlazada de clipstruct
+    - puntero a un array de caracteres que se utilizara de buffer
+    - dos campos con el numero de elementos y un identificador
+    - un unico elemento inicialmente y se iran anadiendo segun se seleccionen
+
+- gestionar varios clipboards usando un clipboard manager y un driver (modulo) por cada clipboard
+    - manager encargado de arrancar/parar los drivers usando usermode_helper
+        - arrancar/parar un clipboard, escribir su nombre en /proc/aisoclip/(des)activar
+    - /proc/aisoclip/monitor mostrara los clipboards activos
+
+- cada clipboard tiene asociado
+    - un directorio virtual en /proc/aisoclip/<nombre clipboard> con entradas periodo y clipboard
+    - un kernel thread para monitorizar el numero de caracteres que contiene y registrarlo en el log
+      del kernel
