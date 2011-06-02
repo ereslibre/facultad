@@ -1,0 +1,56 @@
+dispositivo de bloques
+
+opcional
+    poder instalar particiones
+        necesario implementar ioctl
+
+pdflush
+    cambiar comportamiento
+
+--------------------------------------------------------------------
+
+linux/fs.h
+
+register_blkdev
+unregister_blkdev
+block_device_operations
+    open
+    release
+    ioctl
+
+Cuidado !! algo cambio en 2.6.28
+
+--------------------------------------------------------------------
+
+No hay que implementar read y write, si no una funcion que procese
+las peticiones pendientes.
+
+    para esto tenemos que inicializar una cola de operaciones
+
+        blk_init_queue
+        blk_queue_logical_block_size
+        blk_cleanup_queue
+
+--------------------------------------------------------------------
+
+struct gendisk
+    estructura que define dispositivo de bloques particionable
+
+struct gendisk {
+    int major;
+    int minors;
+    int firstminor;
+    char disk_name[32];
+    ...
+    struct block_device_operations *fops;
+    struct request_queue *queue;
+    ...
+    sector_t capacity;
+}
+
+struct gendisk *alloc_disk
+    argumento: num de particiones que queremos
+
+void add_disk(struct gendisk *);
+     del_gendisk
+     put_disk
