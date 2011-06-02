@@ -33,6 +33,10 @@ las peticiones pendientes.
 
 --------------------------------------------------------------------
 
+Para ir extrayendo funciones de la cola blk_fetch_request
+
+--------------------------------------------------------------------
+
 struct gendisk
     estructura que define dispositivo de bloques particionable
 
