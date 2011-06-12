@@ -1,0 +1,471 @@
+/*
+* AstroLog Cascading Style Sheet
+* Author: Jeff Burton
+* Version: 1.0.0, 23 Nov 2004
+*/
+BODY {
+    PADDING-RIGHT: 10px; 
+    PADDING-LEFT: 10px; 
+    BACKGROUND: #123; 
+    PADDING-BOTTOM: 20px; 
+    MARGIN: 0px; 
+    FONT: small/1.5em "Trebuchet MS",Verdana,Arial,Sans-serif; 
+    COLOR: #ccc; 
+    PADDING-TOP: 20px;
+    TEXT-ALIGN: center
+}
+A:link {
+    COLOR: #9db
+}
+A:visited {
+    COLOR: #798
+}
+A:hover {
+    COLOR: #fff
+}
+A IMG {
+    BORDER-TOP-WIDTH: 0px;
+    BORDER-LEFT-WIDTH: 0px;
+    BORDER-BOTTOM-WIDTH: 0px;
+    BORDER-RIGHT-WIDTH: 0px
+}
+TEXTAREA {
+    FONT: small/1.5em "Trebuchet MS",Verdana,Arial,Sans-serif;
+}
+SUP {
+    FONT-SIZE: smaller;
+    VERTICAL-ALIGN: super;
+}
+BLOCKQUOTE {
+    BORDER-RIGHT: #596 0px dotted;
+    PADDING-RIGHT: 15px;
+    BORDER-TOP: #596 1px dotted;
+    PADDING-LEFT: 15px;
+    PADDING-BOTTOM: 5px;
+    MARGIN: 0.75em 0px;
+    BORDER-LEFT: #596 0px dotted;
+    PADDING-TOP: 5px;
+    BORDER-BOTTOM: #596 1px dotted
+}
+DIV.content {
+    MARGIN: 0px auto; 
+    WIDTH: 740px;
+    TEXT-ALIGN: left
+}
+DIV.main_bottom {
+    PADDING-RIGHT: 0px; 
+    PADDING-LEFT: 0px; 
+    FONT-SIZE: 97%; 
+    BACKGROUND: url(/images/corners_main_bot.gif) #eec no-repeat left bottom; 
+    FLOAT: left; 
+    PADDING-BOTTOM: 10px; 
+    MARGIN: 15px 0px 0px;
+    WIDTH: 485px;
+    COLOR: #333; 
+    LINE-HEIGHT: 1.5em; 
+    PADDING-TOP: 0px
+}
+
+DIV.main_bottombis {
+    PADDING-RIGHT: 0px; 
+    PADDING-LEFT: 0px; 
+    FONT-SIZE: 97%; 
+    BACKGROUND: url(/images/corners_main_bot.gif) #eec no-repeat left bottom; 
+    FLOAT: left; 
+    PADDING-BOTTOM: 10px; 
+    MARGIN: 15px 0px 0px;
+    WIDTH: 100%;
+    COLOR: #333; 
+    LINE-HEIGHT: 1.5em; 
+    PADDING-TOP: 0px
+}
+
+DIV.main_bottom A:link {
+    COLOR: #347
+}
+DIV.main_bottom A:visited {
+    COLOR: #666
+}
+DIV.main_bottom A:hover {
+    COLOR: #68a
+}
+DIV.main_top {
+    PADDING-RIGHT: 0px; 
+    PADDING-LEFT: 0px; 
+    BACKGROUND: url(/images/corners_main_top.gif) no-repeat left top; 
+    FLOAT: left; 
+    PADDING-BOTTOM: 0px; 
+    WIDTH: 100%; 
+    PADDING-TOP: 10px
+}
+#sidebar {
+    FONT-SIZE: 97%; 
+    FLOAT: right; 
+    MARGIN: 15px 0px 0px; 
+    WIDTH: 240px; 
+    LINE-HEIGHT: 1.5em
+}
+#header {
+    PADDING-RIGHT: 0px; 
+    PADDING-LEFT: 0px; 
+    BACKGROUND: url(/images/corners_cap_bot.gif) #357 no-repeat left bottom;
+    PADDING-BOTTOM: 8px; 
+    MARGIN: 0px; 
+    COLOR: #fff; 
+    PADDING-TOP: 0px
+}
+#header DIV {
+    PADDING-RIGHT: 15px;
+    PADDING-LEFT: 15px; 
+    BACKGROUND: url(/images/corners_cap_top.gif) no-repeat left top;
+    PADDING-BOTTOM: 0px; 
+    PADDING-TOP: 8px
+}
+#blog-title {
+    PADDING-RIGHT: 30px; 
+    PADDING-LEFT: 30px; 
+    FONT-SIZE: 200%;
+    PADDING-BOTTOM: 5px; 
+    MARGIN: 0px; 
+    LINE-HEIGHT: 1.2em; 
+    PADDING-TOP: 10px
+}
+#blog-title A {
+    COLOR: #fff; 
+    TEXT-DECORATION: none
+}
+P.page-navbar {
+    PADDING-RIGHT: 30px; 
+    PADDING-LEFT: 30px; 
+    FONT-SIZE: 94%; 
+    PADDING-BOTTOM: 10px; 
+    MARGIN: 0px; 
+    COLOR: #abc; 
+    LINE-HEIGHT: 1.5em; 
+    PADDING-TOP: 5px
+}
+.date-header {
+    FONT-SIZE: 85%; 
+    MARGIN: 0px 28px 0px 43px; 
+    COLOR: #586; 
+    LINE-HEIGHT: 2em; 
+    LETTER-SPACING: 0.2em
+}
+.post {
+    BORDER-RIGHT: #bb9 0px dotted; 
+    PADDING-RIGHT: 13px; 
+    BORDER-TOP: #bb9 1px dotted; 
+    PADDING-LEFT: 13px; 
+    PADDING-BOTTOM: 0px; 
+    MARGIN: 0.3em 0px 25px;
+    BORDER-LEFT: #bb9 0px dotted; 
+    PADDING-TOP: 0px; 
+    BORDER-BOTTOM: #bb9 1px dotted
+}
+.post TABLE {
+    border-collapse:collapse;
+    border: 1px #bb9 dotted;
+}
+.post TABLE.noborder {
+    border-collapse:collapse;
+    border: 0px #bb9 dotted;
+}
+.post TH {
+    border-collapse:collapse;
+    border: 1px #bb9 dotted;
+}
+.post TD {
+    border-collapse:collapse;
+    border: 1px #bb9 dotted;
+}
+.post TD.noborder {
+    border-collapse:collapse;
+    border: 0px #bb9 dotted;
+}
+.post TD.noborderhighlight {
+    border-collapse:collapse;
+    border: 0px #bb9 dotted;
+    BACKGROUND-COLOR: #ddb;
+}
+.post TD.nonviewable {
+    color: #bb9;
+    border-collapse:collapse;
+    border: 1px #bb9 dotted;
+}
+.post TD.primetime {
+    color: #586;
+    border-collapse:collapse;
+    border: 1px #bb9 dotted;
+}
+.post TD.normal {
+    border-collapse:collapse;
+    border: 1px #bb9 dotted;
+    BACKGROUND-COLOR: #eec;
+}
+.post TD.highlight {
+    border-collapse:collapse;
+    border: 1px #bb9 dotted;
+    BACKGROUND-COLOR: #ddb;
+}
+.post P {
+    MARGIN: 0px 0px 0.75em
+}
+.post IMG {
+    BORDER-RIGHT: #586 1px solid;
+    PADDING-RIGHT: 4px;
+    BORDER-TOP: #586 1px solid;
+    PADDING-LEFT: 4px;
+    PADDING-BOTTOM: 4px;
+    MARGIN: 0px 0px 5px;
+    BORDER-LEFT: #586 1px solid;
+    PADDING-TOP: 4px;
+    BORDER-BOTTOM: #586 1px solid
+}
+.post IMG.noborder {
+    BORDER-RIGHT: 0px;
+    PADDING-RIGHT: 4px;
+    BORDER-TOP: 0px;
+    PADDING-LEFT: 4px;
+    PADDING-BOTTOM: 4px;
+    BORDER-LEFT: 0px;
+    PADDING-TOP: 4px;
+    BORDER-BOTTOM: 0px
+}
+.post BLOCKQUOTE P {
+    MARGIN: 0.5em 0px
+}
+.post UL {
+    MARGIN-TOP: -12px;
+}
+.navlink {
+    BORDER-RIGHT: #bb9 0px dotted; 
+    PADDING-RIGHT: 13px; 
+    BORDER-TOP: #bb9 1px dotted; 
+    PADDING-LEFT: 13px; 
+    PADDING-BOTTOM: 0px; 
+    MARGIN: 0.3em 0px 10px; 
+    BORDER-LEFT: #bb9 0px dotted; 
+    PADDING-TOP: 0px; 
+    BORDER-BOTTOM: #bb9 1px dotted;
+    FONT-SIZE: 85%;
+}
+.post-title {
+    BORDER-RIGHT: #bb9 1px dotted; 
+    PADDING-RIGHT: 14px; 
+    BORDER-TOP: #bb9 0px dotted; 
+    DISPLAY: block; 
+    PADDING-LEFT: 29px; 
+    FONT-SIZE: 135%; 
+    BACKGROUND: url(/images/icon_arrow.gif) no-repeat 10px 0.5em; 
+    PADDING-BOTTOM: 2px;
+    MARGIN: 0px;
+    BORDER-LEFT: #bb9 1px dotted;
+    COLOR: #333; 
+    LINE-HEIGHT: 1.5em; 
+    PADDING-TOP: 2px; 
+    BORDER-BOTTOM: #bb9 1px dotted
+}
+.post-title STRONG {
+    DISPLAY: block;
+    TEXT-DECORATION: none
+}
+.post-body {
+    BORDER-RIGHT: #bb9 1px dotted; 
+    PADDING-RIGHT: 14px;
+    BORDER-TOP: #bb9 0px dotted; 
+    PADDING-LEFT: 29px; 
+    PADDING-BOTTOM: 1px; 
+    BORDER-LEFT: #bb9 1px dotted; 
+    PADDING-TOP: 10px; 
+    BORDER-BOTTOM: #eec 1px dotted
+}
+
+.post-body A:visited {
+    COLOR: #267
+}
+.post-body A:link {
+    COLOR: #198
+}
+
+.post-bodybis {
+    BORDER-RIGHT: #bb9 1px dotted; 
+    PADDING-RIGHT: 1px;
+    BORDER-TOP: #bb9 0px dotted; 
+    PADDING-LEFT: 2px; 
+    PADDING-BOTTOM: 1px; 
+    BORDER-LEFT: #bb9 1px dotted; 
+    PADDING-TOP: 10px; 
+    BORDER-BOTTOM: #eec 1px dotted
+}
+
+P.note {
+    FONT-SIZE: 75%;
+    LINE-HEIGHT: 1.25em;
+}
+P.page-footer {
+    FONT-SIZE: 75%;
+    LINE-HEIGHT: 1.25em;
+}
+P.post-footer {
+    BORDER-RIGHT: #bb9 1px dotted; 
+    PADDING-RIGHT: 14px; 
+    BORDER-TOP: #bb9 1px dotted; 
+    PADDING-LEFT: 29px; 
+    FONT-SIZE: 80%;
+    BACKGROUND: #fff; 
+    PADDING-BOTTOM: 2px; 
+    MARGIN: 0px; 
+    BORDER-LEFT: #bb9 1px dotted; 
+    COLOR: #666; 
+    LINE-HEIGHT: 1.5em; 
+    PADDING-TOP: 2px; 
+    BORDER-BOTTOM: #eee 1px solid; 
+    TEXT-ALIGN: left
+}
+.sidebar-title {
+    PADDING-RIGHT: 0px;
+    PADDING-LEFT: 0px;
+    FONT-SIZE: 115%;
+    PADDING-BOTTOM: 0.2em;
+    MARGIN: 0px;
+    COLOR: #abc;
+    LINE-HEIGHT: 1.5em;
+    PADDING-TOP: 0px;
+    BORDER-BOTTOM: #456 1px dotted
+}
+.navpane {
+    PADDING-RIGHT: 0px;
+    PADDING-LEFT: 0px;
+    BACKGROUND: url(/images/corners_prof_bot.gif) #586 no-repeat left bottom;
+    PADDING-BOTTOM: 10px;
+    MARGIN: 0px 0px 15px;
+    COLOR: #fff;
+    PADDING-TOP: 0px
+}
+.navpane H2 {
+    BORDER-TOP-WIDTH: 0px;
+    PADDING-RIGHT: 15px;
+    PADDING-LEFT: 15px;
+    BORDER-LEFT-WIDTH: 0px;
+    FONT-SIZE: 115%;
+    BACKGROUND: url(/images/corners_prof_top.gif) no-repeat left top;
+    BORDER-BOTTOM-WIDTH: 0px;
+    PADDING-BOTTOM: 0.2em;
+    MARGIN: 0px;
+    COLOR: #fff;
+    LINE-HEIGHT: 1.5em;
+    PADDING-TOP: 10px;
+    BORDER-RIGHT-WIDTH: 0px
+}
+.navpane DIV.textblock {
+    CLEAR: left
+    LIST-STYLE-TYPE: none;
+    BORDER-TOP: #7a8 1px dotted;
+    MARGIN: 0px 14px 0.5em;
+    PADDING-TOP: 8px;
+}
+.navpane A:link {
+    COLOR: #aea
+}
+.navpane A:visited {
+    COLOR: #8c8
+}
+.navpane A:hover {
+    COLOR: #fff
+}
+.navpane DL {
+    LIST-STYLE-TYPE: none;
+    BORDER-TOP: #7a8 1px dotted;
+    MARGIN: 0px 14px 0.5em;
+    PADDING-TOP: 8px;
+}
+.navpane DD {
+    PADDING-RIGHT: 0px;
+    PADDING-LEFT: 14px;
+    PADDING-BOTTOM: 3px;
+    MARGIN: 0px 0px 3px;
+    LINE-HEIGHT: 1em;
+    PADDING-TOP: 0px;
+}
+.box {
+    PADDING-RIGHT: 0px; 
+    PADDING-LEFT: 0px; 
+    BACKGROUND: url(/images/corners_side_top.gif) #234 no-repeat left top; 
+    PADDING-BOTTOM: 0px; 
+    MARGIN: 0px 0px 15px; 
+    COLOR: #abc; 
+    PADDING-TOP: 10px
+}
+.box2 {
+    PADDING-RIGHT: 13px; 
+    PADDING-LEFT: 13px; 
+    BACKGROUND: url(/images/corners_side_bot.gif) no-repeat left bottom; 
+    PADDING-BOTTOM: 8px; 
+    PADDING-TOP: 0px
+}
+.box UL {
+    PADDING-RIGHT: 0px; 
+    PADDING-LEFT: 0px; 
+    PADDING-BOTTOM: 0px; 
+    MARGIN: 0.5em 0px 1.25em; 
+    PADDING-TOP: 0px; 
+    LIST-STYLE-TYPE: none
+}
+.box UL LI {
+    PADDING-RIGHT: 0px; 
+    PADDING-LEFT: 16px; 
+    BACKGROUND: url(/images/icon_arrow_sm.gif) no-repeat 2px 0.25em; 
+    PADDING-BOTTOM: 3px; 
+    MARGIN: 0px 0px 3px; 
+    LINE-HEIGHT: 1.4em; 
+    PADDING-TOP: 0px; 
+    BORDER-BOTTOM: #345 1px dotted
+    COLOR: #bbc;
+}
+.box P {
+    MARGIN: 0px 0px 0.6em
+}
+.pagefooter {
+    CLEAR: both; 
+    PADDING-RIGHT: 0px; 
+    PADDING-LEFT: 0px; 
+    PADDING-BOTTOM: 0px; 
+    MARGIN: 0px; 
+    PADDING-TOP: 15px
+}
+.pagefooter-top {
+    PADDING-RIGHT: 0px; 
+    PADDING-LEFT: 0px; 
+    BACKGROUND: url(/images/corners_cap_top.gif) #357 no-repeat left top; 
+    PADDING-BOTTOM: 0px; 
+    COLOR: #fff; 
+    PADDING-TOP: 8px
+}
+.pagefooter-bottom {
+    PADDING-RIGHT: 15px; 
+    PADDING-LEFT: 15px; 
+    BACKGROUND: url(/images/corners_cap_bot.gif) no-repeat left bottom; 
+    PADDING-BOTTOM: 8px; 
+    PADDING-TOP: 0px
+}
+.pagefooter P {
+    MARGIN: 0px
+}
+.xpagefooter A {
+    COLOR: #fff
+}
+.xpagefooter A:link {
+    COLOR: #347
+}
+.xpagefooter A:visited {
+    COLOR: #666
+}
+.xpagefooter A:hover {
+    COLOR: #68a
+}
+TD.fullsize {
+    WIDTH: 100%
+}
+TABLE.fullsize {
+    WIDTH: 100%
+}
