@@ -2,7 +2,7 @@
 \usepackage[utf8]{inputenc}
 \title{Realización de Prácticas Formativas}
 \author{Rafael Fernández López\\Ingeniería en Informática}
-\date{Septiembre 2011}
+\date{1 de julio al 30 de septiembre de 2010}
 \begin{document}
   \maketitle
   \section{Proyecto}
@@ -66,4 +66,34 @@
         el sistema para los nuevos clientes. Tras unos meses con los nuevos clientes utilizando el
         nuevo sistema, así como los clientes elegidos para realizar pruebas, se procederá a la migración
         completa de todos los clientes.
+  \newpage
+  \section{Desarrollo de plataforma Bluetooth propia para KDE}
+    Debido a que desde Interdominios se impulsa el software libre, se nos encargó el desarrollo de
+    una plataforma Bluetooth propia para KDE.
+    Hemos trabajado en proporcionar soporte de Bluetooth al sistema de escritorio KDE de una manera
+    integrada. Dicho escritorio únicamente contaba con una aplicación monolítica que se encargaba de
+    todos los casos de uso que un usuario pudiera necesitar; pairing, transferencia de ficheros,
+    navegación por dispositivos... pero resultaba ser una herramienta demasiado compleja y propensa
+    a errores.
+    Se ha dividido al proyecto en varias partes pequeñas y continuando con el paradigma TDD:
+    \begin{itemize}
+      \item KDED: demonio encargado de centralizar peticiones genéricas de bluetooth
+      \item KIOs: integración en el navegador de archivos para poder escanear dispositivos, así como
+                  navegar por ellos como si fuera un sistema de ficheros local
+      \item KCMs: módulos de configuración que se muestran en el lugar de configuración global para
+                  el usuario denominado "System Settings".
+      \item Aplicación monolítica: es un icono en la bandeja del sistema que actúa como acceso
+            rápido a las acciones más típicas que el usuario desee.
+      \item libbluedevil: librería con una API muy sencilla que permite realizar operaciones típicas
+                          sobre el subsistema de Bluetooth, como por ejemplo: escanear nuevos
+                          dispositivos, solicitar los dispositivos conocidos, cambiar el alias a
+                          algún dispositivo, confiar o desconfiar en un dispositivo...
+    \end{itemize}
+    Como parte de la modularidad y un buen diseño todo el sistema de Bluetooth para KDE lo hemos
+    denominado BlueDevil, y para su funcionamiento éste utiliza una librería denominada
+    libbluedevil, diseñada para integrar el sistema de Bluetooth donde sea necesario con una API muy
+    sencilla y no acoplada a BlueDevil. Como resultado de nuestro trabajo, este sistema ya se ha
+    integrado en distribuciones como Kubuntu, OpenSuSE, y será introducido upstream en breve en el
+    repositorio de KDE, para que todas las distribuciones que lo empaqueten lleven soporte de
+    Bluetooth integrado.
 \end{document}
