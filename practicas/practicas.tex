@@ -1,0 +1,69 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\title{Realización de Prácticas Formativas}
+\author{Rafael Fernández López\\Ingeniería en Informática}
+\date{Septiembre 2011}
+\begin{document}
+  \maketitle
+  \section{Proyecto}
+    El proyecto está enmarcado dentro del equipo de desarrollo de Interdominios. Las tareas a
+    realizar son las siguientes:
+    \begin{itemize}
+      \item Creación de una extranet para los clientes
+      \item Desarrollo de plataforma Bluetooth propia para KDE
+    \end{itemize}
+    El modelo de desarrollo de todos los subproyectos es TDD (Test Driven Development), de manera
+    que conseguimos desarrollar un producto estable, así como asegurar que en futuras mejoras y
+    ampliaciones las funcionalidades implementadas continuarán funcionando de forma óptima.
+  \section{Creación de una extranet para los clientes}
+    Ha sido necesario crear una extranet para los clientes que cuentan con muchos productos para
+    permitirles hacer operaciones en modo "batch" masivo. Esto ayuda a los clientes que tienen
+    muchos productos aprovechar mejor el tiempo requerido a la administración de sus productos.
+    Las tecnologías utilizadas para el desarrollo de este panel han sido las siguientes:
+    \begin{itemize}
+      \item PHP
+      \item Ruby
+      \item C/C++
+      \item Qooxdoo
+      \item MySQL
+    \end{itemize}
+    Al comienzo de las prácticas el panel era una idea con unos casos de uso bien especificados.
+    Tras los tres meses de prácticas y con el trabajo de todo el equipo y ayuda de mis tutores se
+    ha conseguido crear un sistema completamente nuevo con un diseño modular.
+    El nuevo panel permite registrar, renovar, trasladar y realizar todo tipo de acciones sobre
+    dominios y sus contactos. Además, y por haber desarrollado una base genérica y extensible
+    también se han desarrollado a posteriori otras aplicaciones:
+    \begin{itemize}
+      \item Aplicación que permite crear, modificar y gestionar cuentas de correo electrónico desde
+            el punto de vista del administrador (cuotas...)
+      \item Aplicación de monitorización de máquinas virtuales, que también permite a los clientes
+            comprobar el estado de sus máquinas, así como reiniciar, apagar e iniciar las máquinas
+    \end{itemize}
+    Gracias a que la plataforma desarrollada es agnóstica, genérica y modular se puede extender su
+    uso a cualquier tipo de proyecto orientado tanto al cliente final como a los administradores de
+    sistemas. Únicamente es requerida la creación de una interfaz de usuario en el lenguaje y
+    framework deseado, contactando con el servidor en un formato conocido (JSON, XML), creando de
+    esta forma aplicaciones cliente-servidor; siendo el servidor el que dentro de la plataforma
+    contiene toda la lógica de negocio.
+    \subsection{Seguridad}
+      Se ha prestado especial atención a la seguridad, por el hecho de ser un proyecto clave dentro
+      de la estrategia interna. En este caso el sistema es complejo y está compuesto por tres
+      servidores, siendo uno de ellos el único que es accesible desde fuera de la red interna.
+      De esta manera, el servidor que contiene el cliente web es el único accesible por el cliente.
+      La interfaz web realizará ciertas acciones que serán reportadas mediante un formato propio al
+      segundo servidor, mediante red privada interna y encriptada. Este servidor se encargará de
+      modificar las bases de datos necesarias, así como de incluir trabajos que requieran de contacto
+      con proveedores de dominios, que serán incluidos en el tercer y último servidor, encargado
+      de contactar con los proveedores.
+    \subsection{Migración}
+      Ha sido necesario desarrollar una herramienta de migración de usuarios actuales al nuevo
+      sistema que les permitirá realizar operaciones en modo "batch".
+      \subsubsection{Plan de migración}
+        Debido a la gran cantidad de clientes con la que cuenta Interdominios, ha sido necesario
+        realizar un plan de migración. Hemos contactado con diversos clientes que eran propicios para
+        el uso de este sistema, migrando a un número limitado de clientes con grandes cuentas. Además,
+        y tras comprobar que el sistema estaba funcionando correctamente para ellos, también se abrió
+        el sistema para los nuevos clientes. Tras unos meses con los nuevos clientes utilizando el
+        nuevo sistema, así como los clientes elegidos para realizar pruebas, se procederá a la migración
+        completa de todos los clientes.
+\end{document}
